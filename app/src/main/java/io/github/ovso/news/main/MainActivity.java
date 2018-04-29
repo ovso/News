@@ -14,18 +14,23 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.github.ovso.news.R;
 import io.github.ovso.news.framework.BaseActivity;
+import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity
-    implements NavigationView.OnNavigationItemSelectedListener {
+    implements NavigationView.OnNavigationItemSelectedListener, MainPresenter.View {
   @BindView(R.id.nav_view) NavigationView nav;
   @BindView(R.id.drawer_layout) DrawerLayout drawer;
-  //@Inject
-  //MainPresenter presenter;
+
+  @Inject
+  MainPresenter presenter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    //Timber.d("presenter = " + presenter);
+    presenter.onCreate();
+  }
+
+  @Override public void setListener() {
     ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
         this, drawer, toolbar, R.string.navigation_drawer_open, R.string
         .navigation_drawer_close);
@@ -33,8 +38,6 @@ public class MainActivity extends BaseActivity
     toggle.syncState();
 
     nav.setNavigationItemSelectedListener(this);
-
-
   }
 
   @OnClick(R.id.fab) void onFabClick(View view) {
@@ -80,24 +83,7 @@ public class MainActivity extends BaseActivity
   @SuppressWarnings("StatementWithEmptyBody")
   @Override
   public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-    // Handle navigation view item clicks here.
-    int id = item.getItemId();
-
-    if (id == R.id.nav_camera) {
-      // Handle the camera action
-    } else if (id == R.id.nav_gallery) {
-
-    } else if (id == R.id.nav_slideshow) {
-
-    } else if (id == R.id.nav_manage) {
-
-    } else if (id == R.id.nav_share) {
-
-    } else if (id == R.id.nav_send) {
-
-    }
-
     drawer.closeDrawer(GravityCompat.START);
-    return true;
+    return presenter.onNavigationItemSelected(item.getItemId());
   }
 }

@@ -2,17 +2,19 @@ package io.github.ovso.news;
 
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
+import io.github.ovso.news.di.DaggerAppComponent;
 import io.github.ovso.news.framework.AppInitUtils;
+import lombok.Getter;
 
 public class App extends DaggerApplication {
-  public static boolean DEBUG = false;
-  private static App instance;
+  @Getter private static boolean DEBUG = false;
+  @Getter private static App instance;
 
   @Override
   public void onCreate() {
     super.onCreate();
     instance = this;
-    DEBUG = AppInitUtils.debug(this);
+    DEBUG = AppInitUtils.isDebug(this);
     AppInitUtils.timber(DEBUG);
   }
 

@@ -12,7 +12,7 @@ public class AppInitUtils {
     }
   }
 
-  public static boolean debug(Context context) {
+  public static boolean isDebug(Context context) {
     return SystemUtils.isDebuggable(context);
   }
 }
