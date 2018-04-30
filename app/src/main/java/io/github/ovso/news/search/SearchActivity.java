@@ -1,6 +1,5 @@
 package io.github.ovso.news.search;
 
-import butterknife.BindView;
 import io.github.ovso.news.R;
 import io.github.ovso.news.framework.BaseActivity;
 

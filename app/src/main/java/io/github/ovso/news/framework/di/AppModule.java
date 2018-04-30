@@ -1,4 +1,4 @@
-package io.github.ovso.news.di;
+package io.github.ovso.news.framework.di;
 
 import android.app.Application;
 import android.content.Context;
