@@ -1,12 +1,4 @@
-*.iml
 .gradle
-/local.properties
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.idea
 keystore.properties
+.idea
+/app/src/main/java/io/github/ovso/news/Security.java
