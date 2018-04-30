@@ -3,4 +3,5 @@
   <item name="root_view" type="id"/>
   <item name="fab" type="id"/>
   <item name="recyclerview" type="id"/>
+  <item name="searchview" type="id"/>
 </resources>
