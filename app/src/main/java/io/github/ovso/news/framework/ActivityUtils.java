@@ -3,7 +3,7 @@ package io.github.ovso.news.framework;
 import android.app.Activity;
 import android.content.Intent;
 import io.github.ovso.news.listup.ListUpActivity;
-import io.github.ovso.news.main.WebActivity;
+import io.github.ovso.news.web.WebActivity;
 import io.github.ovso.news.search.SearchActivity;
 
 public class ActivityUtils {

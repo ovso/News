@@ -1,4 +1,4 @@
-package io.github.ovso.news.main;
+package io.github.ovso.news.web;
 
 import dagger.Module;
 import dagger.Provides;

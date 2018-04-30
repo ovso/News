@@ -21,7 +21,7 @@
       </intent-filter>
     </activity>
     <activity
-        android:name=".main.WebActivity"
+        android:name=".web.WebActivity"
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme.NoActionBar"/>
     <activity

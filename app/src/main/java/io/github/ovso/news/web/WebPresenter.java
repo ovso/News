@@ -1,4 +1,4 @@
-package io.github.ovso.news.main;
+package io.github.ovso.news.web;
 
 public interface WebPresenter {
 

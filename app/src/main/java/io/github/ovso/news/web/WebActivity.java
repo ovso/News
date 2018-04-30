@@ -1,4 +1,4 @@
-package io.github.ovso.news.main;
+package io.github.ovso.news.web;
 
 import android.os.Bundle;
 import butterknife.OnClick;
