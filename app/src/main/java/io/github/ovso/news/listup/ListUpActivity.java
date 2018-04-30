@@ -1,8 +1,5 @@
 package io.github.ovso.news.listup;
 
-import android.support.design.widget.FloatingActionButton;
-import android.view.View;
-import butterknife.BindView;
 import butterknife.OnClick;
 import io.github.ovso.news.R;
 import io.github.ovso.news.framework.ActivityUtils;
