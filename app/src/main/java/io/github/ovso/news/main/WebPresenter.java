@@ -1,6 +1,6 @@
 package io.github.ovso.news.main;
 
-public interface MainPresenter {
+public interface WebPresenter {
 
     void onCreate();
 

@@ -7,9 +7,9 @@ import io.github.ovso.news.framework.ActivityUtils;
 import io.github.ovso.news.framework.BaseActivity;
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity implements MainPresenter.View {
+public class WebActivity extends BaseActivity implements WebPresenter.View {
   @Inject
-  MainPresenter presenter;
+  WebPresenter presenter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
