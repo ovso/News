@@ -19,7 +19,7 @@
       tools:text="방금 전"
       />
   <TextView
-      android:id="@+id/textView2"
+      android:id="@id/title_textview"
       android:layout_width="wrap_content"
       android:layout_height="36dp"
       android:layout_marginStart="8dp"

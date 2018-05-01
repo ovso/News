@@ -15,7 +15,13 @@ public interface SearchViewPresenter {
     void setListener();
 
     void showErrorMessage(@StringRes int resId);
+
     void showMessage(@StringRes int resId);
+
     void showMessage(String msg);
+
+    void setupRecyclerView();
+
+    void refresh();
   }
 }
