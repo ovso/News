@@ -69,6 +69,10 @@ public class SearchActivity extends BaseActivity implements SearchViewPresenter.
     adapterView.refresh();
   }
 
+  @Override public void allRefresh() {
+    adapter.allRefresh();
+  }
+
   @Override public void onItemClick(Website item) {
 
   }

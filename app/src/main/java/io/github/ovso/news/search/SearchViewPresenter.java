@@ -23,5 +23,7 @@ public interface SearchViewPresenter {
     void setupRecyclerView();
 
     void refresh();
+
+    void allRefresh(); // why... --> recyclerview index bug...
   }
 }

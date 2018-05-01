@@ -33,7 +33,7 @@ public class SearchViewPresenterImpl extends BasePresenter<SearchViewPresenter.V
   @DebugLog @Override public void onQueryTextChange(String newText) {
     if(ObjectUtils.isEmpty(newText)) {
       adapterDataModel.clear();
-      view.refresh();
+      view.allRefresh(); // recyclerview index bug...
       return;
     }
     adapterDataModel.clear();

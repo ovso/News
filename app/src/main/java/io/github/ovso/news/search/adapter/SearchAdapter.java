@@ -76,7 +76,7 @@ public class SearchAdapter extends BaseRecyclerAdapter
   @Override public void refresh() {
     notifyItemRangeChanged(0, items.size());
   }
-  public void removeRefresh() {
+  public void allRefresh() {
     notifyDataSetChanged();
   }
   @Accessors(chain = true) @Setter public static class Builder {
