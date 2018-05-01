@@ -1,8 +1,9 @@
 package io.github.ovso.news.search.model;
 
 import lombok.Getter;
+import lombok.ToString;
 
-@Getter public class Website {
+@ToString @Getter public class Website {
   private String title;
   private String link;
   private String description;

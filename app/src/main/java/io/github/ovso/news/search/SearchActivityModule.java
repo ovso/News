@@ -23,14 +23,15 @@ import javax.inject.Singleton;
 
   @DebugLog @Singleton @Provides
   public SearchAdapter provideSearchAdapter(OnRecyclerItemClickListener<Website> listener) {
-    return new SearchAdapter.Builder().setOnRecyclerItemClickListener(listener).build();
+    return new SearchAdapter.Builder().setOnItemClickListener(listener).build();
   }
 
   @DebugLog @Provides public BaseAdapterView provideAdapterView(SearchAdapter adapter) {
     return adapter;
   }
 
-  @DebugLog @Provides public BaseAdapterDataModel<Website> provideAdapterDataModel(SearchAdapter adapter) {
+  @DebugLog @Provides
+  public BaseAdapterDataModel<Website> provideAdapterDataModel(SearchAdapter adapter) {
     return adapter;
   }
 }

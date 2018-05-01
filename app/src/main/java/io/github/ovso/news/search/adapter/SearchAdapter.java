@@ -1,6 +1,5 @@
 package io.github.ovso.news.search.adapter;
 
-import android.text.Html;
 import android.view.View;
 import io.github.ovso.news.R;
 import io.github.ovso.news.framework.DeprecatedUtils;
@@ -13,15 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import timber.log.Timber;
 
 public class SearchAdapter extends BaseRecyclerAdapter
     implements BaseAdapterDataModel<Website>, BaseAdapterView {
   private List<Website> items = new ArrayList<>();
-  private OnRecyclerItemClickListener<Website> onRecyclerItemClickListener;
+  private OnRecyclerItemClickListener<Website> onItemClickListener;
 
   private SearchAdapter(SearchAdapter.Builder builder) {
-    onRecyclerItemClickListener = builder.onRecyclerItemClickListener;
+    onItemClickListener = builder.onItemClickListener;
   }
 
   @Override protected BaseViewHolder createViewHolder(View view, int viewType) {
@@ -35,9 +33,9 @@ public class SearchAdapter extends BaseRecyclerAdapter
   @Override public void onBindViewHolder(BaseViewHolder viewHolder, int position) {
     if (viewHolder instanceof SearchViewHolder) {
       SearchViewHolder holder = (SearchViewHolder) viewHolder;
-      Website item = items.get(position);
-      //holder.titleTextView.setText(item.getTitle());
+      final Website item = items.get(position);
       holder.titleTextView.setText(DeprecatedUtils.fromHtml(item.getTitle()));
+      holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(item));
     }
   }
 
@@ -76,11 +74,13 @@ public class SearchAdapter extends BaseRecyclerAdapter
   @Override public void refresh() {
     notifyItemRangeChanged(0, items.size());
   }
+
   public void allRefresh() {
     notifyDataSetChanged();
   }
+
   @Accessors(chain = true) @Setter public static class Builder {
-    private OnRecyclerItemClickListener<Website> onRecyclerItemClickListener;
+    private OnRecyclerItemClickListener<Website> onItemClickListener;
 
     public SearchAdapter build() {
       return new SearchAdapter(this);

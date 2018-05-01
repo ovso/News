@@ -1,6 +1,7 @@
 package io.github.ovso.news.search;
 
 import android.support.annotation.StringRes;
+import io.github.ovso.news.search.model.Website;
 
 public interface SearchViewPresenter {
 
@@ -9,6 +10,8 @@ public interface SearchViewPresenter {
   void onQueryTextChange(String newText);
 
   void onStop();
+
+  void onItemClick(Website item);
 
   interface View {
 
@@ -25,5 +28,7 @@ public interface SearchViewPresenter {
     void refresh();
 
     void allRefresh(); // why... --> recyclerview index bug...
+
+    void finish();
   }
 }

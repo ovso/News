@@ -31,7 +31,7 @@ public class SearchViewPresenterImpl extends BasePresenter<SearchViewPresenter.V
   }
 
   @DebugLog @Override public void onQueryTextChange(String newText) {
-    if(ObjectUtils.isEmpty(newText)) {
+    if (ObjectUtils.isEmpty(newText)) {
       adapterDataModel.clear();
       view.allRefresh(); // recyclerview index bug...
       return;
@@ -49,5 +49,9 @@ public class SearchViewPresenterImpl extends BasePresenter<SearchViewPresenter.V
 
   @Override public void onStop() {
     compositeDisposable.clear();
+  }
+
+  @DebugLog @Override public void onItemClick(Website item) {
+    view.finish();
   }
 }
