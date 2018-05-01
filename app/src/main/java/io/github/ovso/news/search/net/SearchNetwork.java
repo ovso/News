@@ -26,6 +26,14 @@ public class SearchNetwork extends BaseNetwork<SearchApi> {
     return getApi().getWebsiteResult(queryMap);
   }
 
+  public Observable<WebsiteResult> getWebsiteResult(String text) {
+    Map<String, String> queryMap = new HashMap<>();
+    queryMap.put("display", String.valueOf(5));
+    queryMap.put("start", String.valueOf(1));
+    queryMap.put("query", text);
+    return getApi().getWebsiteResult(queryMap);
+  }
+
   @Override protected Headers createHeaders() {
     Map<String, String> headers = new HashMap<>();
     headers.put(Security.NAVER_CLIENT_ID_NAME.getValue(), Security.NAVER_CLIENT_ID.getValue());

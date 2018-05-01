@@ -2,6 +2,7 @@ package io.github.ovso.news.search;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.SearchView;
 import butterknife.BindView;
 import io.github.ovso.news.R;
@@ -30,5 +31,22 @@ public class SearchActivity extends BaseActivity implements SearchViewPresenter.
         return presenter.onQueryTextChange(newText);
       }
     });
+  }
+
+  @Override public void showErrorMessage(int resId) {
+    Snackbar.make(rootView, resId, Snackbar.LENGTH_SHORT).show();
+  }
+
+  @Override public void showMessage(int resId) {
+    Snackbar.make(rootView, resId, Snackbar.LENGTH_SHORT).show();
+  }
+
+  @Override public void showMessage(String msg) {
+    Snackbar.make(rootView, msg, Snackbar.LENGTH_SHORT).show();
+  }
+
+  @Override protected void onStop() {
+    presenter.onStop();
+    super.onStop();
   }
 }

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.view.ViewGroup;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dagger.android.support.DaggerAppCompatActivity;
@@ -16,7 +18,7 @@ import io.github.ovso.news.R;
 public abstract class BaseActivity extends DaggerAppCompatActivity {
 
   private Unbinder unbinder;
-
+  protected @BindView(R.id.root_view) ViewGroup rootView;
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(getLayoutResId());

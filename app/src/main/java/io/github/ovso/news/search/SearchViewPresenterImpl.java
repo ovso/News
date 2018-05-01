@@ -1,6 +1,7 @@
 package io.github.ovso.news.search;
 
 import hugo.weaving.DebugLog;
+import io.github.ovso.news.R;
 import io.github.ovso.news.framework.BasePresenter;
 import io.github.ovso.news.framework.rx.SchedulersFacade;
 import io.github.ovso.news.search.model.WebsiteResult;
@@ -22,20 +23,21 @@ public class SearchViewPresenterImpl extends BasePresenter<SearchViewPresenter.V
 
   @Override public void onCreate() {
     view.setListener();
-    compositeDisposable.add(network.getWebsiteResult()
-        .subscribeOn(schedulers.io())
-        .observeOn(schedulers.ui()).subscribe(new Consumer<WebsiteResult>() {
-          @DebugLog @Override public void accept(WebsiteResult result) throws Exception {
-
-          }
-        }, new Consumer<Throwable>() {
-          @Override public void accept(Throwable throwable) throws Exception {
-
-          }
-        }));
   }
 
   @DebugLog @Override public boolean onQueryTextChange(String newText) {
+    compositeDisposable.clear();
+    compositeDisposable.add(network.getWebsiteResult(newText)
+        .subscribeOn(schedulers.io())
+        .observeOn(schedulers.ui()).subscribe(new Consumer<WebsiteResult>() {
+          @DebugLog @Override public void accept(WebsiteResult result) throws Exception {
+            
+          }
+        }, throwable -> view.showErrorMessage(R.string.error)));
     return false;
+  }
+
+  @Override public void onStop() {
+    compositeDisposable.clear();
   }
 }
