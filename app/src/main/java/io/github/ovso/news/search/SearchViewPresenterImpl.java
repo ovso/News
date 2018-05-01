@@ -25,16 +25,15 @@ public class SearchViewPresenterImpl extends BasePresenter<SearchViewPresenter.V
     view.setListener();
   }
 
-  @DebugLog @Override public boolean onQueryTextChange(String newText) {
+  @DebugLog @Override public void onQueryTextChange(String newText) {
     compositeDisposable.clear();
     compositeDisposable.add(network.getWebsiteResult(newText)
         .subscribeOn(schedulers.io())
         .observeOn(schedulers.ui()).subscribe(new Consumer<WebsiteResult>() {
           @DebugLog @Override public void accept(WebsiteResult result) throws Exception {
-            
+
           }
         }, throwable -> view.showErrorMessage(R.string.error)));
-    return false;
   }
 
   @Override public void onStop() {

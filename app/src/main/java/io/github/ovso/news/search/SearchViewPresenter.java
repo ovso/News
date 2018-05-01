@@ -6,7 +6,7 @@ public interface SearchViewPresenter {
 
   void onCreate();
 
-  boolean onQueryTextChange(String newText);
+  void onQueryTextChange(String newText);
 
   void onStop();
 

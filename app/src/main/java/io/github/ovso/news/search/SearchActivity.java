@@ -27,8 +27,8 @@ public class SearchActivity extends BaseActivity implements SearchViewPresenter.
 
   @Override public void setListener() {
     searchView.setOnQueryTextListener(new OnSimpleQueryTextListener() {
-      @Override public boolean onQueryTextChange(String newText) {
-        return presenter.onQueryTextChange(newText);
+      @Override public void onQueryTextChanged(String newText) {
+        presenter.onQueryTextChange(newText);
       }
     });
   }
