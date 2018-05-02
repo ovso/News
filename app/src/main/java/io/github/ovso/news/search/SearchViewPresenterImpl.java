@@ -3,14 +3,15 @@ package io.github.ovso.news.search;
 import hugo.weaving.DebugLog;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.AppDatabase;
+import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.BasePresenter;
 import io.github.ovso.news.framework.ObjectUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.rx.SchedulersFacade;
 import io.github.ovso.news.search.model.Website;
 import io.github.ovso.news.search.net.SearchNetwork;
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
-import timber.log.Timber;
 
 public class SearchViewPresenterImpl extends BasePresenter<SearchViewPresenter.View>
     implements SearchViewPresenter {
@@ -56,6 +57,13 @@ public class SearchViewPresenterImpl extends BasePresenter<SearchViewPresenter.V
   }
 
   @DebugLog @Override public void onItemClick(Website item) {
-    database.websiteDao();
+    compositeDisposable.add(Observable.fromCallable(() -> {
+      WebsiteEntity entity = WebsiteEntity.convertWebsiteToEntiry(item);
+      database.websiteDao().insertAll(entity);
+      return entity;
+    })
+        .subscribeOn(schedulers.io())
+        .observeOn(schedulers.ui())
+        .subscribe(entity -> view.finish(), throwable -> view.showErrorMessage(R.string.error)));
   }
 }

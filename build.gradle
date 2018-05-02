@@ -31,6 +31,10 @@ buildscript {
 
     // Room
     room_version = '1.0.0'
+
+    // Stetho
+    stetho_version = '1.5.0'
+
     // Test
     junit_version = '4.12'
     runner_version = '1.0.2'

@@ -3,6 +3,7 @@ package io.github.ovso.news.db;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import io.github.ovso.news.search.model.Website;
 import lombok.Data;
 
 @Data @Entity(tableName = "WEBSITE_INFO") public class WebsiteEntity {
@@ -15,4 +16,12 @@ import lombok.Data;
   public String link;
   @ColumnInfo(name = "DESC")
   public String description;
+
+  public static WebsiteEntity convertWebsiteToEntiry(Website item) {
+    WebsiteEntity entity = new WebsiteEntity();
+    entity.description = item.getDescription();
+    entity.link = item.getLink();
+    entity.title = item.getTitle();
+    return entity;
+  }
 }

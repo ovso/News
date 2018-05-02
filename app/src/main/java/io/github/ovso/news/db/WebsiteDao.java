@@ -14,8 +14,10 @@ import java.util.List;
   @Query("SELECT * FROM WEBSITE_INFO WHERE ID IN (:ids)")
   List<WebsiteEntity> loadAllByIds(int[] ids);
 
+  /*
   @Query("SELECT * FROM WEBSITE_INFO WHERE TITLE")
   WebsiteEntity findByName(String title);
+  */
 
   @Insert
   void insertAll(WebsiteEntity... websites);

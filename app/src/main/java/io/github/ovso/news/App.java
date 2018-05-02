@@ -2,8 +2,8 @@ package io.github.ovso.news;
 
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
-import io.github.ovso.news.framework.di.DaggerAppComponent;
 import io.github.ovso.news.framework.AppInitUtils;
+import io.github.ovso.news.framework.di.DaggerAppComponent;
 import lombok.Getter;
 
 public class App extends DaggerApplication {
@@ -16,6 +16,7 @@ public class App extends DaggerApplication {
     instance = this;
     DEBUG = AppInitUtils.isDebug(this);
     AppInitUtils.timber(DEBUG);
+    AppInitUtils.stetho(this);
   }
 
   @Override
