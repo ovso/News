@@ -2,6 +2,7 @@ package io.github.ovso.news.search;
 
 import hugo.weaving.DebugLog;
 import io.github.ovso.news.R;
+import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.framework.BasePresenter;
 import io.github.ovso.news.framework.ObjectUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
@@ -9,6 +10,7 @@ import io.github.ovso.news.framework.rx.SchedulersFacade;
 import io.github.ovso.news.search.model.Website;
 import io.github.ovso.news.search.net.SearchNetwork;
 import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 public class SearchViewPresenterImpl extends BasePresenter<SearchViewPresenter.View>
     implements SearchViewPresenter {
@@ -16,13 +18,15 @@ public class SearchViewPresenterImpl extends BasePresenter<SearchViewPresenter.V
   private SchedulersFacade schedulers;
   private SearchNetwork network;
   private BaseAdapterDataModel<Website> adapterDataModel;
+  private AppDatabase database;
 
   SearchViewPresenterImpl(View view, SchedulersFacade schedulers, SearchNetwork network,
-      BaseAdapterDataModel<Website> adapterDataModel) {
+      BaseAdapterDataModel<Website> adapterDataModel, AppDatabase database) {
     super(view);
     this.schedulers = schedulers;
     this.network = network;
     this.adapterDataModel = adapterDataModel;
+    this.database = database;
   }
 
   @Override public void onCreate() {
@@ -52,6 +56,6 @@ public class SearchViewPresenterImpl extends BasePresenter<SearchViewPresenter.V
   }
 
   @DebugLog @Override public void onItemClick(Website item) {
-    view.finish();
+    database.websiteDao();
   }
 }

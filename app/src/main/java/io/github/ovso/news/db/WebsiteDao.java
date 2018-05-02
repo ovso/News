@@ -7,19 +7,19 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 @Dao public interface WebsiteDao {
-  @Query("SELECT * FROM WEBSITE")
+
+  @Query("SELECT * FROM WEBSITE_INFO")
   List<WebsiteEntity> getAll();
 
-  @Query("SELECT * FROM WEBSITE WHERE uid IN (:userIds)")
-  List<WebsiteEntity> loadAllByIds(int[] userIds);
+  @Query("SELECT * FROM WEBSITE_INFO WHERE ID IN (:ids)")
+  List<WebsiteEntity> loadAllByIds(int[] ids);
 
-  @Query("SELECT * FROM user WHERE first_name LIKE :first AND "
-      + "last_name LIKE :last LIMIT 1")
-  WebsiteEntity findByName(String first, String last);
+  @Query("SELECT * FROM WEBSITE_INFO WHERE TITLE")
+  WebsiteEntity findByName(String title);
 
   @Insert
-  void insertAll(WebsiteEntity... users);
+  void insertAll(WebsiteEntity... websites);
 
   @Delete
-  void delete(WebsiteEntity user);
+  void delete(WebsiteEntity website);
 }

@@ -1,8 +1,9 @@
 package io.github.ovso.news.search;
 
+import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
-import hugo.weaving.DebugLog;
+import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
@@ -17,21 +18,25 @@ import javax.inject.Singleton;
   @Singleton @Provides
   public SearchViewPresenter provideSearchViewPresenter(SearchViewPresenter.View view,
       SchedulersFacade schedulers, SearchNetwork network,
-      BaseAdapterDataModel<Website> adapterDataModel) {
-    return new SearchViewPresenterImpl(view, schedulers, network, adapterDataModel);
+      BaseAdapterDataModel<Website> adapterDataModel, AppDatabase database) {
+    return new SearchViewPresenterImpl(view, schedulers, network, adapterDataModel, database);
   }
 
-  @DebugLog @Singleton @Provides
+  @Singleton @Provides
   public SearchAdapter provideSearchAdapter(OnRecyclerItemClickListener<Website> listener) {
     return new SearchAdapter.Builder().setOnItemClickListener(listener).build();
   }
 
-  @DebugLog @Provides public BaseAdapterView provideAdapterView(SearchAdapter adapter) {
+  @Provides public BaseAdapterView provideAdapterView(SearchAdapter adapter) {
     return adapter;
   }
 
-  @DebugLog @Provides
+  @Provides
   public BaseAdapterDataModel<Website> provideAdapterDataModel(SearchAdapter adapter) {
     return adapter;
+  }
+
+  @Provides public AppDatabase provideAppDatabase(Context context) {
+    return AppDatabase.getInstance(context);
   }
 }

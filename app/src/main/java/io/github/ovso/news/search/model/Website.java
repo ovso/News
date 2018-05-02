@@ -7,4 +7,5 @@ import lombok.ToString;
   private String title;
   private String link;
   private String description;
+
 }
