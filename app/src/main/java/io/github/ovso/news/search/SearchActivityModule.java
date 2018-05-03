@@ -22,7 +22,7 @@ public class SearchActivityModule {
                                                           SchedulersFacade schedulers,
                                                           SearchNetwork network,
                                                           BaseAdapterDataModel<Website>
-                                                                      adapterDataModel,
+                                                                  adapterDataModel,
                                                           AppDatabase database) {
         return new SearchViewPresenterImpl(view, schedulers, network, adapterDataModel, database);
     }

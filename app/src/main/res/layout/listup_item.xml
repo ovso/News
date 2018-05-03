@@ -19,7 +19,7 @@
       tools:text="방금 전"
       />
   <TextView
-      android:id="@+id/textView2"
+      android:id="@id/title_textview"
       android:layout_width="wrap_content"
       android:layout_height="36dp"
       android:layout_marginStart="8dp"
@@ -35,8 +35,8 @@
       android:layout_height="20dp"
       android:textSize="12sp"
       app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="@+id/textView2"
-      app:layout_constraintTop_toBottomOf="@+id/textView2"
+      app:layout_constraintStart_toStartOf="@id/title_textview"
+      app:layout_constraintTop_toBottomOf="@id/title_textview"
       tools:text="뉴스, 증권, 금융, 부동산, 창업 기사 제공."
       />
 </android.support.constraint.ConstraintLayout>
