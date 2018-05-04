@@ -4,7 +4,7 @@ import hugo.weaving.DebugLog;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.db.WebsiteEntity;
-import io.github.ovso.news.framework.BasePresenter;
+import io.github.ovso.news.framework.baseview.BasePresenter;
 import io.github.ovso.news.framework.ObjectUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.rx.SchedulersFacade;

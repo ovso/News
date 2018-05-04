@@ -1,4 +1,4 @@
-package io.github.ovso.news.framework;
+package io.github.ovso.news.framework.baseview;
 
 public abstract class BasePresenter<T> {
   protected T view;

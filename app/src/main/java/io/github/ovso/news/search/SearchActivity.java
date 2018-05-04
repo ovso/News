@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import butterknife.BindView;
 import io.github.ovso.news.R;
-import io.github.ovso.news.framework.BaseActivity;
+import io.github.ovso.news.framework.baseview.BaseActivity;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
 import io.github.ovso.news.framework.listener.OnSimpleQueryTextListener;

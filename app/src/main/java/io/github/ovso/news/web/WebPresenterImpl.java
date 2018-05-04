@@ -9,5 +9,6 @@ public class WebPresenterImpl implements WebPresenter {
   }
 
   @Override public void onCreate() {
+    view.setupViewPager();
   }
 }

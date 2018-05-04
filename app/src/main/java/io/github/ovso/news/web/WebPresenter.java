@@ -6,5 +6,6 @@ public interface WebPresenter {
 
     interface View {
 
+      void setupViewPager();
     }
 }

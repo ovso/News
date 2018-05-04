@@ -1,4 +1,4 @@
-package io.github.ovso.news.framework;
+package io.github.ovso.news.framework.baseview;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;

@@ -8,10 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
+import hugo.weaving.DebugLog;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.ActivityUtils;
-import io.github.ovso.news.framework.BaseActivity;
+import io.github.ovso.news.framework.baseview.BaseActivity;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
@@ -65,7 +66,7 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     adapterView.refresh();
   }
 
-  @Override public void onItemClick(WebsiteEntity item) {
-
+  @DebugLog @Override public void onItemClick(WebsiteEntity item) {
+    ActivityUtils.startActivityWeb(this);
   }
 }

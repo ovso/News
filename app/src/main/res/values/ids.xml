@@ -5,4 +5,6 @@
   <item name="recyclerview" type="id"/>
   <item name="searchview" type="id"/>
   <item name="title_textview" type="id"/>
+  <item name="viewpager" type="id"/>
+  <item name="webview" type="id"/>
 </resources>
