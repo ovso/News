@@ -43,7 +43,7 @@ public class SearchViewPresenterImpl extends BasePresenter<SearchViewPresenter.V
   public void onQueryTextChange(String newText) {
     if (ObjectUtils.isEmpty(newText)) {
       adapterDataModel.clear();
-      view.allRefresh(); // recyclerview index bug...
+      view.allRefresh(); // recyclerview index bug...( create wrapper class)
       return;
     }
     adapterDataModel.clear();
@@ -67,17 +67,12 @@ public class SearchViewPresenterImpl extends BasePresenter<SearchViewPresenter.V
   public void onItemClick(Website item) {
     compositeDisposable.add(Observable.fromCallable(() -> {
       WebsiteEntity entity = WebsiteEntity.convertWebsiteToEntiry(item);
-      database.websiteDao().insertAll(entity);
+      database.websiteDao().insert(entity);
       return entity;
     })
         .subscribeOn(schedulers.io())
         .observeOn(schedulers.ui())
-        .subscribe(new Consumer<WebsiteEntity>() {
-          @DebugLog @Override public void accept(WebsiteEntity result) throws Exception {
-
-            view.finish();
-          }
-        }, throwable -> view.showErrorMessage(R.string
+        .subscribe(result -> view.finish(), throwable -> view.showErrorMessage(R.string
             .error)));
   }
 }

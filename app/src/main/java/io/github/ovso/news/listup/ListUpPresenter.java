@@ -1,18 +1,21 @@
 package io.github.ovso.news.listup;
 
+import android.content.Context;
 import android.support.annotation.StringRes;
 
 public interface ListUpPresenter {
 
-    void onCreate();
+  void onCreate();
 
-    void onDestroy();
+  void onDestroy();
 
-    interface View {
-        void showErrorMessage(@StringRes int resId);
+  interface View {
+    void showErrorMessage(@StringRes int resId);
 
-        void setupRecyclerView();
+    void setupRecyclerView();
 
-        void refresh();
-    }
+    void refresh();
+
+    Context getContext();
+  }
 }

@@ -7,7 +7,6 @@ import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
-import io.github.ovso.news.framework.rx.SchedulersFacade;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
 import javax.inject.Singleton;
 
@@ -16,9 +15,9 @@ public class ListUpActivityModule {
   @Singleton
   @Provides
   public ListUpPresenter provideListUpPresenter(ListUpPresenter.View view, AppDatabase
-      database, SchedulersFacade schedulers, BaseAdapterDataModel<WebsiteEntity>
+      database, BaseAdapterDataModel<WebsiteEntity>
       adapterDataModel) {
-    return new ListUpPresenterImpl(view, database, schedulers, adapterDataModel);
+    return new ListUpPresenterImpl(view, database, adapterDataModel);
   }
 
   @Singleton

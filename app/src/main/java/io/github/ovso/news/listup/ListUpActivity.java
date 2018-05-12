@@ -1,5 +1,7 @@
 package io.github.ovso.news.listup;
 
+import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -10,12 +12,14 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import hugo.weaving.DebugLog;
 import io.github.ovso.news.R;
+import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.ActivityUtils;
 import io.github.ovso.news.framework.baseview.BaseActivity;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
+import java.util.List;
 import javax.inject.Inject;
 
 public class ListUpActivity extends BaseActivity implements ListUpPresenter.View,
@@ -28,10 +32,12 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
   @Inject ListUpAdapter adapter;
   @Inject BaseAdapterView adapterView;
 
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     presenter.onCreate();
+
   }
 
   @Override
@@ -64,6 +70,10 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
   @Override
   public void refresh() {
     adapterView.refresh();
+  }
+
+  @Override public Context getContext() {
+    return this;
   }
 
   @DebugLog @Override public void onItemClick(WebsiteEntity item) {
