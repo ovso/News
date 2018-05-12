@@ -2,11 +2,13 @@ package io.github.ovso.news.web;
 
 import dagger.Module;
 import dagger.Provides;
+import io.github.ovso.news.db.AppDatabase;
 import javax.inject.Singleton;
 
-@Module public abstract class WebActivityModule {
+@Module public class WebActivityModule {
 
-  @Singleton @Provides public static WebPresenter provideMainPresenter(WebActivity act) {
-    return new WebPresenterImpl(act);
+  @Singleton @Provides
+  public WebPresenter provideMainPresenter(WebPresenter.View view, AppDatabase database) {
+    return new WebPresenterImpl(view, database);
   }
 }

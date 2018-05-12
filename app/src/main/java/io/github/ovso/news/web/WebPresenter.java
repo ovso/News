@@ -4,7 +4,9 @@ public interface WebPresenter {
 
     void onCreate();
 
-    interface View {
+  void onDestroy();
+
+  interface View {
 
       void setupViewPager();
     }

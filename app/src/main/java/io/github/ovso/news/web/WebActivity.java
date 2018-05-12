@@ -42,4 +42,9 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
     items.add(WebFragment.newInstance(null));
     viewPager.setAdapter(new WebPagerAdapter(getSupportFragmentManager(), items));
   }
+
+  @Override protected void onDestroy() {
+    presenter.onDestroy();
+    super.onDestroy();
+  }
 }
