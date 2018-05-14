@@ -1,24 +1,29 @@
 package io.github.ovso.news.listup.adapter;
 
 import android.view.View;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionRemoveItem;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.DeprecatedUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
-import io.github.ovso.news.framework.adapter.BaseRecyclerAdapter;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-public class ListUpAdapter extends BaseRecyclerAdapter
-    implements BaseAdapterDataModel<WebsiteEntity>, BaseAdapterView {
+public class ListUpAdapter extends BaseSwipeAdapter
+    implements BaseAdapterDataModel<WebsiteEntity>, BaseAdapterView, SwipeableItemAdapter<ListUpViewHolder> {
   private List<WebsiteEntity> items = new ArrayList<>();
   private OnRecyclerItemClickListener<WebsiteEntity> onItemClickListener;
 
   private ListUpAdapter(ListUpAdapter.Builder builder) {
+    setHasStableIds(true); // this is required for swiping feature.
     onItemClickListener = builder.onItemClickListener;
   }
 
@@ -38,13 +43,17 @@ public class ListUpAdapter extends BaseRecyclerAdapter
       ListUpViewHolder holder = (ListUpViewHolder) viewHolder;
       final WebsiteEntity item = items.get(position);
       holder.titleTextView.setText(DeprecatedUtils.fromHtml(item.getTitle()));
-      holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(item));
+      //holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(item));
     }
   }
 
   @Override
   public int getItemCount() {
     return getSize();
+  }
+
+  @Override public long getItemId(int position) {
+    return items.get(position).getId(); // need to return stable (= not change even after position changed) value
   }
 
   @Override
@@ -91,6 +100,27 @@ public class ListUpAdapter extends BaseRecyclerAdapter
     notifyDataSetChanged();
   }
 
+  @Override public int onGetSwipeReactionType(ListUpViewHolder holder, int position, int x, int y) {
+    return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
+  }
+
+  @Override public void onSwipeItemStarted(ListUpViewHolder holder, int position) {
+    notifyDataSetChanged();
+  }
+
+  @Override public void onSetSwipeBackground(ListUpViewHolder holder, int position, int type) {
+
+  }
+
+  @Override
+  public SwipeResultAction onSwipeItem(ListUpViewHolder holder, int position, int result) {
+    if (result == Swipeable.RESULT_CANCELED) {
+      return new SwipeResultActionDefault();
+    } else {
+      return new MySwipeResultActionRemoveItem(this, position);
+    }
+  }
+
   @Accessors(chain = true)
   @Setter
   public static class Builder {
@@ -98,6 +128,25 @@ public class ListUpAdapter extends BaseRecyclerAdapter
 
     public ListUpAdapter build() {
       return new ListUpAdapter(this);
+    }
+  }
+
+  interface Swipeable extends SwipeableItemConstants {
+  }
+
+  static class MySwipeResultActionRemoveItem extends SwipeResultActionRemoveItem {
+    private ListUpAdapter adapter;
+    private int position;
+
+    public MySwipeResultActionRemoveItem(ListUpAdapter adapter, int position) {
+      this.adapter = adapter;
+      this.position = position;
+    }
+
+    @Override
+    protected void onPerformAction() {
+      adapter.items.remove(position);
+      adapter.notifyItemRemoved(position);
     }
   }
 }

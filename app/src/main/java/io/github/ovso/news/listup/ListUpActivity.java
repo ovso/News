@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import hugo.weaving.DebugLog;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.AppDatabase;
@@ -31,6 +32,7 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
   @Inject ListUpPresenter presenter;
   @Inject ListUpAdapter adapter;
   @Inject BaseAdapterView adapterView;
+  @Inject RecyclerViewSwipeManager swipeManager;
 
 
   @Override
@@ -64,7 +66,8 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
   @Override
   public void setupRecyclerView() {
     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-    recyclerView.setAdapter(adapter);
+    recyclerView.setAdapter(swipeManager.createWrappedAdapter(adapter));
+    swipeManager.attachRecyclerView(recyclerView);
   }
 
   @Override

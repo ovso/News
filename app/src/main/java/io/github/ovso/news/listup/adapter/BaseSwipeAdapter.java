@@ -1,20 +1,19 @@
-package io.github.ovso.news.framework.adapter;
+package io.github.ovso.news.listup.adapter;
 
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
-import hugo.weaving.DebugLog;
+import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 
 /**
  * Created by jaeho on 2017. 8. 1
  */
 
-public abstract class BaseRecyclerAdapter
-    extends RecyclerView.Adapter<BaseRecyclerAdapter.BaseViewHolder> {
+public abstract class BaseSwipeAdapter
+    extends RecyclerView.Adapter<BaseSwipeAdapter.BaseViewHolder> {
 
   @Override public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View view =
@@ -30,11 +29,11 @@ public abstract class BaseRecyclerAdapter
 
   @Override public abstract int getItemCount();
 
-  public static class BaseViewHolder extends RecyclerView.ViewHolder {
+  public static abstract class BaseViewHolder extends AbstractSwipeableItemViewHolder {
 
     public BaseViewHolder(View itemView) {
       super(itemView);
       ButterKnife.bind(this, itemView);
     }
-  }
+    }
 }

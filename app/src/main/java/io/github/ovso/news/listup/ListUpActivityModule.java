@@ -1,5 +1,6 @@
 package io.github.ovso.news.listup;
 
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import dagger.Module;
 import dagger.Provides;
 import io.github.ovso.news.db.AppDatabase;
@@ -23,7 +24,7 @@ public class ListUpActivityModule {
   @Singleton
   @Provides
   public ListUpAdapter provideListUpAdapter(OnRecyclerItemClickListener<WebsiteEntity> listener) {
-    return new ListUpAdapter.Builder().setOnItemClickListener(listener).build();
+    return new ListUpAdapter.Builder().build();
   }
 
   @Provides
@@ -34,5 +35,9 @@ public class ListUpActivityModule {
   @Provides
   public BaseAdapterDataModel<WebsiteEntity> provideAdapterDataModel(ListUpAdapter adapter) {
     return adapter;
+  }
+
+  @Singleton @Provides public RecyclerViewSwipeManager provideRecyclerViewSwipeManager() {
+    return new RecyclerViewSwipeManager();
   }
 }
