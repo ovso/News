@@ -49,6 +49,7 @@ public class ListUpAdapter extends BaseSwipeAdapter
       final WebsiteEntity item = items.get(position);
       holder.titleTextView.setText(DeprecatedUtils.fromHtml(item.getTitle()));
       //holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(item));
+      holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(item));
     }
   }
 

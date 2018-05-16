@@ -24,9 +24,11 @@ public class ListUpActivityModule {
 
   @Singleton
   @Provides
-  public ListUpAdapter provideListUpAdapter(OnRecyclerItemClickListener<WebsiteEntity> listener,
+  public ListUpAdapter provideListUpAdapter(
+      OnRecyclerItemClickListener<WebsiteEntity> itemClickListener,
       OnPerformDeleteActionListener deleteActionListener) {
-    return new ListUpAdapter.Builder().setOnPerformDeleteActionListener(deleteActionListener)
+    return new ListUpAdapter.Builder().setOnItemClickListener(itemClickListener)
+        .setOnPerformDeleteActionListener(deleteActionListener)
         .build();
   }
 
