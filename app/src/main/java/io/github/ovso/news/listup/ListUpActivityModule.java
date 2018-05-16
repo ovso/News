@@ -9,6 +9,7 @@ import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
+import io.github.ovso.news.listup.listener.OnPerformDeleteActionListener;
 import javax.inject.Singleton;
 
 @Module
@@ -23,8 +24,10 @@ public class ListUpActivityModule {
 
   @Singleton
   @Provides
-  public ListUpAdapter provideListUpAdapter(OnRecyclerItemClickListener<WebsiteEntity> listener) {
-    return new ListUpAdapter.Builder().build();
+  public ListUpAdapter provideListUpAdapter(OnRecyclerItemClickListener<WebsiteEntity> listener,
+      OnPerformDeleteActionListener deleteActionListener) {
+    return new ListUpAdapter.Builder().setOnPerformDeleteActionListener(deleteActionListener)
+        .build();
   }
 
   @Provides
