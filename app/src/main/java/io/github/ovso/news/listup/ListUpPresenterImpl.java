@@ -36,4 +36,8 @@ public class ListUpPresenterImpl implements ListUpPresenter {
   public void onDestroy() {
     compositeDisposable.clear();
   }
+
+  @Override public void onSwipeDelete(WebsiteEntity remove) {
+    database.websiteDao().delete(remove);
+  }
 }

@@ -157,9 +157,8 @@ public class ListUpAdapter extends BaseSwipeAdapter
 
     @Override
     protected void onPerformAction() {
-      adapter.items.remove(position);
+      listener.onSwipeDelete(adapter.items.remove(position));
       adapter.notifyItemRemoved(position);
-      listener.onSwipeDelete();
     }
   }
 }

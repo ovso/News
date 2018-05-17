@@ -80,7 +80,7 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     ActivityUtils.startActivityWeb(this);
   }
 
-  @DebugLog @Override public void onSwipeDelete() {
-
+  @Override public void onSwipeDelete(WebsiteEntity remove) {
+    presenter.onSwipeDelete(remove);
   }
 }
