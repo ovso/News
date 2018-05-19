@@ -61,7 +61,7 @@ dependencies {
   implementation "com.jakewharton.timber:timber:$timber_version"
 
   // Lombok
-  provided "org.projectlombok:lombok:$lombok_version"
+  compileOnly "org.projectlombok:lombok:$lombok_version"
   annotationProcessor "org.projectlombok:lombok:$lombok_version"
 
   // Network
