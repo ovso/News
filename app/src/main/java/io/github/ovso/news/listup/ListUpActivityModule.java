@@ -10,6 +10,8 @@ import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
+import io.github.ovso.news.listup.listener.OnMoveItemListener;
+
 import javax.inject.Singleton;
 
 @Module
@@ -25,8 +27,8 @@ public class ListUpActivityModule {
   @Singleton
   @Provides
   public ListUpAdapter provideListUpAdapter(
-      OnRecyclerItemClickListener<WebsiteEntity> itemClickListener) {
-    return new ListUpAdapter.Builder().setOnItemClickListener(itemClickListener)
+          OnRecyclerItemClickListener<WebsiteEntity> itemClickListener, OnMoveItemListener moveItemListener) {
+    return new ListUpAdapter.Builder().setOnItemClickListener(itemClickListener).setOnMoveItemListener(moveItemListener)
         .build();
   }
 
@@ -44,6 +46,6 @@ public class ListUpActivityModule {
     RecyclerViewDragDropManager manager = new RecyclerViewDragDropManager();
     manager.setInitiateOnMove(false);
     manager.setInitiateOnLongPress(true);
-    return new RecyclerViewDragDropManager();
+    return manager;
   }
 }

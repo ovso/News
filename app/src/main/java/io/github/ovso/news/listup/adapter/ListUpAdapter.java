@@ -8,13 +8,13 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import java.util.ArrayList;
 import java.util.List;
 
-import hugo.weaving.DebugLog;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.DeprecatedUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
+import io.github.ovso.news.listup.listener.OnMoveItemListener;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -23,10 +23,12 @@ public class ListUpAdapter extends BaseDraggableAdapter
         DraggableItemAdapter<ListUpViewHolder> {
     private List<WebsiteEntity> items = new ArrayList<>();
     private OnRecyclerItemClickListener<WebsiteEntity> onItemClickListener;
+    private OnMoveItemListener onMoveItemListener;
 
     private ListUpAdapter(ListUpAdapter.Builder builder) {
         setHasStableIds(true); // this is required for D&D feature.
         onItemClickListener = builder.onItemClickListener;
+        onMoveItemListener = builder.onMoveItemListener;
     }
 
     @Override
@@ -61,7 +63,7 @@ public class ListUpAdapter extends BaseDraggableAdapter
 
     @Override
     public void add(WebsiteEntity item) {
-        items.add(item);
+
     }
 
     @Override
@@ -81,6 +83,7 @@ public class ListUpAdapter extends BaseDraggableAdapter
 
     @Override
     public void add(int index, WebsiteEntity item) {
+        //items.add(index, item);
     }
 
     @Override
@@ -116,7 +119,7 @@ public class ListUpAdapter extends BaseDraggableAdapter
     public void onMoveItem(int fromPosition, int toPosition) {
         WebsiteEntity movedItem = items.remove(fromPosition);
         items.add(toPosition, movedItem);
-
+        onMoveItemListener.onMoveItem(movedItem, fromPosition, toPosition);
     }
 
     @Override
@@ -138,7 +141,7 @@ public class ListUpAdapter extends BaseDraggableAdapter
     @Setter
     public static class Builder {
         private OnRecyclerItemClickListener<WebsiteEntity> onItemClickListener;
-
+        private OnMoveItemListener onMoveItemListener;
         public ListUpAdapter build() {
             return new ListUpAdapter(this);
         }

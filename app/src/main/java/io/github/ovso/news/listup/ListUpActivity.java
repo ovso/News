@@ -22,9 +22,10 @@ import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
 import io.github.ovso.news.framework.baseview.BaseActivity;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
+import io.github.ovso.news.listup.listener.OnMoveItemListener;
 
 public class ListUpActivity extends BaseActivity implements ListUpPresenter.View,
-        OnRecyclerItemClickListener<WebsiteEntity> {
+        OnRecyclerItemClickListener<WebsiteEntity>, OnMoveItemListener {
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
@@ -89,4 +90,8 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
         ActivityUtils.startActivityWeb(this);
     }
 
+    @Override
+    public void onMoveItem(WebsiteEntity moveItem, int fromPosition, int toPosition) {
+        presenter.onMoveItem(moveItem, fromPosition, toPosition);
+    }
 }

@@ -1,6 +1,12 @@
 package io.github.ovso.news.listup;
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.Observer;
+import android.support.annotation.Nullable;
+
+import java.util.List;
+
+import hugo.weaving.DebugLog;
 import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
@@ -24,11 +30,14 @@ public class ListUpPresenterImpl implements ListUpPresenter {
   public void onCreate() {
     view.setupRecyclerView();
 
-    database.websiteDao().getAll().observe((LifecycleOwner) view.getContext(), items -> {
-      adapterDataModel.clear();
-      view.refresh();
-      adapterDataModel.addAll(items);
-      view.refresh();
+    database.websiteDao().getAll().observe((LifecycleOwner) view.getContext(), new Observer<List<WebsiteEntity>>() {
+      @Override
+      @DebugLog public void onChanged(@Nullable List<WebsiteEntity> items) {
+        adapterDataModel.clear();
+        view.refresh();
+        adapterDataModel.addAll(items);
+        view.refresh();
+      }
     });
   }
 
@@ -37,7 +46,9 @@ public class ListUpPresenterImpl implements ListUpPresenter {
     compositeDisposable.clear();
   }
 
-  @Override public void onSwipeDelete(WebsiteEntity remove) {
-    database.websiteDao().delete(remove);
+  @Override
+  @DebugLog public void onMoveItem(WebsiteEntity moveItem, int fromPosition, int toPosition) {
+    //database.websiteDao().delete(moveItem);
+    //database.websiteDao().insert(moveItem, fromPosition, toPosition);
   }
 }

@@ -10,7 +10,7 @@ public interface ListUpPresenter {
 
   void onDestroy();
 
-  void onSwipeDelete(WebsiteEntity remove);
+  void onMoveItem(WebsiteEntity moveItem, int fromPosition, int toPosition);
 
   interface View {
     void showErrorMessage(@StringRes int resId);
