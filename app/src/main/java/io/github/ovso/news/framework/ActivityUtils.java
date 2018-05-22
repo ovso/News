@@ -10,7 +10,7 @@ import io.github.ovso.news.search.SearchActivity;
 public class ActivityUtils {
 
   public static void startActivityListUp(Activity activity) {
-    Intent intent = new Intent(activity, DraggableSwipeableExampleActivity.class);
+    Intent intent = new Intent(activity, ListUpActivity.class);
     activity.startActivity(intent);
     activity.finish();
   }
