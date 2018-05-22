@@ -41,6 +41,9 @@ public class ListUpActivityModule {
   }
 
   @Singleton @Provides public RecyclerViewDragDropManager provideRecyclerViewDragDropManager() {
+    RecyclerViewDragDropManager manager = new RecyclerViewDragDropManager();
+    manager.setInitiateOnMove(false);
+    manager.setInitiateOnLongPress(true);
     return new RecyclerViewDragDropManager();
   }
 }

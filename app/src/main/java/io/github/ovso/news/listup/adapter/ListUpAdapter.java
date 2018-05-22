@@ -25,7 +25,7 @@ public class ListUpAdapter extends BaseDraggableAdapter
     private OnRecyclerItemClickListener<WebsiteEntity> onItemClickListener;
 
     private ListUpAdapter(ListUpAdapter.Builder builder) {
-        setHasStableIds(true); // this is required for swiping feature.
+        setHasStableIds(true); // this is required for D&D feature.
         onItemClickListener = builder.onItemClickListener;
     }
 
@@ -46,7 +46,6 @@ public class ListUpAdapter extends BaseDraggableAdapter
             final WebsiteEntity item = items.get(position);
             holder.titleTextView.setText(DeprecatedUtils.fromHtml(item.getTitle()));
             //holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(item));
-            //holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(item));
         }
     }
 
@@ -57,8 +56,7 @@ public class ListUpAdapter extends BaseDraggableAdapter
 
     @Override
     public long getItemId(int position) {
-        return items.get(position)
-                .getId(); // need to return stable (= not change even after position changed) value
+        return items.get(position).getId(); // need to return stable (= not change even after reordered) value
     }
 
     @Override
@@ -67,8 +65,8 @@ public class ListUpAdapter extends BaseDraggableAdapter
     }
 
     @Override
-    public void addAll(List<WebsiteEntity> all) {
-        items.addAll(all);
+    public void addAll(List<WebsiteEntity> $items) {
+        items.addAll($items);
     }
 
     @Override
@@ -83,7 +81,6 @@ public class ListUpAdapter extends BaseDraggableAdapter
 
     @Override
     public void add(int index, WebsiteEntity item) {
-        items.add(index, item);
     }
 
     @Override
@@ -127,12 +124,12 @@ public class ListUpAdapter extends BaseDraggableAdapter
         return true;
     }
 
-    @DebugLog @Override
+    @Override
     public void onItemDragStarted(int position) {
 
     }
 
-    @DebugLog @Override
+    @Override
     public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
 
     }
