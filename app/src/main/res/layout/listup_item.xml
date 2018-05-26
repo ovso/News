@@ -15,16 +15,16 @@
         android:foreground="?android:attr/selectableItemBackground"
         >
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/drag_imageview"
+            android:layout_width="?android:attr/actionBarSize"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/dp_8"
             android:gravity="right|center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="방금 전" />
+            android:background="@drawable/ic_drag_handle"/>
 
         <TextView
             android:id="@id/title_textview"
@@ -35,7 +35,7 @@
             android:ellipsize="end"
             android:gravity="left|center_vertical"
             android:textSize="@dimen/sp_24"
-            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintEnd_toStartOf="@+id/drag_imageview"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -52,7 +52,7 @@
             android:textSize="@dimen/sp_12"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintEnd_toStartOf="@+id/drag_imageview"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/title_textview"
             app:layout_constraintTop_toBottomOf="@id/title_textview"

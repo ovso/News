@@ -57,6 +57,7 @@ public class ListUpActivityModule {
     @Provides
     public RecyclerViewDragDropManager provideRecyclerViewDragDropManager() {
         RecyclerViewDragDropManager manager = new RecyclerViewDragDropManager();
+        manager.setDraggingItemAlpha(.5f);
         return manager;
     }
 

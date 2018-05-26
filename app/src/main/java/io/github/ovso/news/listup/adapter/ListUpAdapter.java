@@ -1,6 +1,7 @@
 package io.github.ovso.news.listup.adapter;
 
 import android.view.View;
+import android.widget.Toast;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hugo.weaving.DebugLog;
+import io.github.ovso.news.App;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.DeprecatedUtils;
@@ -16,6 +18,7 @@ import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
 import io.github.ovso.news.listup.listener.OnAdapterListener;
+import io.github.ovso.news.listup2.ViewUtils;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -50,6 +53,13 @@ public class ListUpAdapter extends BaseDraggableAdapter
             holder.titleTextView.setText(DeprecatedUtils.fromHtml(item.getTitle()));
             holder.descTextView.setText(DeprecatedUtils.fromHtml(item.getDescription()));
             holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(item));
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    return true;
+                }
+            });
         }
     }
 
@@ -109,7 +119,14 @@ public class ListUpAdapter extends BaseDraggableAdapter
 
     @Override
     public boolean onCheckCanStartDrag(ListUpViewHolder holder, int position, int x, int y) {
-        return true;
+        // x, y --- relative from the itemView's top-left
+        final View containerView = holder.rootView;
+        final View dragHandleView = holder.dragImageView;
+
+        final int offsetX = containerView.getLeft() + (int) (containerView.getTranslationX() + 0.5f);
+        final int offsetY = containerView.getTop() + (int) (containerView.getTranslationY() + 0.5f);
+
+        return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
     }
 
     @Override
