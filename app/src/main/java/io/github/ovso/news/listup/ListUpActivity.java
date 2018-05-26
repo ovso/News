@@ -8,6 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.h6ah4i.android.widget.advrecyclerview.animator.DraggableItemAnimator;
+import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
+import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 
 import java.util.List;
@@ -40,7 +43,12 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     BaseAdapterView adapterView;
     @Inject
     RecyclerViewDragDropManager dragDropManager;
-
+    @Inject
+    DraggableItemAnimator animator;
+    @Inject
+    ItemShadowDecorator itemShadowDecorator;
+    @Inject
+    SimpleListDividerDecorator simpleListDividerDecorator;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +81,9 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     public void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(dragDropManager.createWrappedAdapter(adapter));
+        recyclerView.setItemAnimator(animator);
+        recyclerView.addItemDecoration(itemShadowDecorator);
+        recyclerView.addItemDecoration(simpleListDividerDecorator);
         dragDropManager.attachRecyclerView(recyclerView);
     }
 
