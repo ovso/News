@@ -1,5 +1,7 @@
 package io.github.ovso.news.search;
 
+import java.util.List;
+
 import hugo.weaving.DebugLog;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.AppDatabase;
@@ -67,6 +69,11 @@ public class SearchViewPresenterImpl extends BasePresenter<SearchViewPresenter.V
   public void onItemClick(Website item) {
     compositeDisposable.add(Observable.fromCallable(() -> {
       WebsiteEntity entity = WebsiteEntity.convertWebsiteToEntiry(item);
+      List<WebsiteEntity> items = database.websiteDao().getAll().getValue();
+      items.add(entity);
+      for (int i = 0; i < items.size(); i++) {
+        items.get(i).position = i;
+      }
       database.websiteDao().insert(entity);
       return entity;
     })
