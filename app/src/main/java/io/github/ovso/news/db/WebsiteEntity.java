@@ -17,6 +17,9 @@ import lombok.Data;
   @ColumnInfo(name = "DESC")
   public String description;
 
+  @ColumnInfo(name =  "POSITION")
+  public int position;
+
   public static WebsiteEntity convertWebsiteToEntiry(Website item) {
     WebsiteEntity entity = new WebsiteEntity();
     entity.description = item.getDescription();

@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -91,7 +93,7 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     }
 
     @Override
-    public void onMoveItem(WebsiteEntity moveItem, int fromPosition, int toPosition) {
-        presenter.onMoveItem(moveItem, fromPosition, toPosition);
+    public void onMoveItem(List<WebsiteEntity> items) {
+        presenter.onMoveItem(items);
     }
 }

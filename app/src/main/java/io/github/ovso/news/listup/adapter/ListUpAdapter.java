@@ -8,6 +8,7 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import java.util.ArrayList;
 import java.util.List;
 
+import hugo.weaving.DebugLog;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.DeprecatedUtils;
@@ -119,7 +120,8 @@ public class ListUpAdapter extends BaseDraggableAdapter
     public void onMoveItem(int fromPosition, int toPosition) {
         WebsiteEntity movedItem = items.remove(fromPosition);
         items.add(toPosition, movedItem);
-        onMoveItemListener.onMoveItem(movedItem, fromPosition, toPosition);
+        //onMoveItemListener.onMoveItem(movedItem, fromPosition, toPosition);
+        onMoveItemListener.onMoveItem(items);
     }
 
     @Override
@@ -133,7 +135,7 @@ public class ListUpAdapter extends BaseDraggableAdapter
     }
 
     @Override
-    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+    @DebugLog  public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
 
     }
 

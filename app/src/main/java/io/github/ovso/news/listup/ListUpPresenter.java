@@ -2,6 +2,9 @@ package io.github.ovso.news.listup;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
+
+import java.util.List;
+
 import io.github.ovso.news.db.WebsiteEntity;
 
 public interface ListUpPresenter {
@@ -10,7 +13,7 @@ public interface ListUpPresenter {
 
   void onDestroy();
 
-  void onMoveItem(WebsiteEntity moveItem, int fromPosition, int toPosition);
+  void onMoveItem(List<WebsiteEntity> items);
 
   interface View {
     void showErrorMessage(@StringRes int resId);
