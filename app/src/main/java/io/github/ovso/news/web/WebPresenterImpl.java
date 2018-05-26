@@ -17,6 +17,6 @@ public class WebPresenterImpl implements WebPresenter {
   }
 
   @Override public void onDestroy() {
-    database.close();
+    //database.close();
   }
 }

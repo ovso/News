@@ -46,6 +46,7 @@ public class ListUpPresenterImpl implements ListUpPresenter {
 
     @Override
     public void onDestroy() {
+        //database.close();
         compositeDisposable.clear();
         view.release();
     }
