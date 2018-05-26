@@ -5,13 +5,13 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ListAdapter;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.DraggableItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -23,9 +23,7 @@ import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
 import io.github.ovso.news.framework.rx.SchedulersFacade;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
-import io.github.ovso.news.listup.listener.OnMoveItemListener;
-
-import javax.inject.Singleton;
+import io.github.ovso.news.listup.listener.OnAdapterListener;
 
 @Module
 public class ListUpActivityModule {
@@ -40,8 +38,8 @@ public class ListUpActivityModule {
     @Singleton
     @Provides
     public ListUpAdapter provideListUpAdapter(
-            OnRecyclerItemClickListener<WebsiteEntity> itemClickListener, OnMoveItemListener moveItemListener) {
-        return new ListUpAdapter.Builder().setOnItemClickListener(itemClickListener).setOnMoveItemListener(moveItemListener)
+            OnRecyclerItemClickListener<WebsiteEntity> itemClickListener, OnAdapterListener onAdapterListener) {
+        return new ListUpAdapter.Builder().setOnItemClickListener(itemClickListener).setOnAdapterListener(onAdapterListener)
                 .build();
     }
 

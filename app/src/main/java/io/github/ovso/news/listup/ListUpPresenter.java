@@ -9,21 +9,22 @@ import io.github.ovso.news.db.WebsiteEntity;
 
 public interface ListUpPresenter {
 
-  void onCreate();
+    void onCreate();
 
-  void onDestroy();
+    void onDestroy();
 
-  void onMoveItem(List<WebsiteEntity> items);
 
-  interface View {
-    void showErrorMessage(@StringRes int resId);
+    void onItemDragFinished(List<WebsiteEntity> items);
 
-    void setupRecyclerView();
+    interface View {
+        void showErrorMessage(@StringRes int resId);
 
-    void refresh();
+        void setupRecyclerView();
 
-    Context getContext();
+        void refresh();
 
-      void release();
-  }
+        Context getContext();
+
+        void release();
+    }
 }

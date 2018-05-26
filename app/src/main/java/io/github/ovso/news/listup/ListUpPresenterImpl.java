@@ -4,7 +4,6 @@ import android.arch.lifecycle.LifecycleOwner;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.db.WebsiteEntity;
@@ -51,14 +50,13 @@ public class ListUpPresenterImpl implements ListUpPresenter {
         view.release();
     }
 
-
     @Override
-    public void onMoveItem(List<WebsiteEntity> items) {
+    public void onItemDragFinished(List<WebsiteEntity> items) {
         for (int i = 0; i < items.size(); i++) {
             WebsiteEntity item = items.get(i);
             item.position = i;
             database.websiteDao().update(item);
         }
-
     }
+
 }

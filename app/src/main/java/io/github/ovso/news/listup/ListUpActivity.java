@@ -28,10 +28,10 @@ import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
 import io.github.ovso.news.framework.baseview.BaseActivity;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
-import io.github.ovso.news.listup.listener.OnMoveItemListener;
+import io.github.ovso.news.listup.listener.OnAdapterListener;
 
 public class ListUpActivity extends BaseActivity implements ListUpPresenter.View,
-        OnRecyclerItemClickListener<WebsiteEntity>, OnMoveItemListener {
+        OnRecyclerItemClickListener<WebsiteEntity>, OnAdapterListener {
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
@@ -130,13 +130,13 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     }
 
     @Override
-    public void onMoveItem(List<WebsiteEntity> items) {
-        presenter.onMoveItem(items);
-    }
-
-    @Override
     protected void onPause() {
         dragDropManager.cancelDrag();
         super.onPause();
+    }
+
+    @Override
+    public void onItemDragFinished(List<WebsiteEntity> items) {
+        presenter.onItemDragFinished(items);
     }
 }

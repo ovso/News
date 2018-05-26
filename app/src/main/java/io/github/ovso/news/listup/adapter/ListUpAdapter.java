@@ -15,7 +15,7 @@ import io.github.ovso.news.framework.DeprecatedUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
-import io.github.ovso.news.listup.listener.OnMoveItemListener;
+import io.github.ovso.news.listup.listener.OnAdapterListener;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -24,12 +24,12 @@ public class ListUpAdapter extends BaseDraggableAdapter
         DraggableItemAdapter<ListUpViewHolder> {
     private List<WebsiteEntity> items = new ArrayList<>();
     private OnRecyclerItemClickListener<WebsiteEntity> onItemClickListener;
-    private OnMoveItemListener onMoveItemListener;
+    private OnAdapterListener onAdapterListener;
 
     private ListUpAdapter(ListUpAdapter.Builder builder) {
         setHasStableIds(true); // this is required for D&D feature.
         onItemClickListener = builder.onItemClickListener;
-        onMoveItemListener = builder.onMoveItemListener;
+        onAdapterListener = builder.onAdapterListener;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ListUpAdapter extends BaseDraggableAdapter
             ListUpViewHolder holder = (ListUpViewHolder) viewHolder;
             final WebsiteEntity item = items.get(position);
             holder.titleTextView.setText(DeprecatedUtils.fromHtml(item.getTitle()));
-            holder.descTextView.setText(item.getDescription());
+            holder.descTextView.setText(DeprecatedUtils.fromHtml(item.getDescription()));
             holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(item));
         }
     }
@@ -121,7 +121,6 @@ public class ListUpAdapter extends BaseDraggableAdapter
     public void onMoveItem(int fromPosition, int toPosition) {
         WebsiteEntity movedItem = items.remove(fromPosition);
         items.add(toPosition, movedItem);
-        onMoveItemListener.onMoveItem(items);
     }
 
     @Override
@@ -136,14 +135,14 @@ public class ListUpAdapter extends BaseDraggableAdapter
 
     @Override
     @DebugLog  public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
-
+        onAdapterListener.onItemDragFinished(items);
     }
 
     @Accessors(chain = true)
     @Setter
     public static class Builder {
         private OnRecyclerItemClickListener<WebsiteEntity> onItemClickListener;
-        private OnMoveItemListener onMoveItemListener;
+        private OnAdapterListener onAdapterListener;
         public ListUpAdapter build() {
             return new ListUpAdapter(this);
         }
