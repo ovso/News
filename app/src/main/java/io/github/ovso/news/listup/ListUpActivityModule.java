@@ -3,6 +3,9 @@ package io.github.ovso.news.listup;
 import android.content.Context;
 import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.widget.ListAdapter;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.DraggableItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
@@ -61,6 +64,12 @@ public class ListUpActivityModule {
 
     @Singleton
     @Provides
+    public RecyclerView.Adapter provideWrapperAdapter(RecyclerViewDragDropManager dragDropManager, ListUpAdapter adapter) {
+        return dragDropManager.createWrappedAdapter(adapter);
+    }
+
+    @Singleton
+    @Provides
     public DraggableItemAnimator provideDraggableItemAnimator() {
         return new DraggableItemAnimator();
     }
@@ -75,5 +84,11 @@ public class ListUpActivityModule {
     @Provides
     public SimpleListDividerDecorator provideSimpleListDividerDecorator(Context context) {
         return new SimpleListDividerDecorator(ContextCompat.getDrawable(context, R.drawable.list_divider_h), true);
+    }
+
+    @Singleton
+    @Provides
+    public LinearLayoutManager provideLinearLayoutManager(Context context) {
+        return new LinearLayoutManager(context);
     }
 }

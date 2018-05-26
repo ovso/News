@@ -12,6 +12,7 @@ import com.h6ah4i.android.widget.advrecyclerview.animator.DraggableItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
+import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.List;
 
@@ -49,6 +50,10 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     ItemShadowDecorator itemShadowDecorator;
     @Inject
     SimpleListDividerDecorator simpleListDividerDecorator;
+    @Inject
+    RecyclerView.Adapter wrappedAdapter;
+    @Inject
+    LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,8 +84,8 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
 
     @Override
     public void setupRecyclerView() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setAdapter(dragDropManager.createWrappedAdapter(adapter));
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(wrappedAdapter);
         recyclerView.setItemAnimator(animator);
         recyclerView.addItemDecoration(itemShadowDecorator);
         recyclerView.addItemDecoration(simpleListDividerDecorator);
@@ -97,6 +102,27 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
         return this;
     }
 
+    @Override
+    public void release() {
+        if (dragDropManager != null) {
+            dragDropManager.release();
+            dragDropManager = null;
+        }
+
+        if (recyclerView != null) {
+            recyclerView.setItemAnimator(null);
+            recyclerView.setAdapter(null);
+            recyclerView = null;
+        }
+
+        if (wrappedAdapter != null) {
+            WrapperAdapterUtils.releaseAll(wrappedAdapter);
+            wrappedAdapter = null;
+        }
+        adapter = null;
+        layoutManager = null;
+    }
+
     @DebugLog
     @Override
     public void onItemClick(WebsiteEntity item) {
@@ -106,5 +132,11 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     @Override
     public void onMoveItem(List<WebsiteEntity> items) {
         presenter.onMoveItem(items);
+    }
+
+    @Override
+    protected void onPause() {
+        dragDropManager.cancelDrag();
+        super.onPause();
     }
 }

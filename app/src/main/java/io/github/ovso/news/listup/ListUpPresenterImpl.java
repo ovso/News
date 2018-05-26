@@ -48,6 +48,7 @@ public class ListUpPresenterImpl implements ListUpPresenter {
     @Override
     public void onDestroy() {
         compositeDisposable.clear();
+        view.release();
     }
 
 

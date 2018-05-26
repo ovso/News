@@ -23,5 +23,7 @@ public interface ListUpPresenter {
     void refresh();
 
     Context getContext();
+
+      void release();
   }
 }

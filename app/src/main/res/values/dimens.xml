@@ -12,5 +12,10 @@
     <dimen name="list_item2_height">96dp</dimen>
     <dimen name="list_group_item_height">96dp</dimen>
     <dimen name="list_group_item_with_add_remove_buttons_height">108dp</dimen>
+    <dimen name="sp_24">24sp</dimen>
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_36">36dp</dimen>
 
 </resources>

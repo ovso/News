@@ -48,7 +48,8 @@ public class ListUpAdapter extends BaseDraggableAdapter
             ListUpViewHolder holder = (ListUpViewHolder) viewHolder;
             final WebsiteEntity item = items.get(position);
             holder.titleTextView.setText(DeprecatedUtils.fromHtml(item.getTitle()));
-            //holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(item));
+            holder.descTextView.setText(item.getDescription());
+            holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(item));
         }
     }
 
@@ -120,7 +121,6 @@ public class ListUpAdapter extends BaseDraggableAdapter
     public void onMoveItem(int fromPosition, int toPosition) {
         WebsiteEntity movedItem = items.remove(fromPosition);
         items.add(toPosition, movedItem);
-        //onMoveItemListener.onMoveItem(movedItem, fromPosition, toPosition);
         onMoveItemListener.onMoveItem(items);
     }
 
