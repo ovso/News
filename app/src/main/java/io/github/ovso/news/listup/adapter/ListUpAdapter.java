@@ -134,13 +134,6 @@ public class ListUpAdapter extends BaseDraggableAdapter
         items.add(toPosition, movedItem);
     }
 
-    private boolean onRemoveItem(int position) {
-        WebsiteEntity removeItem = items.remove(position);
-        notifyItemRemoved(position);
-        onAdapterListener.onRemoveItem(removeItem);
-        return true;
-    }
-
     @Override
     public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
         return true;

@@ -76,7 +76,6 @@ public class ListUpPresenterImpl implements ListUpPresenter {
                 view.notifyItemRemoved(position);
                 database.websiteDao().delete(item);
                 updateItemPositionOnDatabase();
-                view.showSnackBar(R.string.delete_it);
             }
             dialog.dismiss();
         });
