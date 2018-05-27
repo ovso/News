@@ -1,7 +1,6 @@
 package io.github.ovso.news.listup.adapter;
 
 import android.view.View;
-import android.widget.Toast;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
@@ -10,13 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hugo.weaving.DebugLog;
-import io.github.ovso.news.App;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.DeprecatedUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
-import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
 import io.github.ovso.news.listup.listener.OnAdapterListener;
 import io.github.ovso.news.listup2.ViewUtils;
 import lombok.Setter;
@@ -51,7 +48,7 @@ public class ListUpAdapter extends BaseDraggableAdapter
             holder.titleTextView.setText(DeprecatedUtils.fromHtml(item.getTitle()));
             holder.descTextView.setText(DeprecatedUtils.fromHtml(item.getDescription()));
             holder.itemView.setOnClickListener(v -> onAdapterListener.onItemClick(item));
-            holder.itemView.setOnLongClickListener(v -> onAdapterListener.onItemLongClick(item));
+            holder.itemView.setOnLongClickListener(v -> onRemoveItem(position));
         }
     }
 
@@ -101,6 +98,11 @@ public class ListUpAdapter extends BaseDraggableAdapter
     }
 
     @Override
+    public List<WebsiteEntity> getItems() {
+        return items;
+    }
+
+    @Override
     public void refresh() {
         notifyItemRangeChanged(0, items.size());
     }
@@ -132,6 +134,13 @@ public class ListUpAdapter extends BaseDraggableAdapter
         items.add(toPosition, movedItem);
     }
 
+    private boolean onRemoveItem(int position) {
+        WebsiteEntity removeItem = items.remove(position);
+        notifyItemRemoved(position);
+        onAdapterListener.onRemoveItem(removeItem);
+        return true;
+    }
+
     @Override
     public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
         return true;
@@ -143,17 +152,20 @@ public class ListUpAdapter extends BaseDraggableAdapter
     }
 
     @Override
-    @DebugLog  public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
-        onAdapterListener.onItemDragFinished(items);
+    @DebugLog
+    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+        onAdapterListener.onItemDragFinished();
     }
 
     @Accessors(chain = true)
     @Setter
     public static class Builder {
         private OnAdapterListener<WebsiteEntity> onAdapterListener;
+
         public ListUpAdapter build() {
             return new ListUpAdapter(this);
         }
     }
+
 
 }

@@ -71,6 +71,11 @@ public class SearchAdapter extends BaseRecyclerAdapter
     items.clear();
   }
 
+  @Override
+  public List<Website> getItems() {
+    return items;
+  }
+
   @Override public void refresh() {
     notifyItemRangeChanged(0, items.size());
   }

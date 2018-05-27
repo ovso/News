@@ -31,7 +31,7 @@ public class ListUpPresenterImpl implements ListUpPresenter {
     @Override
     public void onCreate() {
         view.setupRecyclerView();
-        database.websiteDao().getAll().observe((LifecycleOwner) view.getContext(), $items -> compositeDisposable.addAll(Observable.fromCallable(() -> {
+        database.websiteDao().getLiveDataItems().observe((LifecycleOwner) view.getContext(), $items -> compositeDisposable.addAll(Observable.fromCallable(() -> {
             final List<WebsiteEntity> items = $items;
             Collections.sort(items, (o1, o2) -> o1.position < o2.position ? -1 : o1.position > o2.position ? 1 : 0);
             return items;
@@ -52,7 +52,11 @@ public class ListUpPresenterImpl implements ListUpPresenter {
     }
 
     @Override
-    public void onItemDragFinished(List<WebsiteEntity> items) {
+    public void onItemDragFinished() {
+        updateItemPositionOnDatabase();
+    }
+    private void updateItemPositionOnDatabase() {
+        List<WebsiteEntity> items = adapterDataModel.getItems();
         for (int i = 0; i < items.size(); i++) {
             WebsiteEntity item = items.get(i);
             item.position = i;
@@ -61,9 +65,8 @@ public class ListUpPresenterImpl implements ListUpPresenter {
     }
 
     @Override
-    public boolean onItemLongClick(WebsiteEntity item) {
-
-        return true;
+    public void onRemoveItem(WebsiteEntity $item) {
+        database.websiteDao().delete($item);
+        updateItemPositionOnDatabase();
     }
-
 }

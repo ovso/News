@@ -1,9 +1,11 @@
 package io.github.ovso.news.listup;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -129,8 +131,8 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     }
 
     @Override
-    public boolean onItemLongClick(WebsiteEntity item) {
-        return presenter.onItemLongClick(item);
+    public void onRemoveItem(WebsiteEntity item) {
+        presenter.onRemoveItem(item);
     }
 
     @Override
@@ -140,7 +142,7 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     }
 
     @Override
-    public void onItemDragFinished(List<WebsiteEntity> items) {
-        presenter.onItemDragFinished(items);
+    public void onItemDragFinished() {
+        presenter.onItemDragFinished();
     }
 }

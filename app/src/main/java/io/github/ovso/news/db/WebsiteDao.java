@@ -12,8 +12,10 @@ import java.util.List;
 @Dao public interface WebsiteDao {
 
   @Query("SELECT * FROM WEBSITE_INFO")
-  LiveData<List<WebsiteEntity>> getAll();
+  LiveData<List<WebsiteEntity>> getLiveDataItems();
 
+  @Query("SELECT * FROM WEBSITE_INFO")
+  List<WebsiteEntity> getItems();
 
 //  @Query("SELECT * FROM WEBSITE_INFO WHERE ID IN (:ids)")
 //  List<WebsiteEntity> loadAllByIds(int[] ids);

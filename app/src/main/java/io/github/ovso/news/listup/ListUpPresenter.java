@@ -1,6 +1,7 @@
 package io.github.ovso.news.listup;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.StringRes;
 
 import java.util.List;
@@ -13,10 +14,9 @@ public interface ListUpPresenter {
 
     void onDestroy();
 
+    void onItemDragFinished();
 
-    void onItemDragFinished(List<WebsiteEntity> items);
-
-    boolean onItemLongClick(WebsiteEntity item);
+    void onRemoveItem(WebsiteEntity item);
 
     interface View {
         void showErrorMessage(@StringRes int resId);
