@@ -5,5 +5,7 @@ public interface OnAdapterListener<T> {
 
     void onItemClick(T item);
 
+    boolean onItemLongClick(int position);
+
     void onRemoveItem(T item);
 }

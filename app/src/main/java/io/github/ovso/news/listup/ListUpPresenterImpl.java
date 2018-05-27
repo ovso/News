@@ -5,8 +5,10 @@ import android.arch.lifecycle.LifecycleOwner;
 import java.util.Collections;
 import java.util.List;
 
+import io.github.ovso.news.R;
 import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.db.WebsiteEntity;
+import io.github.ovso.news.framework.DeprecatedUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.rx.SchedulersFacade;
 import io.reactivex.Observable;
@@ -55,6 +57,7 @@ public class ListUpPresenterImpl implements ListUpPresenter {
     public void onItemDragFinished() {
         updateItemPositionOnDatabase();
     }
+
     private void updateItemPositionOnDatabase() {
         List<WebsiteEntity> items = adapterDataModel.getItems();
         for (int i = 0; i < items.size(); i++) {
@@ -68,5 +71,21 @@ public class ListUpPresenterImpl implements ListUpPresenter {
     public void onRemoveItem(WebsiteEntity $item) {
         database.websiteDao().delete($item);
         updateItemPositionOnDatabase();
+        view.showSnackBar(R.string.do_you_want_to_delete);
+    }
+
+    @Override
+    public boolean onItemLongClick(int position) {
+        String title = adapterDataModel.getItem(position).getTitle();
+        view.showRemoveDialog(String.valueOf(DeprecatedUtils.fromHtml(title)), (dialog, which) -> {
+            if (which == -1) { // -2 cancel -1 ok
+                WebsiteEntity item = adapterDataModel.remove(position);
+                view.notifyItemRemoved(position);
+                database.websiteDao().delete(item);
+                updateItemPositionOnDatabase();
+            }
+            dialog.dismiss();
+        });
+        return true;
     }
 }

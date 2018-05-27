@@ -18,6 +18,8 @@ public interface ListUpPresenter {
 
     void onRemoveItem(WebsiteEntity item);
 
+    boolean onItemLongClick(int position);
+
     interface View {
         void showErrorMessage(@StringRes int resId);
 
@@ -28,5 +30,11 @@ public interface ListUpPresenter {
         Context getContext();
 
         void release();
+
+        void showSnackBar(@StringRes int resId);
+
+        void showRemoveDialog(String title, DialogInterface.OnClickListener onClickListener);
+
+        void notifyItemRemoved(int position);
     }
 }

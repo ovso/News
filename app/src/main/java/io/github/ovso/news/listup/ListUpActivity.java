@@ -16,8 +16,6 @@ import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDec
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -27,7 +25,6 @@ import io.github.ovso.news.R;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.ActivityUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
-import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
 import io.github.ovso.news.framework.baseview.BaseActivity;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
 import io.github.ovso.news.listup.listener.OnAdapterListener;
@@ -124,10 +121,35 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
         layoutManager = null;
     }
 
+    @Override
+    public void showSnackBar(int resId) {
+        Snackbar.make(rootView, resId, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showRemoveDialog(String title, DialogInterface.OnClickListener onClickListener) {
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(R.string.do_you_want_to_delete)
+                .setPositiveButton(android.R.string.ok, onClickListener)
+                .setNegativeButton(android.R.string.cancel, onClickListener)
+                .show();
+    }
+
+    @Override
+    public void notifyItemRemoved(int position) {
+        adapterView.notifyItemRemoved(position);
+    }
+
     @DebugLog
     @Override
     public void onItemClick(WebsiteEntity item) {
         ActivityUtils.startActivityWeb(this);
+    }
+
+    @Override
+    public boolean onItemLongClick(int position) {
+        return presenter.onItemLongClick(position);
     }
 
     @Override

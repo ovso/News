@@ -5,5 +5,7 @@ package io.github.ovso.news.framework.adapter;
  */
 
 public interface BaseAdapterView {
-  void refresh();
+    void refresh();
+
+    void notifyItemRemoved(int position);
 }
