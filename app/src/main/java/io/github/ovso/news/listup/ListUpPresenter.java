@@ -16,7 +16,7 @@ public interface ListUpPresenter {
 
     void onItemDragFinished(List<WebsiteEntity> items);
 
-    void onItemLongClick(WebsiteEntity item);
+    boolean onItemLongClick(WebsiteEntity item);
 
     interface View {
         void showErrorMessage(@StringRes int resId);

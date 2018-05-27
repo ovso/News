@@ -129,8 +129,8 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     }
 
     @Override
-    public void onItemLongClick(WebsiteEntity item) {
-        presenter.onItemLongClick(item);
+    public boolean onItemLongClick(WebsiteEntity item) {
+        return presenter.onItemLongClick(item);
     }
 
     @Override

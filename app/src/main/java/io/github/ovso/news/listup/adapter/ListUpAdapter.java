@@ -26,7 +26,6 @@ public class ListUpAdapter extends BaseDraggableAdapter
         implements BaseAdapterDataModel<WebsiteEntity>, BaseAdapterView,
         DraggableItemAdapter<ListUpViewHolder> {
     private List<WebsiteEntity> items = new ArrayList<>();
-    private OnRecyclerItemClickListener<WebsiteEntity> onItemClickListener;
     private OnAdapterListener<WebsiteEntity> onAdapterListener;
 
     private ListUpAdapter(ListUpAdapter.Builder builder) {
@@ -51,14 +50,8 @@ public class ListUpAdapter extends BaseDraggableAdapter
             final WebsiteEntity item = items.get(position);
             holder.titleTextView.setText(DeprecatedUtils.fromHtml(item.getTitle()));
             holder.descTextView.setText(DeprecatedUtils.fromHtml(item.getDescription()));
-            holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(item));
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-
-                    return true;
-                }
-            });
+            holder.itemView.setOnClickListener(v -> onAdapterListener.onItemClick(item));
+            holder.itemView.setOnLongClickListener(v -> onAdapterListener.onItemLongClick(item));
         }
     }
 

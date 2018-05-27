@@ -61,8 +61,9 @@ public class ListUpPresenterImpl implements ListUpPresenter {
     }
 
     @Override
-    public void onItemLongClick(WebsiteEntity item) {
+    public boolean onItemLongClick(WebsiteEntity item) {
 
+        return true;
     }
 
 }
