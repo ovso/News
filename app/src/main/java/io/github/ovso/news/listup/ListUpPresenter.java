@@ -16,8 +16,6 @@ public interface ListUpPresenter {
 
     void onItemDragFinished();
 
-    void onRemoveItem(WebsiteEntity item);
-
     boolean onItemLongClick(int position);
 
     interface View {

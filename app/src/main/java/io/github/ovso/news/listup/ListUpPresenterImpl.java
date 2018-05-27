@@ -68,13 +68,6 @@ public class ListUpPresenterImpl implements ListUpPresenter {
     }
 
     @Override
-    public void onRemoveItem(WebsiteEntity $item) {
-        database.websiteDao().delete($item);
-        updateItemPositionOnDatabase();
-        view.showSnackBar(R.string.do_you_want_to_delete);
-    }
-
-    @Override
     public boolean onItemLongClick(int position) {
         String title = adapterDataModel.getItem(position).getTitle();
         view.showRemoveDialog(String.valueOf(DeprecatedUtils.fromHtml(title)), (dialog, which) -> {
@@ -83,6 +76,7 @@ public class ListUpPresenterImpl implements ListUpPresenter {
                 view.notifyItemRemoved(position);
                 database.websiteDao().delete(item);
                 updateItemPositionOnDatabase();
+                view.showSnackBar(R.string.delete_it);
             }
             dialog.dismiss();
         });

@@ -18,5 +18,6 @@
     <string name="dialog_message_group_item_pinned">Group item pinned! (group = %1$d)</string>
     <string name="dialog_message_child_item_pinned">Child item pinned! (group = %1$d, child = %2$d)</string>
     <string name="do_you_want_to_delete">삭제할까요?</string>
+    <string name="delete_it">삭제되었습니다.</string>
 
 </resources>

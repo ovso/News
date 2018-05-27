@@ -48,7 +48,6 @@ public class ListUpAdapter extends BaseDraggableAdapter
             holder.titleTextView.setText(DeprecatedUtils.fromHtml(item.getTitle()));
             holder.descTextView.setText(DeprecatedUtils.fromHtml(item.getDescription()));
             holder.itemView.setOnClickListener(v -> onAdapterListener.onItemClick(item));
-            //holder.itemView.setOnLongClickListener(v -> onRemoveItem(position));
             holder.itemView.setOnLongClickListener(v -> onAdapterListener.onItemLongClick(position));
         }
     }

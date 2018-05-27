@@ -153,11 +153,6 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     }
 
     @Override
-    public void onRemoveItem(WebsiteEntity item) {
-        presenter.onRemoveItem(item);
-    }
-
-    @Override
     protected void onPause() {
         dragDropManager.cancelDrag();
         super.onPause();
