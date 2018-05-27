@@ -27,11 +27,10 @@ public class ListUpAdapter extends BaseDraggableAdapter
         DraggableItemAdapter<ListUpViewHolder> {
     private List<WebsiteEntity> items = new ArrayList<>();
     private OnRecyclerItemClickListener<WebsiteEntity> onItemClickListener;
-    private OnAdapterListener onAdapterListener;
+    private OnAdapterListener<WebsiteEntity> onAdapterListener;
 
     private ListUpAdapter(ListUpAdapter.Builder builder) {
         setHasStableIds(true); // this is required for D&D feature.
-        onItemClickListener = builder.onItemClickListener;
         onAdapterListener = builder.onAdapterListener;
     }
 
@@ -158,8 +157,7 @@ public class ListUpAdapter extends BaseDraggableAdapter
     @Accessors(chain = true)
     @Setter
     public static class Builder {
-        private OnRecyclerItemClickListener<WebsiteEntity> onItemClickListener;
-        private OnAdapterListener onAdapterListener;
+        private OnAdapterListener<WebsiteEntity> onAdapterListener;
         public ListUpAdapter build() {
             return new ListUpAdapter(this);
         }

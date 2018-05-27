@@ -20,7 +20,6 @@ import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
-import io.github.ovso.news.framework.adapter.OnRecyclerItemClickListener;
 import io.github.ovso.news.framework.rx.SchedulersFacade;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
 import io.github.ovso.news.listup.listener.OnAdapterListener;
@@ -37,9 +36,8 @@ public class ListUpActivityModule {
 
     @Singleton
     @Provides
-    public ListUpAdapter provideListUpAdapter(
-            OnRecyclerItemClickListener<WebsiteEntity> itemClickListener, OnAdapterListener onAdapterListener) {
-        return new ListUpAdapter.Builder().setOnItemClickListener(itemClickListener).setOnAdapterListener(onAdapterListener)
+    public ListUpAdapter provideListUpAdapter(OnAdapterListener<WebsiteEntity> onAdapterListener) {
+        return new ListUpAdapter.Builder().setOnAdapterListener(onAdapterListener)
                 .build();
     }
 

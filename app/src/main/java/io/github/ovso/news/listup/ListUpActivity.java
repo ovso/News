@@ -30,8 +30,7 @@ import io.github.ovso.news.framework.baseview.BaseActivity;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
 import io.github.ovso.news.listup.listener.OnAdapterListener;
 
-public class ListUpActivity extends BaseActivity implements ListUpPresenter.View,
-        OnRecyclerItemClickListener<WebsiteEntity>, OnAdapterListener {
+public class ListUpActivity extends BaseActivity implements ListUpPresenter.View, OnAdapterListener<WebsiteEntity> {
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
@@ -127,6 +126,11 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     @Override
     public void onItemClick(WebsiteEntity item) {
         ActivityUtils.startActivityWeb(this);
+    }
+
+    @Override
+    public void onItemLongClick(WebsiteEntity item) {
+        presenter.onItemLongClick(item);
     }
 
     @Override

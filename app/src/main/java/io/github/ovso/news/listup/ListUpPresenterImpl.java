@@ -60,4 +60,9 @@ public class ListUpPresenterImpl implements ListUpPresenter {
         }
     }
 
+    @Override
+    public void onItemLongClick(WebsiteEntity item) {
+
+    }
+
 }
