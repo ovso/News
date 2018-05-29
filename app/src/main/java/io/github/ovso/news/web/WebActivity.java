@@ -24,7 +24,7 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    presenter.onCreate();
+    presenter.onCreate(getIntent());
   }
 
   @OnClick(R.id.fab) void onFabClick() {
@@ -35,16 +35,6 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
     return R.layout.activity_web;
   }
 
-  @Override public void setupViewPager() {
-    List<Fragment> items = new ArrayList<>();
-    items.add(WebFragment.newInstance(null));
-    items.add(WebFragment.newInstance(null));
-    items.add(WebFragment.newInstance(null));
-    items.add(WebFragment.newInstance(null));
-    items.add(WebFragment.newInstance(null));
-    viewPager.setAdapter(new WebPagerAdapter(getSupportFragmentManager(), items));
-  }
-
   @Override public void setupViewPager(List<WebsiteEntity> items) {
     List<Fragment> fragments = new ArrayList<>();
     for (int i = 0; i < items.size(); i++) {
@@ -53,6 +43,10 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
       fragments.add(WebFragment.newInstance(args));
     }
     viewPager.setAdapter(new WebPagerAdapter(getSupportFragmentManager(), fragments));
+  }
+
+  @Override public void navigateToPosition(int position) {
+    viewPager.setCurrentItem(position, true);
   }
 
   @Override public Context getContext() {

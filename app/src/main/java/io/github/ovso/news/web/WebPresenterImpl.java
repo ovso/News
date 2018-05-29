@@ -1,6 +1,7 @@
 package io.github.ovso.news.web;
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.content.Intent;
 import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.rx.SchedulersFacade;
@@ -23,7 +24,7 @@ public class WebPresenterImpl implements WebPresenter {
     this.schedulers = schedulers;
   }
 
-  @Override public void onCreate() {
+  @Override public void onCreate(Intent intent) {
     database.websiteDao().getLiveDataItems().observe((LifecycleOwner) view.getContext(),
         $items -> compositeDisposable.addAll(Observable.fromCallable(() -> {
           final List<WebsiteEntity> items = $items;
@@ -32,6 +33,7 @@ public class WebPresenterImpl implements WebPresenter {
           return items;
         }).subscribeOn(schedulers.io()).observeOn(schedulers.ui()).subscribe(entities -> {
           view.setupViewPager(entities);
+          view.navigateToPosition(intent.getIntExtra("position",0));
         })));
   }
 

@@ -2,6 +2,7 @@ package io.github.ovso.news.listup;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDec
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
+import io.github.ovso.news.web.WebActivity;
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -144,7 +146,10 @@ public class ListUpActivity extends BaseActivity implements ListUpPresenter.View
     @DebugLog
     @Override
     public void onItemClick(WebsiteEntity item) {
-        ActivityUtils.startActivityWeb(this);
+        Intent intent = new Intent(getApplicationContext(), WebActivity.class);
+        intent.putExtra("position", item.getPosition());
+        startActivity(intent);
+        finish();
     }
 
     @Override

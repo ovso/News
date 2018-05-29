@@ -1,21 +1,22 @@
 package io.github.ovso.news.web;
 
 import android.content.Context;
+import android.content.Intent;
 import io.github.ovso.news.db.WebsiteEntity;
 import java.util.List;
 
 public interface WebPresenter {
 
-  void onCreate();
-
   void onDestroy();
 
-  interface View {
+  void onCreate(Intent intent);
 
-    void setupViewPager();
+  interface View {
 
     Context getContext();
 
     void setupViewPager(List<WebsiteEntity> items);
+
+    void navigateToPosition(int position);
   }
 }
