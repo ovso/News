@@ -29,6 +29,6 @@ public class WebFragment extends BaseFragment {
     settings.setJavaScriptEnabled(true);
     webView.setWebChromeClient(new WebChromeClient());
     webView.setWebViewClient(new WebViewClient());
-    webView.loadUrl("http://www.daum.net");
+    webView.loadUrl(getArguments().getString("link"));
   }
 }

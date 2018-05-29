@@ -1,19 +1,38 @@
 package io.github.ovso.news.web;
 
+import android.arch.lifecycle.LifecycleOwner;
 import io.github.ovso.news.db.AppDatabase;
+import io.github.ovso.news.db.WebsiteEntity;
+import io.github.ovso.news.framework.rx.SchedulersFacade;
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
+import java.util.Collections;
+import java.util.List;
 
 public class WebPresenterImpl implements WebPresenter {
 
   private WebPresenter.View view;
   private AppDatabase database;
+  private CompositeDisposable compositeDisposable = new CompositeDisposable();
+  private SchedulersFacade schedulers;
 
-  public WebPresenterImpl(WebPresenter.View view, AppDatabase database) {
+  public WebPresenterImpl(WebPresenter.View view, AppDatabase database,
+      SchedulersFacade schedulers) {
     this.view = view;
     this.database = database;
+    this.schedulers = schedulers;
   }
 
   @Override public void onCreate() {
-    view.setupViewPager();
+    database.websiteDao().getLiveDataItems().observe((LifecycleOwner) view.getContext(),
+        $items -> compositeDisposable.addAll(Observable.fromCallable(() -> {
+          final List<WebsiteEntity> items = $items;
+          Collections.sort(items,
+              (o1, o2) -> o1.position < o2.position ? -1 : o1.position > o2.position ? 1 : 0);
+          return items;
+        }).subscribeOn(schedulers.io()).observeOn(schedulers.ui()).subscribe(entities -> {
+          view.setupViewPager(entities);
+        })));
   }
 
   @Override public void onDestroy() {
