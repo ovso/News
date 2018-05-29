@@ -57,4 +57,12 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
     presenter.onDestroy();
     super.onDestroy();
   }
+
+  @OnClick(R.id.left_imageview) void onLeftClick() {
+    viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true);
+  }
+
+  @OnClick(R.id.right_imageview) void onRightClick() {
+    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+  }
 }
