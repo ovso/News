@@ -9,7 +9,6 @@ import io.github.ovso.news.R;
 
 public class ListUpViewHolder extends BaseDraggableAdapter.BaseViewHolder {
   @BindView(R.id.title_textview) TextView titleTextView;
-  @BindView(R.id.desc_textview) TextView descTextView;
   @BindView(R.id.root_view) View rootView;
   @BindView(R.id.drag_imageview) ImageView dragImageView;
   public ListUpViewHolder(View itemView) {

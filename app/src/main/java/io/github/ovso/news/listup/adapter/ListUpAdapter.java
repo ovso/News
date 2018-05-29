@@ -46,7 +46,6 @@ public class ListUpAdapter extends BaseDraggableAdapter
             ListUpViewHolder holder = (ListUpViewHolder) viewHolder;
             final WebsiteEntity item = items.get(position);
             holder.titleTextView.setText(DeprecatedUtils.fromHtml(item.getTitle()));
-            holder.descTextView.setText(DeprecatedUtils.fromHtml(item.getDescription()));
             holder.itemView.setOnClickListener(v -> onAdapterListener.onItemClick(item));
             holder.itemView.setOnLongClickListener(v -> onAdapterListener.onItemLongClick(position));
         }

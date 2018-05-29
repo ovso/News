@@ -6,56 +6,41 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
-    <android.support.constraint.ConstraintLayout
+  <android.support.constraint.ConstraintLayout
+      android:id="@id/root_view"
       android:layout_width="match_parent"
       android:layout_height="?android:attr/actionBarSize"
+      android:background="?android:attr/selectableItemBackground"
+      android:foreground="?android:attr/selectableItemBackground"
       tools:layout_editor_absoluteY="81dp"
-      android:id="@id/root_view"
-        android:background="?android:attr/selectableItemBackground"
-        android:foreground="?android:attr/selectableItemBackground"
-        >
+      >
 
-        <ImageView
-            android:id="@+id/drag_imageview"
-            android:layout_width="?android:attr/actionBarSize"
-            android:layout_height="0dp"
-            android:layout_marginEnd="@dimen/dp_8"
-            android:gravity="right|center_vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/ic_drag_handle"/>
+    <ImageView
+        android:id="@+id/drag_imageview"
+        android:layout_width="?android:attr/actionBarSize"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_drag_handle"
+        android:gravity="right|center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
-        <TextView
-            android:id="@id/title_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_36"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="@dimen/dp_8"
-            android:ellipsize="end"
-            android:gravity="left|center_vertical"
-            android:textSize="@dimen/sp_24"
-            app:layout_constraintEnd_toStartOf="@+id/drag_imageview"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:maxLines="@integer/single_line"
-            tools:text="매일경제" />
-
-        <TextView
-            android:id="@id/desc_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_20"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:maxLines="@integer/single_line"
-            android:textSize="@dimen/sp_12"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/drag_imageview"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/title_textview"
-            app:layout_constraintTop_toBottomOf="@id/title_textview"
-            tools:text="뉴스, 증권, 금융, 부동산, 창업 기사 제공." />
+    <TextView
+        android:id="@id/title_textview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:gravity="left|center_vertical"
+        android:maxLines="@integer/single_line"
+        android:textSize="@dimen/sp_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/drag_imageview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="매일경제 매일경제  매일경제 매일경제"
+        />
   </android.support.constraint.ConstraintLayout>
 </FrameLayout>
