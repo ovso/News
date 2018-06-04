@@ -1,11 +1,12 @@
 package io.github.ovso.news.web;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
@@ -21,9 +22,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class WebActivity extends BaseActivity implements WebPresenter.View {
-  @BindView(R.id.viewpager) ViewPager viewPager;
+  @BindView(R.id.viewpager) WebViewPager viewPager;
   @BindView(R.id.left_button) View leftButton;
   @BindView(R.id.right_button) View rightButton;
+  @BindView(R.id.paging_lock_button) FloatingActionButton pagingLockButton;
   @Inject
   WebPresenter presenter;
 
@@ -35,6 +37,11 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
 
   @OnClick(R.id.fab) void onFabClick() {
     ActivityUtils.startActivityListUp(this);
+  }
+
+  @OnClick(R.id.paging_lock_button)
+  void onPagingLockClick() {
+    presenter.onPagingLockClick(viewPager.isPagingEnabled());
   }
 
   @Override protected int getLayoutResId() {
@@ -73,6 +80,32 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
 
   @Override public void showRightButton() {
     rightButton.setVisibility(View.VISIBLE);
+  }
+
+  @Override public void unlockPaging() {
+    viewPager.setPagingEnabled(true);
+  }
+
+  @Override public void lockPaging() {
+    viewPager.setPagingEnabled(false);
+  }
+
+  @Override public void showPagingLockIcon() {
+    pagingLockButton.setImageResource(R.drawable.ic_lock);
+  }
+
+  @Override public void showPagingLockNotiDialog() {
+    new AlertDialog.Builder(this).setTitle("!")
+        .setMessage(R.string.paging_lock)
+        .setPositiveButton(
+            android.R.string.ok, (dialog, which) -> dialog.dismiss())
+        .setNeutralButton(R.string.do_not_look_again,
+            (dialog, which) -> dialog.dismiss())
+        .show();
+  }
+
+  @Override public void showPagingUnlockIcon() {
+    pagingLockButton.setImageResource(R.drawable.ic_lock_open);
   }
 
   @Override public Context getContext() {

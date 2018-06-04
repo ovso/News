@@ -13,6 +13,8 @@ public interface WebPresenter {
 
   void onPageChange(int position, int itemCount);
 
+  void onPagingLockClick(boolean enabled);
+
   interface View {
 
     Context getContext();
@@ -28,5 +30,15 @@ public interface WebPresenter {
     void showLeftButton();
 
     void showRightButton();
+
+    void unlockPaging();
+
+    void lockPaging();
+
+    void showPagingUnlockIcon();
+
+    void showPagingLockIcon();
+
+    void showPagingLockNotiDialog();
   }
 }

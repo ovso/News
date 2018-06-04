@@ -9,7 +9,7 @@
     tools:context=".web.WebActivity"
     >
 
-  <android.support.v4.view.ViewPager
+  <io.github.ovso.news.web.WebViewPager
       android:id="@id/viewpager"
       android:layout_width="0dp"
       android:layout_height="0dp"
@@ -24,12 +24,12 @@
   <ImageButton
       android:id="@+id/left_button"
       android:layout_width="50dp"
-      android:layout_height="50dp"
+      android:layout_height="100dp"
       app:layout_constraintBottom_toBottomOf="@+id/root_view"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@drawable/ic_left"
-      android:scaleType="fitXY"
+      android:scaleType="fitCenter"
       android:background="?android:attr/selectableItemBackground"
       />
 
@@ -48,16 +48,28 @@
       app:layout_constraintStart_toStartOf="parent"
       app:srcCompat="@drawable/ic_format_align"
       />
+  <android.support.design.widget.FloatingActionButton
+      android:id="@id/paging_lock_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|left"
+      android:layout_marginBottom="16dp"
+      android:layout_marginStart="8dp"
+      app:backgroundTint="@android:color/white"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:srcCompat="@drawable/ic_lock_open"
+      />
   <ImageButton
       android:id="@+id/right_button"
       android:layout_width="50dp"
-      android:layout_height="50dp"
+      android:layout_height="100dp"
       android:layout_marginBottom="8dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="@+id/root_view"
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@drawable/ic_right"
-      android:scaleType="fitXY"
+      android:scaleType="fitCenter"
       android:background="?android:attr/selectableItemBackground"
       />
 

@@ -48,6 +48,18 @@ public class WebPresenterImpl implements WebPresenter {
     }
   }
 
+  @Override public void onPagingLockClick(boolean $enabled) {
+    boolean enabled =! $enabled;
+    if(enabled) {
+      view.unlockPaging();
+      view.showPagingUnlockIcon();
+    } else {
+      view.lockPaging();
+      view.showPagingLockIcon();
+      view.showPagingLockNotiDialog();
+    }
+  }
+
   private boolean isFirstPosition(int position) {
     return position == 0;
   }
