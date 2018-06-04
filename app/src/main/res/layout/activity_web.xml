@@ -21,14 +21,15 @@
       app:layout_constraintVertical_bias="1.0"
       />
 
-  <ImageView
-      android:id="@+id/left_imageview"
+  <ImageButton
+      android:id="@+id/left_button"
       android:layout_width="50dp"
       android:layout_height="50dp"
       app:layout_constraintBottom_toBottomOf="@+id/root_view"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@drawable/ic_left"
+      android:scaleType="fitXY"
       android:background="?android:attr/selectableItemBackground"
       />
 
@@ -47,8 +48,8 @@
       app:layout_constraintStart_toStartOf="parent"
       app:srcCompat="@drawable/ic_format_align"
       />
-  <ImageView
-      android:id="@+id/right_imageview"
+  <ImageButton
+      android:id="@+id/right_button"
       android:layout_width="50dp"
       android:layout_height="50dp"
       android:layout_marginBottom="8dp"
@@ -56,6 +57,7 @@
       app:layout_constraintEnd_toEndOf="@+id/root_view"
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@drawable/ic_right"
+      android:scaleType="fitXY"
       android:background="?android:attr/selectableItemBackground"
       />
 

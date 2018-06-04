@@ -11,6 +11,8 @@ public interface WebPresenter {
 
   void onCreate(Intent intent);
 
+  void onPageChange(int position, int itemCount);
+
   interface View {
 
     Context getContext();
@@ -18,5 +20,13 @@ public interface WebPresenter {
     void setupViewPager(List<WebsiteEntity> items);
 
     void navigateToPosition(int position);
+
+    void hideLeftButton();
+
+    void hideRightButton();
+
+    void showLeftButton();
+
+    void showRightButton();
   }
 }

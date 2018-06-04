@@ -33,8 +33,27 @@ public class WebPresenterImpl implements WebPresenter {
           return items;
         }).subscribeOn(schedulers.io()).observeOn(schedulers.ui()).subscribe(entities -> {
           view.setupViewPager(entities);
-          view.navigateToPosition(intent.getIntExtra("position",0));
+          view.navigateToPosition(intent.getIntExtra("position", 0));
         })));
+  }
+
+  @Override public void onPageChange(int position, int itemCount) {
+    if (isFirstPosition(position)) {
+      view.hideLeftButton();
+    } else if (isLastPosition(position, itemCount)) {
+      view.hideRightButton();
+    } else {
+      view.showLeftButton();
+      view.showRightButton();
+    }
+  }
+
+  private boolean isFirstPosition(int position) {
+    return position == 0;
+  }
+
+  private boolean isLastPosition(int position, int itemCount) {
+    return position == (itemCount - 1);
   }
 
   @Override public void onDestroy() {
