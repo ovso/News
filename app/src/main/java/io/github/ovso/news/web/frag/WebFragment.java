@@ -3,20 +3,25 @@ package io.github.ovso.news.web.frag;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Toast;
 import butterknife.BindView;
 import io.github.ovso.news.R;
 import io.github.ovso.news.framework.baseview.BaseFragment;
 import io.github.ovso.news.framework.listener.OnWebNavigationListener;
+import io.github.ovso.news.framework.webview.OnWebChromeClientListener;
+import io.github.ovso.news.framework.webview.OnWebViewClientListener;
+import io.github.ovso.news.framework.webview.WebChromeClientImpl;
+import io.github.ovso.news.framework.webview.WebViewClientImpl;
+import timber.log.Timber;
 
-public class WebFragment extends BaseFragment implements OnWebNavigationListener {
+public class WebFragment extends BaseFragment implements OnWebNavigationListener,
+    OnWebChromeClientListener, OnWebViewClientListener {
   @BindView(R.id.webview) WebView webView;
-
+  @BindView(R.id.progressbar) ContentLoadingProgressBar progressBar;
   @Override public void onAttach(Context context) {
     super.onAttach(context);
   }
@@ -44,9 +49,9 @@ public class WebFragment extends BaseFragment implements OnWebNavigationListener
     settings.setDomStorageEnabled(true);
     webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
     webView.setScrollbarFadingEnabled(true);
-    webView.setLayerType(View.LAYER_TYPE_HARDWARE,null);
-    webView.setWebChromeClient(new WebChromeClient());
-    webView.setWebViewClient(new WebViewClient());
+    webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+    webView.setWebChromeClient(new WebChromeClientImpl.Builder().setOnWebChromeClientListener(this).build());
+    webView.setWebViewClient(new WebViewClientImpl.Builder().setOnWebViewClientListener(this).build());
     webView.loadUrl(getArguments().getString("link"));
   }
 
@@ -64,5 +69,27 @@ public class WebFragment extends BaseFragment implements OnWebNavigationListener
 
   @Override public void onShare() {
     Toast.makeText(getContext(), webView.getUrl(), Toast.LENGTH_SHORT).show();
+  }
+
+  @Override public void onProgressChanged(int progress) {
+    Timber.d("progress = " + progress);
+    if (progressBar != null) {
+      progressBar.setProgress(progress);
+    }
+  }
+
+  @Override public void onPageStarted() {
+    Timber.d("onPageStarted");
+    if (progressBar != null) {
+      progressBar.show();
+    }
+
+  }
+
+  @Override public void onPageFinished() {
+    Timber.d("onPageFinished");
+    if (progressBar != null) {
+      progressBar.hide();
+    }
   }
 }
