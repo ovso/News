@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
@@ -25,7 +26,6 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
   @BindView(R.id.viewpager) WebViewPager viewPager;
   @BindView(R.id.left_button) View leftButton;
   @BindView(R.id.right_button) View rightButton;
-  @BindView(R.id.paging_lock_button) FloatingActionButton pagingLockButton;
   @Inject
   WebPresenter presenter;
 
@@ -35,13 +35,11 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
     presenter.onCreate(getIntent());
   }
 
-  @OnClick(R.id.fab) void onFabClick() {
-    ActivityUtils.startActivityListUp(this);
-  }
-
-  @OnClick(R.id.paging_lock_button)
-  void onPagingLockClick() {
-    presenter.onPagingLockClick(viewPager.isPagingEnabled());
+  @OnClick({
+      R.id.back_button, R.id.forward_button, R.id.refresh_button, R.id.share_button,
+      R.id.listup_button
+  }) void onNaviClick(View view) {
+    presenter.onNaviClick(view.getId());
   }
 
   @Override protected int getLayoutResId() {
@@ -56,6 +54,7 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
       fragments.add(WebFragment.newInstance(args));
     }
     viewPager.setAdapter(new WebPagerAdapter(getSupportFragmentManager(), fragments));
+    viewPager.setPagingEnabled(false);
   }
 
   @DebugLog @OnPageChange(R.id.viewpager) void onPageChange(int position) {
@@ -86,26 +85,24 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
     viewPager.setPagingEnabled(true);
   }
 
-  @Override public void lockPaging() {
-    viewPager.setPagingEnabled(false);
+  @Override public void navigateToListUp() {
+    ActivityUtils.startActivityListUp(this);
   }
 
-  @Override public void showPagingLockIcon() {
-    pagingLockButton.setImageResource(R.drawable.ic_lock);
+  @Override public void moveToBackWeb() {
+    Toast.makeText(this, "back", Toast.LENGTH_SHORT).show();
   }
 
-  @Override public void showPagingLockNotiDialog() {
-    new AlertDialog.Builder(this).setTitle("!")
-        .setMessage(R.string.paging_lock)
-        .setPositiveButton(
-            android.R.string.ok, (dialog, which) -> dialog.dismiss())
-        .setNeutralButton(R.string.do_not_look_again,
-            (dialog, which) -> dialog.dismiss())
-        .show();
+  @Override public void moveToForwardWeb() {
+    Toast.makeText(this, "forward", Toast.LENGTH_SHORT).show();
   }
 
-  @Override public void showPagingUnlockIcon() {
-    pagingLockButton.setImageResource(R.drawable.ic_lock_open);
+  @Override public void refreshWeb() {
+    Toast.makeText(this, "refresh", Toast.LENGTH_SHORT).show();
+  }
+
+  @Override public void shareWeb() {
+    Toast.makeText(this, "share", Toast.LENGTH_SHORT).show();
   }
 
   @Override public Context getContext() {

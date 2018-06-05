@@ -2,6 +2,7 @@ package io.github.ovso.news.web;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.content.Intent;
+import io.github.ovso.news.R;
 import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.rx.SchedulersFacade;
@@ -48,15 +49,23 @@ public class WebPresenterImpl implements WebPresenter {
     }
   }
 
-  @Override public void onPagingLockClick(boolean $enabled) {
-    boolean enabled =! $enabled;
-    if(enabled) {
-      view.unlockPaging();
-      view.showPagingUnlockIcon();
-    } else {
-      view.lockPaging();
-      view.showPagingLockIcon();
-      view.showPagingLockNotiDialog();
+  @Override public void onNaviClick(int id) {
+    switch (id) {
+      case R.id.back_button:
+        view.moveToBackWeb();
+        break;
+      case R.id.forward_button:
+        view.moveToForwardWeb();
+        break;
+      case R.id.refresh_button:
+        view.refreshWeb();
+        break;
+      case R.id.share_button:
+        view.shareWeb();
+        break;
+      case R.id.listup_button:
+        view.navigateToListUp();
+        break;
     }
   }
 

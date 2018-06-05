@@ -13,7 +13,7 @@ public interface WebPresenter {
 
   void onPageChange(int position, int itemCount);
 
-  void onPagingLockClick(boolean enabled);
+  void onNaviClick(int id);
 
   interface View {
 
@@ -33,12 +33,14 @@ public interface WebPresenter {
 
     void unlockPaging();
 
-    void lockPaging();
+    void navigateToListUp();
 
-    void showPagingUnlockIcon();
+    void moveToBackWeb();
 
-    void showPagingLockIcon();
+    void moveToForwardWeb();
 
-    void showPagingLockNotiDialog();
+    void refreshWeb();
+
+    void shareWeb();
   }
 }
