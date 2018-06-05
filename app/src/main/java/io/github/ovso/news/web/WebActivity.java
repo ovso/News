@@ -16,6 +16,7 @@ import io.github.ovso.news.R;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.ActivityUtils;
 import io.github.ovso.news.framework.baseview.BaseActivity;
+import io.github.ovso.news.framework.listener.OnWebNavigationListener;
 import io.github.ovso.news.web.apdater.WebPagerAdapter;
 import io.github.ovso.news.web.frag.WebFragment;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
   @BindView(R.id.right_button) View rightButton;
   @Inject
   WebPresenter presenter;
+  private OnWebNavigationListener onWebNavigationListener;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
 
   @DebugLog @OnPageChange(R.id.viewpager) void onPageChange(int position) {
     presenter.onPageChange(position, viewPager.getAdapter().getCount());
+    onWebNavigationListener =
+        (OnWebNavigationListener) ((WebPagerAdapter) viewPager.getAdapter()).getItem(position);
   }
 
   @Override public void navigateToPosition(int position) {
@@ -89,20 +93,20 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
     ActivityUtils.startActivityListUp(this);
   }
 
-  @Override public void moveToBackWeb() {
-    Toast.makeText(this, "back", Toast.LENGTH_SHORT).show();
+  @Override public void moveToBackOnWeb() {
+    onWebNavigationListener.onBack();
   }
 
-  @Override public void moveToForwardWeb() {
-    Toast.makeText(this, "forward", Toast.LENGTH_SHORT).show();
+  @Override public void moveToForwardOnWeb() {
+    onWebNavigationListener.onForward();
   }
 
-  @Override public void refreshWeb() {
-    Toast.makeText(this, "refresh", Toast.LENGTH_SHORT).show();
+  @Override public void reloadOnWeb() {
+    onWebNavigationListener.onReload();
   }
 
-  @Override public void shareWeb() {
-    Toast.makeText(this, "share", Toast.LENGTH_SHORT).show();
+  @Override public void shareOnWeb() {
+    onWebNavigationListener.onShare();
   }
 
   @Override public Context getContext() {

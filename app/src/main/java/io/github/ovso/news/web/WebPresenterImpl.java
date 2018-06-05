@@ -52,16 +52,16 @@ public class WebPresenterImpl implements WebPresenter {
   @Override public void onNaviClick(int id) {
     switch (id) {
       case R.id.back_button:
-        view.moveToBackWeb();
+        view.moveToBackOnWeb();
         break;
       case R.id.forward_button:
-        view.moveToForwardWeb();
+        view.moveToForwardOnWeb();
         break;
       case R.id.refresh_button:
-        view.refreshWeb();
+        view.reloadOnWeb();
         break;
       case R.id.share_button:
-        view.shareWeb();
+        view.shareOnWeb();
         break;
       case R.id.listup_button:
         view.navigateToListUp();

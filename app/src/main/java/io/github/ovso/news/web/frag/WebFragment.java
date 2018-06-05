@@ -1,5 +1,6 @@
 package io.github.ovso.news.web.frag;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -7,12 +8,18 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 import butterknife.BindView;
 import io.github.ovso.news.R;
 import io.github.ovso.news.framework.baseview.BaseFragment;
+import io.github.ovso.news.framework.listener.OnWebNavigationListener;
 
-public class WebFragment extends BaseFragment {
+public class WebFragment extends BaseFragment implements OnWebNavigationListener {
   @BindView(R.id.webview) WebView webView;
+
+  @Override public void onAttach(Context context) {
+    super.onAttach(context);
+  }
 
   public static WebFragment newInstance(Bundle args) {
     WebFragment f = new WebFragment();
@@ -43,4 +50,19 @@ public class WebFragment extends BaseFragment {
     webView.loadUrl(getArguments().getString("link"));
   }
 
+  @Override public void onBack() {
+    webView.goBack();
+  }
+
+  @Override public void onForward() {
+    webView.goForward();
+  }
+
+  @Override public void onReload() {
+    webView.reload();
+  }
+
+  @Override public void onShare() {
+    Toast.makeText(getContext(), webView.getUrl(), Toast.LENGTH_SHORT).show();
+  }
 }

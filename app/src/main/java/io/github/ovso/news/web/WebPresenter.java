@@ -35,12 +35,12 @@ public interface WebPresenter {
 
     void navigateToListUp();
 
-    void moveToBackWeb();
+    void moveToBackOnWeb();
 
-    void moveToForwardWeb();
+    void moveToForwardOnWeb();
 
-    void refreshWeb();
+    void reloadOnWeb();
 
-    void shareWeb();
+    void shareOnWeb();
   }
 }
