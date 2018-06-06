@@ -1,29 +1,28 @@
 package io.github.ovso.news.web.frag;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 import butterknife.BindView;
 import io.github.ovso.news.R;
 import io.github.ovso.news.framework.baseview.BaseFragment;
-import io.github.ovso.news.framework.listener.OnWebNavigationListener;
-import io.github.ovso.news.framework.webview.OnWebChromeClientListener;
-import io.github.ovso.news.framework.webview.OnWebViewClientListener;
-import io.github.ovso.news.framework.webview.WebChromeClientImpl;
-import io.github.ovso.news.framework.webview.WebViewClientImpl;
-import timber.log.Timber;
+import io.github.ovso.news.web.listener.OnWebNavigationListener;
+import io.github.ovso.news.web.listener.OnWebViewStatusListener;
 
-public class WebFragment extends BaseFragment implements OnWebNavigationListener,
-    OnWebChromeClientListener, OnWebViewClientListener {
+public class WebFragment extends BaseFragment
+    implements OnWebNavigationListener{
   @BindView(R.id.webview) WebView webView;
-  @BindView(R.id.progressbar) ContentLoadingProgressBar progressBar;
+  private OnWebViewStatusListener onWebViewStatusListener;
   @Override public void onAttach(Context context) {
     super.onAttach(context);
+    onWebViewStatusListener = (OnWebViewStatusListener) context;
   }
 
   public static WebFragment newInstance(Bundle args) {
@@ -50,8 +49,23 @@ public class WebFragment extends BaseFragment implements OnWebNavigationListener
     webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
     webView.setScrollbarFadingEnabled(true);
     webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-    webView.setWebChromeClient(new WebChromeClientImpl.Builder().setOnWebChromeClientListener(this).build());
-    webView.setWebViewClient(new WebViewClientImpl.Builder().setOnWebViewClientListener(this).build());
+    webView.setWebChromeClient(new WebChromeClient() {
+      @Override public void onProgressChanged(WebView view, int newProgress) {
+        super.onProgressChanged(view, newProgress);
+        onWebViewStatusListener.onProgress(newProgress, getArguments().getInt("position"));
+      }
+    });
+    webView.setWebViewClient(new WebViewClient() {
+      @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        super.onPageStarted(view, url, favicon);
+        onWebViewStatusListener.onPageStarted(getArguments().getInt("position"));
+      }
+
+      @Override public void onPageFinished(WebView view, String url) {
+        super.onPageFinished(view, url);
+        onWebViewStatusListener.onPageFinished(getArguments().getInt("position"));
+      }
+    });
     webView.loadUrl(getArguments().getString("link"));
   }
 
@@ -71,25 +85,4 @@ public class WebFragment extends BaseFragment implements OnWebNavigationListener
     Toast.makeText(getContext(), webView.getUrl(), Toast.LENGTH_SHORT).show();
   }
 
-  @Override public void onProgressChanged(int progress) {
-    Timber.d("progress = " + progress);
-    if (progressBar != null) {
-      progressBar.setProgress(progress);
-    }
-  }
-
-  @Override public void onPageStarted() {
-    Timber.d("onPageStarted");
-    if (progressBar != null) {
-      progressBar.show();
-    }
-
-  }
-
-  @Override public void onPageFinished() {
-    Timber.d("onPageFinished");
-    if (progressBar != null) {
-      progressBar.hide();
-    }
-  }
 }

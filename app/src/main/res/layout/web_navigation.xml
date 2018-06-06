@@ -1,42 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_40"
-    android:gravity="center"
-    android:orientation="horizontal"
-    tools:context=".web.WebActivity"
     >
-  <ImageButton
-      android:id="@id/back_button"
-      android:scaleType="fitCenter"
-      app:srcCompat="@drawable/ic_keyboard_arrow_left"
-      style="@style/WebviewNavigationButtonStyle"
+  <android.support.v4.widget.ContentLoadingProgressBar
+      android:id="@id/progressbar"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:layout_gravity="top"
+      android:progress="0"
+      android:progressTint="@android:color/holo_orange_light"
+      style="@style/CustomProgressBarHorizontal"
       />
-  <ImageButton
-      android:id="@id/forward_button"
-      android:scaleType="fitCenter"
-      app:srcCompat="@drawable/ic_keyboard_arrow_right"
-      style="@style/WebviewNavigationButtonStyle"
-      />
-  <ImageButton
-      android:id="@id/refresh_button"
-      android:scaleType="center"
-      app:srcCompat="@drawable/ic_refresh"
-      style="@style/WebviewNavigationButtonStyle"
-      />
-  <ImageButton
-      android:id="@id/share_button"
-      android:scaleType="center"
-      app:srcCompat="@drawable/ic_share"
-      style="@style/WebviewNavigationButtonStyle"
-      />
-  <ImageButton
-      android:id="@id/listup_button"
-      android:scaleType="center"
-      app:srcCompat="@drawable/ic_format_align"
-      style="@style/WebviewNavigationButtonStyle"
-      />
-</LinearLayout>
+  style="?android:attr/android:progressBarStyleHorizontal"
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:orientation="horizontal"
+      >
+    <ImageButton
+        android:id="@id/back_button"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_keyboard_arrow_left"
+        style="@style/WebviewNavigationButtonStyle"
+        />
+    <ImageButton
+        android:id="@id/forward_button"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_keyboard_arrow_right"
+        style="@style/WebviewNavigationButtonStyle"
+        />
+    <ImageButton
+        android:id="@id/refresh_button"
+        android:scaleType="center"
+        app:srcCompat="@drawable/ic_refresh"
+        style="@style/WebviewNavigationButtonStyle"
+        />
+    <ImageButton
+        android:id="@id/share_button"
+        android:scaleType="center"
+        app:srcCompat="@drawable/ic_share"
+        style="@style/WebviewNavigationButtonStyle"
+        />
+    <ImageButton
+        android:id="@id/listup_button"
+        android:scaleType="center"
+        app:srcCompat="@drawable/ic_format_align"
+        style="@style/WebviewNavigationButtonStyle"
+        />
+  </LinearLayout>
+
+</FrameLayout>

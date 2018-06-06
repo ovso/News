@@ -3,26 +3,30 @@ package io.github.ovso.news.web;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.View;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
-import hugo.weaving.DebugLog;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.ActivityUtils;
 import io.github.ovso.news.framework.baseview.BaseActivity;
-import io.github.ovso.news.framework.listener.OnWebNavigationListener;
+import io.github.ovso.news.web.listener.OnWebNavigationListener;
+import io.github.ovso.news.web.listener.OnWebViewStatusListener;
 import io.github.ovso.news.web.apdater.WebPagerAdapter;
 import io.github.ovso.news.web.frag.WebFragment;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import timber.log.Timber;
 
-public class WebActivity extends BaseActivity implements WebPresenter.View {
+public class WebActivity extends BaseActivity implements WebPresenter.View,
+    OnWebViewStatusListener {
   @BindView(R.id.viewpager) WebViewPager viewPager;
   @BindView(R.id.left_button) View leftButton;
   @BindView(R.id.right_button) View rightButton;
+  @BindView(R.id.progressbar) ContentLoadingProgressBar progressBar;
   @Inject
   WebPresenter presenter;
   private OnWebNavigationListener onWebNavigationListener;
@@ -49,16 +53,21 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
     for (int i = 0; i < items.size(); i++) {
       Bundle args = new Bundle();
       args.putString("link", items.get(i).getLink());
+      args.putInt("position", i);
       fragments.add(WebFragment.newInstance(args));
     }
     viewPager.setAdapter(new WebPagerAdapter(getSupportFragmentManager(), fragments));
     viewPager.setPagingEnabled(false);
   }
 
-  @DebugLog @OnPageChange(R.id.viewpager) void onPageChange(int position) {
+  @OnPageChange(R.id.viewpager) void onPageChange(int position) {
     presenter.onPageChange(position, viewPager.getAdapter().getCount());
-    onWebNavigationListener =
-        (OnWebNavigationListener) ((WebPagerAdapter) viewPager.getAdapter()).getItem(position);
+    onWebNavigationListener = getOnWebNavigationListener(position);
+  }
+
+  private OnWebNavigationListener getOnWebNavigationListener(int position) {
+    Fragment item = ((WebPagerAdapter) viewPager.getAdapter()).getItem(position);
+    return (OnWebNavigationListener) item;
   }
 
   @Override public void navigateToPosition(int position) {
@@ -120,5 +129,23 @@ public class WebActivity extends BaseActivity implements WebPresenter.View {
 
   @OnClick(R.id.right_button) void onRightClick() {
     viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+  }
+
+  @Override public void onProgress(int progress, int itemPosition) {
+    if (viewPager.getCurrentItem() == itemPosition) {
+      progressBar.setProgress(progress);
+    }
+  }
+
+  @Override public void onPageStarted(int itemPosition) {
+    if (viewPager.getCurrentItem() == itemPosition) {
+      progressBar.show();
+    }
+  }
+
+  @Override public void onPageFinished(int itemPosition) {
+    if (viewPager.getCurrentItem() == itemPosition) {
+      progressBar.hide();
+    }
   }
 }
