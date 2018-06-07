@@ -5,4 +5,6 @@ public interface OnWebNavigationListener {
   void onForward();
   void onReload();
   void onShare();
+  boolean canGoForward();
+  boolean canGoBack();
 }

@@ -87,4 +87,11 @@ public class WebFragment extends BaseFragment
     Toast.makeText(getContext(), webView.getUrl(), Toast.LENGTH_SHORT).show();
   }
 
+  @Override public boolean canGoForward() {
+    return webView.canGoForward();
+  }
+
+  @Override public boolean canGoBack() {
+    return webView.canGoBack();
+  }
 }

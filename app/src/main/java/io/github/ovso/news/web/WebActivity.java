@@ -65,6 +65,17 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
   @OnPageChange(R.id.viewpager) void onPageChange(int position) {
     presenter.onPageChange(position, viewPager.getAdapter().getCount());
     onWebNavigationListener = getOnWebNavigationListener(position);
+
+    if(onWebNavigationListener.canGoBack()) {
+      enableBackButton();
+    } else {
+      disableBackButton();
+    }
+    if(onWebNavigationListener.canGoForward()) {
+      enableForwardButton();
+    } else {
+      disableForwardButton();
+    }
   }
 
   private OnWebNavigationListener getOnWebNavigationListener(int position) {
@@ -73,7 +84,7 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
   }
 
   @Override public void navigateToPosition(int position) {
-    if(position == 0) {
+    if (position == 0) {
       onPageChange(position);
     } else {
       viewPager.setCurrentItem(position, true);
