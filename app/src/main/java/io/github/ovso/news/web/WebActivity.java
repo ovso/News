@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.View;
+import android.widget.ImageButton;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
@@ -12,14 +13,13 @@ import io.github.ovso.news.R;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.ActivityUtils;
 import io.github.ovso.news.framework.baseview.BaseActivity;
-import io.github.ovso.news.web.listener.OnWebNavigationListener;
-import io.github.ovso.news.web.listener.OnWebViewStatusListener;
 import io.github.ovso.news.web.apdater.WebPagerAdapter;
 import io.github.ovso.news.web.frag.WebFragment;
+import io.github.ovso.news.web.listener.OnWebNavigationListener;
+import io.github.ovso.news.web.listener.OnWebViewStatusListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import timber.log.Timber;
 
 public class WebActivity extends BaseActivity implements WebPresenter.View,
     OnWebViewStatusListener {
@@ -27,6 +27,8 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
   @BindView(R.id.left_button) View leftButton;
   @BindView(R.id.right_button) View rightButton;
   @BindView(R.id.progressbar) ContentLoadingProgressBar progressBar;
+  @BindView(R.id.back_button) ImageButton backButton;
+  @BindView(R.id.forward_button) ImageButton forwardButton;
   @Inject
   WebPresenter presenter;
   private OnWebNavigationListener onWebNavigationListener;
@@ -71,7 +73,11 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
   }
 
   @Override public void navigateToPosition(int position) {
-    viewPager.setCurrentItem(position, true);
+    if(position == 0) {
+      onPageChange(position);
+    } else {
+      viewPager.setCurrentItem(position, true);
+    }
   }
 
   @Override public void hideLeftButton() {
@@ -88,10 +94,6 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
 
   @Override public void showRightButton() {
     rightButton.setVisibility(View.VISIBLE);
-  }
-
-  @Override public void unlockPaging() {
-    viewPager.setPagingEnabled(true);
   }
 
   @Override public void navigateToListUp() {
@@ -112,6 +114,26 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
 
   @Override public void shareOnWeb() {
     onWebNavigationListener.onShare();
+  }
+
+  @Override public void enableBackButton() {
+    backButton.setEnabled(true);
+    backButton.setImageResource(R.drawable.ic_keyboard_arrow_left);
+  }
+
+  @Override public void disableBackButton() {
+    backButton.setEnabled(false);
+    backButton.setImageResource(R.drawable.ic_keyboard_arrow_left_disable);
+  }
+
+  @Override public void enableForwardButton() {
+    forwardButton.setEnabled(true);
+    forwardButton.setImageResource(R.drawable.ic_keyboard_arrow_right);
+  }
+
+  @Override public void disableForwardButton() {
+    forwardButton.setEnabled(false);
+    forwardButton.setImageResource(R.drawable.ic_keyboard_arrow_right_disable);
   }
 
   @Override public Context getContext() {
@@ -147,5 +169,13 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
     if (viewPager.getCurrentItem() == itemPosition) {
       progressBar.hide();
     }
+  }
+
+  @Override public void canGoBack(boolean canGoBack) {
+    presenter.canGoBack(canGoBack);
+  }
+
+  @Override public void canGoForward(boolean canGoForward) {
+    presenter.canGoForward(canGoForward);
   }
 }

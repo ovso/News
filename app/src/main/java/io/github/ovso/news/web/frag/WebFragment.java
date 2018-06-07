@@ -64,6 +64,8 @@ public class WebFragment extends BaseFragment
       @Override public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
         onWebViewStatusListener.onPageFinished(getArguments().getInt("position"));
+        onWebViewStatusListener.canGoBack(view.canGoBack());
+        onWebViewStatusListener.canGoForward(view.canGoForward());
       }
     });
     webView.loadUrl(getArguments().getString("link"));

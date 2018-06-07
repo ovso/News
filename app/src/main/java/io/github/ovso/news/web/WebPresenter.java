@@ -15,6 +15,10 @@ public interface WebPresenter {
 
   void onNaviClick(int id);
 
+  void canGoBack(boolean canGoBack);
+
+  void canGoForward(boolean canGoForward);
+
   interface View {
 
     Context getContext();
@@ -31,8 +35,6 @@ public interface WebPresenter {
 
     void showRightButton();
 
-    void unlockPaging();
-
     void navigateToListUp();
 
     void moveToBackOnWeb();
@@ -42,5 +44,14 @@ public interface WebPresenter {
     void reloadOnWeb();
 
     void shareOnWeb();
+
+    void enableBackButton();
+
+    void disableBackButton();
+
+    void enableForwardButton();
+
+    void disableForwardButton();
+
   }
 }

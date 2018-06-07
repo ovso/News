@@ -69,6 +69,22 @@ public class WebPresenterImpl implements WebPresenter {
     }
   }
 
+  @Override public void canGoBack(boolean canGoBack) {
+    if(canGoBack) {
+      view.enableBackButton();
+    } else {
+      view.disableBackButton();
+    }
+  }
+
+  @Override public void canGoForward(boolean canGoForward) {
+    if(canGoForward) {
+      view.enableForwardButton();
+    } else {
+      view.disableForwardButton();
+    }
+  }
+
   private boolean isFirstPosition(int position) {
     return position == 0;
   }
