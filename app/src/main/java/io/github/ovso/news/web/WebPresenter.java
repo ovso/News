@@ -15,6 +15,8 @@ public interface WebPresenter {
 
   void onPageChange(int position, int itemCount, boolean canGoBack, boolean canGoForward);
 
+  void onPageChange(int position, int itemCount);
+
   void onProgress(int progress, int positionOfFragment);
 
   void onPageStarted(int fragmentPosition);

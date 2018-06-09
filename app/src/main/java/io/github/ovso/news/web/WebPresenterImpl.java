@@ -27,6 +27,7 @@ public class WebPresenterImpl implements WebPresenter {
   }
 
   @Override public void onCreate(Intent intent) {
+    viewPagerPosition = intent.getIntExtra("position", 0);
     database.websiteDao().getLiveDataItems().observe((LifecycleOwner) view.getContext(),
         $items -> compositeDisposable.addAll(Observable.fromCallable(() -> {
           final List<WebsiteEntity> items = $items;
@@ -35,7 +36,8 @@ public class WebPresenterImpl implements WebPresenter {
           return items;
         }).subscribeOn(schedulers.io()).observeOn(schedulers.ui()).subscribe(entities -> {
           view.setupViewPager(entities);
-          view.gotoPageOnViewPager(intent.getIntExtra("position", 0));
+          view.gotoPageOnViewPager(viewPagerPosition);
+          handlingForPageMoveButton(entities.size());
         })));
   }
 
@@ -45,6 +47,11 @@ public class WebPresenterImpl implements WebPresenter {
     handlingForPageMoveButton(itemCount);
     handlingForWebBackButton(canGoBack);
     handlingForWebForwardButton(canGoForward);
+  }
+
+  @Override public void onPageChange(int position, int itemCount) {
+    viewPagerPosition = position;
+    handlingForPageMoveButton(itemCount);
   }
 
   @Override public void onProgress(int progress, int fragmentPosition) {
