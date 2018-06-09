@@ -64,9 +64,9 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
 
   @OnPageChange(R.id.viewpager) void onPageChange(int position) {
     onWebNavigationListener = getOnWebNavigationListener(position);
+    presenter.onPageChange(position, viewPager.getAdapter().getCount());
     //presenter.onPageChange(position, viewPager.getAdapter().getCount(),
     //    onWebNavigationListener.canGoBack(), onWebNavigationListener.canGoForward());
-    presenter.onPageChange(position, viewPager.getAdapter().getCount());
   }
 
   private int getViewPagerCurrentPosition() {

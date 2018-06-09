@@ -41,6 +41,7 @@ public class WebPresenterImpl implements WebPresenter {
         })));
   }
 
+  //사용하지 않음
   @Override
   public void onPageChange(int position, int itemCount, boolean canGoBack, boolean canGoForward) {
     viewPagerPosition = position;
@@ -52,6 +53,12 @@ public class WebPresenterImpl implements WebPresenter {
   @Override public void onPageChange(int position, int itemCount) {
     viewPagerPosition = position;
     handlingForPageMoveButton(itemCount);
+    initProgress();
+  }
+
+  private void initProgress() {
+    view.setWebProgress(0);
+    view.hideProgressBar();
   }
 
   @Override public void onProgress(int progress, int fragmentPosition) {

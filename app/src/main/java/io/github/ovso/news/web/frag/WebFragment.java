@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,8 +20,11 @@ import io.github.ovso.news.web.listener.OnWebViewStatusListener;
 public class WebFragment extends BaseFragment
     implements OnWebNavigationListener {
   @BindView(R.id.webview) WebView webView;
+  @BindView(R.id.root_view) ViewGroup rootView;
+
   private OnWebViewStatusListener onWebViewStatusListener;
   private int position;
+
   @Override public void onAttach(Context context) {
     super.onAttach(context);
     onWebViewStatusListener = (OnWebViewStatusListener) context;
@@ -96,5 +100,11 @@ public class WebFragment extends BaseFragment
 
   @Override public boolean canGoBack() {
     return webView.canGoBack();
+  }
+
+  @Override public void onDestroyView() {
+    rootView.removeView(webView);
+    webView.destroy();
+    super.onDestroyView();
   }
 }
