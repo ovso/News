@@ -25,6 +25,10 @@ public interface WebPresenter {
 
   void canGoForward(boolean canGoForward, int fragmentPosition);
 
+  void onViewPagerLeftClick(int viewPagerCurrentPosition);
+
+  void onViewPagerRightClick(int viewPagerCurrentPosition);
+
   interface View {
 
     Context getContext();

@@ -10,7 +10,6 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import java.util.Collections;
 import java.util.List;
-import timber.log.Timber;
 
 public class WebPresenterImpl implements WebPresenter {
 
@@ -36,7 +35,7 @@ public class WebPresenterImpl implements WebPresenter {
           return items;
         }).subscribeOn(schedulers.io()).observeOn(schedulers.ui()).subscribe(entities -> {
           view.setupViewPager(entities);
-          view.navigateToPosition(intent.getIntExtra("position", 0));
+          view.gotoPageOnViewPager(intent.getIntExtra("position", 0));
         })));
   }
 
@@ -135,6 +134,14 @@ public class WebPresenterImpl implements WebPresenter {
         view.disableForwardButton();
       }
     }
+  }
+
+  @Override public void onViewPagerLeftClick(int viewPagerCurrentPosition) {
+    view.gotoPageOnViewPager(viewPagerCurrentPosition - 1);
+  }
+
+  @Override public void onViewPagerRightClick(int viewPagerCurrentPosition) {
+    view.gotoPageOnViewPager(viewPagerCurrentPosition + 1);
   }
 
   private boolean isFirstPosition(int position) {

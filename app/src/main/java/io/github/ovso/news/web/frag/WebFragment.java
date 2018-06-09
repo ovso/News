@@ -15,7 +15,6 @@ import io.github.ovso.news.R;
 import io.github.ovso.news.framework.baseview.BaseFragment;
 import io.github.ovso.news.web.listener.OnWebNavigationListener;
 import io.github.ovso.news.web.listener.OnWebViewStatusListener;
-import timber.log.Timber;
 
 public class WebFragment extends BaseFragment
     implements OnWebNavigationListener {
@@ -39,6 +38,7 @@ public class WebFragment extends BaseFragment
 
   @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
+    webView = getView().findViewById(R.id.webview);
     position = getArguments().getInt("position");
     WebSettings settings = webView.getSettings();
     settings.setJavaScriptEnabled(true);

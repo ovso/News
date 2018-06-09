@@ -20,7 +20,6 @@ import io.github.ovso.news.web.listener.OnWebViewStatusListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import timber.log.Timber;
 
 public class WebActivity extends BaseActivity implements WebPresenter.View,
     OnWebViewStatusListener {
@@ -69,7 +68,7 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
         onWebNavigationListener.canGoBack(), onWebNavigationListener.canGoForward());
   }
 
-  private int getCurrentPosition() {
+  private int getViewPagerCurrentPosition() {
     return viewPager.getCurrentItem();
   }
 
@@ -167,12 +166,14 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
     super.onDestroy();
   }
 
-  @OnClick(R.id.left_button) void onLeftClick() {
-    viewPager.setCurrentItem(getCurrentPosition() - 1, true);
+  @OnClick(R.id.left_button) void onViewPagerLeftClick() {
+    presenter.onViewPagerLeftClick(getViewPagerCurrentPosition());
+
   }
 
-  @OnClick(R.id.right_button) void onRightClick() {
-    viewPager.setCurrentItem(getCurrentPosition() + 1, true);
+  @OnClick(R.id.right_button) void onViewPagerRightClick() {
+    presenter.onViewPagerRightClick(getViewPagerCurrentPosition());
+
   }
 
   @Override public void onProgress(int progress, int positionOfFragment) {
@@ -193,9 +194,5 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
 
   @Override public void canGoForward(boolean canGoForward, int fragmentPosition) {
     presenter.canGoForward(canGoForward, fragmentPosition);
-  }
-
-  private boolean isSynchronizedPosition(int itemPosition) {
-    return viewPager.getCurrentItem() == itemPosition;
   }
 }
