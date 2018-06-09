@@ -11,13 +11,19 @@ public interface WebPresenter {
 
   void onCreate(Intent intent);
 
-  void onPageChange(int position, int itemCount);
-
   void onNaviClick(int id);
 
-  void canGoBack(boolean canGoBack);
+  void onPageChange(int position, int itemCount, boolean canGoBack, boolean canGoForward);
 
-  void canGoForward(boolean canGoForward);
+  void onProgress(int progress, int positionOfFragment);
+
+  void onPageStarted(int fragmentPosition);
+
+  void onPageFinished(int fragmentPosition);
+
+  void canGoBack(boolean canGoBack, int fragmentPosition);
+
+  void canGoForward(boolean canGoForward, int fragmentPosition);
 
   interface View {
 
@@ -53,5 +59,12 @@ public interface WebPresenter {
 
     void disableForwardButton();
 
+    void gotoPageOnViewPager(int position);
+
+    void setWebProgress(int progress);
+
+    void showProgressBar();
+
+    void hideProgressBar();
   }
 }

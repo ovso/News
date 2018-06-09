@@ -15,11 +15,13 @@ import io.github.ovso.news.R;
 import io.github.ovso.news.framework.baseview.BaseFragment;
 import io.github.ovso.news.web.listener.OnWebNavigationListener;
 import io.github.ovso.news.web.listener.OnWebViewStatusListener;
+import timber.log.Timber;
 
 public class WebFragment extends BaseFragment
-    implements OnWebNavigationListener{
+    implements OnWebNavigationListener {
   @BindView(R.id.webview) WebView webView;
   private OnWebViewStatusListener onWebViewStatusListener;
+  private int position;
   @Override public void onAttach(Context context) {
     super.onAttach(context);
     onWebViewStatusListener = (OnWebViewStatusListener) context;
@@ -37,6 +39,7 @@ public class WebFragment extends BaseFragment
 
   @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
+    position = getArguments().getInt("position");
     WebSettings settings = webView.getSettings();
     settings.setJavaScriptEnabled(true);
     settings.setLoadWithOverviewMode(true);
@@ -52,20 +55,20 @@ public class WebFragment extends BaseFragment
     webView.setWebChromeClient(new WebChromeClient() {
       @Override public void onProgressChanged(WebView view, int newProgress) {
         super.onProgressChanged(view, newProgress);
-        onWebViewStatusListener.onProgress(newProgress, getArguments().getInt("position"));
+        onWebViewStatusListener.onProgress(newProgress, position);
       }
     });
     webView.setWebViewClient(new WebViewClient() {
       @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
-        onWebViewStatusListener.onPageStarted(getArguments().getInt("position"));
+        onWebViewStatusListener.onPageStarted(position);
       }
 
       @Override public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-        onWebViewStatusListener.onPageFinished(getArguments().getInt("position"));
-        onWebViewStatusListener.canGoBack(view.canGoBack());
-        onWebViewStatusListener.canGoForward(view.canGoForward());
+        onWebViewStatusListener.onPageFinished(position);
+        onWebViewStatusListener.canGoBack(view.canGoBack(), position);
+        onWebViewStatusListener.canGoForward(view.canGoForward(), position);
       }
     });
     webView.loadUrl(getArguments().getString("link"));

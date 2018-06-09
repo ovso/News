@@ -20,6 +20,7 @@ import io.github.ovso.news.web.listener.OnWebViewStatusListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import timber.log.Timber;
 
 public class WebActivity extends BaseActivity implements WebPresenter.View,
     OnWebViewStatusListener {
@@ -63,25 +64,13 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
   }
 
   @OnPageChange(R.id.viewpager) void onPageChange(int position) {
-    presenter.onPageChange(position, viewPager.getAdapter().getCount());
     onWebNavigationListener = getOnWebNavigationListener(position);
-    
-    setupNavigationBackForward(position);
+    presenter.onPageChange(position, viewPager.getAdapter().getCount(),
+        onWebNavigationListener.canGoBack(), onWebNavigationListener.canGoForward());
   }
 
-  private void setupNavigationBackForward(int position) {
-    if(viewPager.getCurrentItem() == position) {
-      if(onWebNavigationListener.canGoBack()) {
-        enableBackButton();
-      } else {
-        disableBackButton();
-      }
-      if(onWebNavigationListener.canGoForward()) {
-        enableForwardButton();
-      } else {
-        disableForwardButton();
-      }
-    }
+  private int getCurrentPosition() {
+    return viewPager.getCurrentItem();
   }
 
   private OnWebNavigationListener getOnWebNavigationListener(int position) {
@@ -153,6 +142,22 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
     forwardButton.setImageResource(R.drawable.ic_keyboard_arrow_right_disable);
   }
 
+  @Override public void gotoPageOnViewPager(int position) {
+    viewPager.setCurrentItem(position, true);
+  }
+
+  @Override public void setWebProgress(int progress) {
+    progressBar.setProgress(progress);
+  }
+
+  @Override public void showProgressBar() {
+    progressBar.show();
+  }
+
+  @Override public void hideProgressBar() {
+    progressBar.hide();
+  }
+
   @Override public Context getContext() {
     return this;
   }
@@ -163,36 +168,34 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
   }
 
   @OnClick(R.id.left_button) void onLeftClick() {
-    viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true);
+    viewPager.setCurrentItem(getCurrentPosition() - 1, true);
   }
 
   @OnClick(R.id.right_button) void onRightClick() {
-    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+    viewPager.setCurrentItem(getCurrentPosition() + 1, true);
   }
 
-  @Override public void onProgress(int progress, int itemPosition) {
-    if (viewPager.getCurrentItem() == itemPosition) {
-      progressBar.setProgress(progress);
-    }
+  @Override public void onProgress(int progress, int positionOfFragment) {
+    presenter.onProgress(progress, positionOfFragment);
   }
 
-  @Override public void onPageStarted(int itemPosition) {
-    if (viewPager.getCurrentItem() == itemPosition) {
-      progressBar.show();
-    }
+  @Override public void onPageStarted(int fragmentPosition) {
+    presenter.onPageStarted(fragmentPosition);
   }
 
-  @Override public void onPageFinished(int itemPosition) {
-    if (viewPager.getCurrentItem() == itemPosition) {
-      progressBar.hide();
-    }
+  @Override public void onPageFinished(int fragmentPosition) {
+    presenter.onPageFinished(fragmentPosition);
   }
 
-  @Override public void canGoBack(boolean canGoBack) {
-    presenter.canGoBack(canGoBack);
+  @Override public void canGoBack(boolean canGoBack, int fragmentPosition) {
+    presenter.canGoBack(canGoBack, fragmentPosition);
   }
 
-  @Override public void canGoForward(boolean canGoForward) {
-    presenter.canGoForward(canGoForward);
+  @Override public void canGoForward(boolean canGoForward, int fragmentPosition) {
+    presenter.canGoForward(canGoForward, fragmentPosition);
+  }
+
+  private boolean isSynchronizedPosition(int itemPosition) {
+    return viewPager.getCurrentItem() == itemPosition;
   }
 }
