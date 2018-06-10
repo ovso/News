@@ -46,5 +46,6 @@ public class WebPagerAdapter extends FragmentPagerAdapter implements WebAdapterD
 
   @Override public void notifyItemRemoved(int position) {
     // do nothing..
+    // do nothing..
   }
 }
