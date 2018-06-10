@@ -49,7 +49,15 @@ public class WebPresenterImpl implements WebPresenter {
           view.refresh();
           view.gotoPageOnViewPager(viewPagerPosition);
           hideOrShowPageNavigationButton();
+          setupWebNavigationListener();
         })));
+  }
+
+  private void setupWebNavigationListener() {
+    if (isFirstPosition()) {
+      onWebNavigationListener =
+          (OnWebNavigationListener) adapterDataModel.getItem(viewPagerPosition);
+    }
   }
 
   private List<Fragment> generateFragments(final List<WebsiteEntity> $items) {

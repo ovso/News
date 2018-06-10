@@ -3,6 +3,7 @@ package io.github.ovso.news.web.apdater;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,10 @@ public class WebPagerAdapter extends FragmentPagerAdapter implements WebAdapterD
 
   public WebPagerAdapter(FragmentManager fm) {
     super(fm);
+  }
+
+  @Override public void destroyItem(ViewGroup container, int position, Object object) {
+    //super.destroyItem(container, position, object);
   }
 
   @Override public void addAll(List<Fragment> $items) {
