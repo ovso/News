@@ -2,12 +2,17 @@ package io.github.ovso.news.web;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.rx.SchedulersFacade;
+import io.github.ovso.news.web.apdater.WebAdapterDataModel;
+import io.github.ovso.news.web.frag.WebFragment;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,15 +23,17 @@ public class WebPresenterImpl implements WebPresenter {
   private CompositeDisposable compositeDisposable = new CompositeDisposable();
   private SchedulersFacade schedulers;
   private int viewPagerPosition;
-
+  private WebAdapterDataModel<Fragment> adapterDataModel;
   public WebPresenterImpl(WebPresenter.View view, AppDatabase database,
-      SchedulersFacade schedulers) {
+      SchedulersFacade schedulers, WebAdapterDataModel<Fragment> adapterDataModel) {
     this.view = view;
     this.database = database;
     this.schedulers = schedulers;
+    this.adapterDataModel = adapterDataModel;
   }
 
   @Override public void onCreate(Intent intent) {
+    view.setupViewPager();
     viewPagerPosition = intent.getIntExtra("position", 0);
     database.websiteDao().getLiveDataItems().observe((LifecycleOwner) view.getContext(),
         $items -> compositeDisposable.addAll(Observable.fromCallable(() -> {
@@ -35,12 +42,33 @@ public class WebPresenterImpl implements WebPresenter {
               (o1, o2) -> o1.position < o2.position ? -1 : o1.position > o2.position ? 1 : 0);
           return items;
         }).subscribeOn(schedulers.io()).observeOn(schedulers.ui()).subscribe(entities -> {
-          view.setupViewPager(entities);
+          adapterDataModel.addAll(generateFragments(entities));
+          view.refresh();
           view.gotoPageOnViewPager(viewPagerPosition);
           handlingForPageMoveButton(entities.size());
         })));
   }
 
+  private List<Fragment> generateFragments(final List<WebsiteEntity> $items) {
+    List<Fragment> fragments = new ArrayList<>();
+    for (int i = 0; i < $items.size(); i++) {
+      Bundle args = new Bundle();
+      args.putString("link", $items.get(i).getLink());
+      args.putInt("position", i);
+      fragments.add(WebFragment.newInstance(args));
+    }
+    return fragments;
+  }
+  /*
+      List<Fragment> fragments = new ArrayList<>();
+    for (int i = 0; i < items.size(); i++) {
+      Bundle args = new Bundle();
+      args.putString("link", items.get(i).getLink());
+      args.putInt("position", i);
+      fragments.add(WebFragment.newInstance(args));
+    }
+
+   */
   //사용하지 않음
   @Override
   public void onPageChange(int position, int itemCount, boolean canGoBack, boolean canGoForward) {

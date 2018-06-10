@@ -35,6 +35,8 @@ public interface WebPresenter {
 
     Context getContext();
 
+    void setupViewPager();
+
     void setupViewPager(List<WebsiteEntity> items);
 
     void navigateToPosition(int position);
@@ -72,5 +74,7 @@ public interface WebPresenter {
     void showProgressBar();
 
     void hideProgressBar();
+
+    void refresh();
   }
 }

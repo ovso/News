@@ -12,7 +12,9 @@ import butterknife.OnPageChange;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.ActivityUtils;
+import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.baseview.BaseActivity;
+import io.github.ovso.news.web.apdater.WebAdapterDataModel;
 import io.github.ovso.news.web.apdater.WebPagerAdapter;
 import io.github.ovso.news.web.frag.WebFragment;
 import io.github.ovso.news.web.listener.OnWebNavigationListener;
@@ -29,8 +31,10 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
   @BindView(R.id.progressbar) ContentLoadingProgressBar progressBar;
   @BindView(R.id.back_button) ImageButton backButton;
   @BindView(R.id.forward_button) ImageButton forwardButton;
-  @Inject
-  WebPresenter presenter;
+
+  @Inject WebPagerAdapter adapter;
+  @Inject BaseAdapterView adapterView;
+  @Inject WebPresenter presenter;
   private OnWebNavigationListener onWebNavigationListener;
 
   @Override
@@ -50,6 +54,11 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
     return R.layout.activity_web;
   }
 
+  @Override public void setupViewPager() {
+    viewPager.setAdapter(adapter);
+    viewPager.setPagingEnabled(false);
+  }
+
   @Override public void setupViewPager(List<WebsiteEntity> items) {
     List<Fragment> fragments = new ArrayList<>();
     for (int i = 0; i < items.size(); i++) {
@@ -58,8 +67,6 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
       args.putInt("position", i);
       fragments.add(WebFragment.newInstance(args));
     }
-    viewPager.setAdapter(new WebPagerAdapter(getSupportFragmentManager(), fragments));
-    viewPager.setPagingEnabled(false);
   }
 
   @OnPageChange(R.id.viewpager) void onPageChange(int position) {
@@ -158,6 +165,10 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
     progressBar.hide();
   }
 
+  @Override public void refresh() {
+    adapterView.refresh();
+  }
+
   @Override public Context getContext() {
     return this;
   }
@@ -169,12 +180,10 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
 
   @OnClick(R.id.left_button) void onViewPagerLeftClick() {
     presenter.onViewPagerLeftClick(getViewPagerCurrentPosition());
-
   }
 
   @OnClick(R.id.right_button) void onViewPagerRightClick() {
     presenter.onViewPagerRightClick(getViewPagerCurrentPosition());
-
   }
 
   @Override public void onProgress(int progress, int positionOfFragment) {
