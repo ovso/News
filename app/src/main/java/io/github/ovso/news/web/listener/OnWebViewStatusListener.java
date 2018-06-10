@@ -4,6 +4,4 @@ public interface OnWebViewStatusListener {
   void onProgress(int progress, int itemPosition);
   void onPageStarted(int itemPosition);
   void onPageFinished(int itemPosition);
-  void canGoBack(boolean canGoBack, int itemPosition);
-  void canGoForward(boolean canGoForward, int itemPosition);
 }

@@ -21,23 +21,15 @@ public interface WebPresenter {
 
   void onPageFinished(int fragmentPosition);
 
-  void canGoBack(boolean canGoBack, int fragmentPosition);
+  void onViewPagerLeftClick();
 
-  void canGoForward(boolean canGoForward, int fragmentPosition);
-
-  void onViewPagerLeftClick(int viewPagerCurrentPosition);
-
-  void onViewPagerRightClick(int viewPagerCurrentPosition);
+  void onViewPagerRightClick();
 
   interface View {
 
     Context getContext();
 
     void setupViewPager();
-
-    void setupViewPager(List<WebsiteEntity> items);
-
-    void navigateToPosition(int position);
 
     void hideLeftButton();
 
@@ -48,22 +40,6 @@ public interface WebPresenter {
     void showRightButton();
 
     void navigateToListUp();
-
-    void moveToBackOnWeb();
-
-    void moveToForwardOnWeb();
-
-    void reloadOnWeb();
-
-    void shareOnWeb();
-
-    void enableBackButton();
-
-    void disableBackButton();
-
-    void enableForwardButton();
-
-    void disableForwardButton();
 
     void gotoPageOnViewPager(int position);
 

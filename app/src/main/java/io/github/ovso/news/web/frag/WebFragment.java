@@ -71,8 +71,6 @@ public class WebFragment extends BaseFragment
       @Override public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
         onWebViewStatusListener.onPageFinished(position);
-        //onWebViewStatusListener.canGoBack(view.canGoBack(), position);
-        //onWebViewStatusListener.canGoForward(view.canGoForward(), position);
       }
     });
     webView.loadUrl(getArguments().getString("link"));
@@ -92,14 +90,6 @@ public class WebFragment extends BaseFragment
 
   @Override public void onShare() {
     Toast.makeText(getContext(), webView.getUrl(), Toast.LENGTH_SHORT).show();
-  }
-
-  @Override public boolean canGoForward() {
-    return webView.canGoForward();
-  }
-
-  @Override public boolean canGoBack() {
-    return webView.canGoBack();
   }
 
   @Override public void onDestroyView() {

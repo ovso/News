@@ -10,6 +10,7 @@ import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.rx.SchedulersFacade;
 import io.github.ovso.news.web.apdater.WebAdapterDataModel;
 import io.github.ovso.news.web.frag.WebFragment;
+import io.github.ovso.news.web.listener.OnWebNavigationListener;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class WebPresenterImpl implements WebPresenter {
   private SchedulersFacade schedulers;
   private int viewPagerPosition;
   private WebAdapterDataModel<Fragment> adapterDataModel;
+  private OnWebNavigationListener onWebNavigationListener;
 
   public WebPresenterImpl(WebPresenter.View view, AppDatabase database,
       SchedulersFacade schedulers, WebAdapterDataModel<Fragment> adapterDataModel) {
@@ -63,6 +65,7 @@ public class WebPresenterImpl implements WebPresenter {
 
   @Override public void onPageChange(int position) {
     viewPagerPosition = position;
+    onWebNavigationListener = (OnWebNavigationListener) adapterDataModel.getItem(position);
     hideOrShowPageNavigationButton();
     initProgress();
   }
@@ -108,16 +111,16 @@ public class WebPresenterImpl implements WebPresenter {
   @Override public void onNaviClick(int id) {
     switch (id) {
       case R.id.back_button:
-        view.moveToBackOnWeb();
+        onWebNavigationListener.onBack();
         break;
       case R.id.forward_button:
-        view.moveToForwardOnWeb();
+        onWebNavigationListener.onForward();
         break;
       case R.id.refresh_button:
-        view.reloadOnWeb();
+        onWebNavigationListener.onReload();
         break;
       case R.id.share_button:
-        view.shareOnWeb();
+        onWebNavigationListener.onShare();
         break;
       case R.id.listup_button:
         view.navigateToListUp();
@@ -125,32 +128,12 @@ public class WebPresenterImpl implements WebPresenter {
     }
   }
 
-  @Override public void canGoBack(boolean canGoBack, int fragmentPosition) {
-    if (isSynchronizedPosition(fragmentPosition)) {
-      if (canGoBack) {
-        view.enableBackButton();
-      } else {
-        view.disableBackButton();
-      }
-    }
+  @Override public void onViewPagerLeftClick() {
+    view.gotoPageOnViewPager(viewPagerPosition - 1);
   }
 
-  @Override public void canGoForward(boolean canGoForward, int fragmentPosition) {
-    if (isSynchronizedPosition(fragmentPosition)) {
-      if (canGoForward) {
-        view.enableForwardButton();
-      } else {
-        view.disableForwardButton();
-      }
-    }
-  }
-
-  @Override public void onViewPagerLeftClick(int viewPagerCurrentPosition) {
-    view.gotoPageOnViewPager(viewPagerCurrentPosition - 1);
-  }
-
-  @Override public void onViewPagerRightClick(int viewPagerCurrentPosition) {
-    view.gotoPageOnViewPager(viewPagerCurrentPosition + 1);
+  @Override public void onViewPagerRightClick() {
+    view.gotoPageOnViewPager(viewPagerPosition + 1);
   }
 
   private boolean isFirstPosition() {
