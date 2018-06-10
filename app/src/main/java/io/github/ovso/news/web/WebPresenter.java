@@ -2,6 +2,7 @@ package io.github.ovso.news.web;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.StringRes;
 import io.github.ovso.news.db.WebsiteEntity;
 import java.util.List;
 
@@ -50,5 +51,7 @@ public interface WebPresenter {
     void hideProgressBar();
 
     void refresh();
+
+    void showMessage(@StringRes int resId);
   }
 }

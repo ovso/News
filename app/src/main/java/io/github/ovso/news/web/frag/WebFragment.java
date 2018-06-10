@@ -76,12 +76,22 @@ public class WebFragment extends BaseFragment
     webView.loadUrl(getArguments().getString("link"));
   }
 
-  @Override public void onBack() {
-    webView.goBack();
+  @Override public boolean onBack() {
+    if (webView.canGoBack()) {
+      webView.goBack();
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  @Override public void onForward() {
-    webView.goForward();
+  @Override public boolean onForward() {
+    if (webView.canGoForward()) {
+      webView.goForward();
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @Override public void onReload() {

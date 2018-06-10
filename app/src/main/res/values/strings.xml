@@ -21,5 +21,6 @@
     <string name="delete_it">삭제되었습니다.</string>
   <string name="paging_lock">화면이동 스와이프 기능을 일시적으로 막습니다.\\n화면(웹페이지) 내에서 스와이프 기능을 사용하기 위함입니다.\\n좌-우 버튼은 언제나 사용할 수 있습니다.</string>
     <string name="do_not_look_again">다시 보지 않기</string>
+  <string name="no_more_page_to_move">이동할 페이지가 없습니다.</string>
 
 </resources>

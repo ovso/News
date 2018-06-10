@@ -2,6 +2,7 @@ package io.github.ovso.news.web;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.View;
 import butterknife.BindView;
@@ -90,6 +91,10 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
 
   @Override public void refresh() {
     adapterView.refresh();
+  }
+
+  @Override public void showMessage(int resId) {
+    Snackbar.make(rootView,resId, Snackbar.LENGTH_SHORT).show();
   }
 
   @Override public Context getContext() {

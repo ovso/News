@@ -111,10 +111,14 @@ public class WebPresenterImpl implements WebPresenter {
   @Override public void onNaviClick(int id) {
     switch (id) {
       case R.id.back_button:
-        onWebNavigationListener.onBack();
+        if (!onWebNavigationListener.onBack()) {
+          view.showMessage(R.string.no_more_page_to_move);
+        }
         break;
       case R.id.forward_button:
-        onWebNavigationListener.onForward();
+        if (!onWebNavigationListener.onForward()) {
+          view.showMessage(R.string.no_more_page_to_move);
+        }
         break;
       case R.id.refresh_button:
         onWebNavigationListener.onReload();
