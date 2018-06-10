@@ -13,9 +13,7 @@ public interface WebPresenter {
 
   void onNaviClick(int id);
 
-  void onPageChange(int position, int itemCount, boolean canGoBack, boolean canGoForward);
-
-  void onPageChange(int position, int itemCount);
+  void onPageChange(int position);
 
   void onProgress(int progress, int positionOfFragment);
 

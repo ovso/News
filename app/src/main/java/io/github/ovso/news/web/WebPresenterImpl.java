@@ -24,6 +24,7 @@ public class WebPresenterImpl implements WebPresenter {
   private SchedulersFacade schedulers;
   private int viewPagerPosition;
   private WebAdapterDataModel<Fragment> adapterDataModel;
+
   public WebPresenterImpl(WebPresenter.View view, AppDatabase database,
       SchedulersFacade schedulers, WebAdapterDataModel<Fragment> adapterDataModel) {
     this.view = view;
@@ -45,7 +46,7 @@ public class WebPresenterImpl implements WebPresenter {
           adapterDataModel.addAll(generateFragments(entities));
           view.refresh();
           view.gotoPageOnViewPager(viewPagerPosition);
-          handlingForPageMoveButton(entities.size());
+          hideOrShowPageNavigationButton();
         })));
   }
 
@@ -59,28 +60,10 @@ public class WebPresenterImpl implements WebPresenter {
     }
     return fragments;
   }
-  /*
-      List<Fragment> fragments = new ArrayList<>();
-    for (int i = 0; i < items.size(); i++) {
-      Bundle args = new Bundle();
-      args.putString("link", items.get(i).getLink());
-      args.putInt("position", i);
-      fragments.add(WebFragment.newInstance(args));
-    }
 
-   */
-  //사용하지 않음
-  @Override
-  public void onPageChange(int position, int itemCount, boolean canGoBack, boolean canGoForward) {
+  @Override public void onPageChange(int position) {
     viewPagerPosition = position;
-    handlingForPageMoveButton(itemCount);
-    handlingForWebBackButton(canGoBack);
-    handlingForWebForwardButton(canGoForward);
-  }
-
-  @Override public void onPageChange(int position, int itemCount) {
-    viewPagerPosition = position;
-    handlingForPageMoveButton(itemCount);
+    hideOrShowPageNavigationButton();
     initProgress();
   }
 
@@ -111,26 +94,10 @@ public class WebPresenterImpl implements WebPresenter {
     return viewPagerPosition == fragmentPosition;
   }
 
-  private void handlingForWebForwardButton(boolean canGoForward) {
-    if (canGoForward) {
-      view.enableForwardButton();
-    } else {
-      view.disableForwardButton();
-    }
-  }
-
-  private void handlingForWebBackButton(boolean canGoBack) {
-    if (canGoBack) {
-      view.enableBackButton();
-    } else {
-      view.disableBackButton();
-    }
-  }
-
-  private void handlingForPageMoveButton(int itemCount) {
-    if (isFirstPosition(viewPagerPosition)) {
+  private void hideOrShowPageNavigationButton() {
+    if (isFirstPosition()) {
       view.hideLeftButton();
-    } else if (isLastPosition(viewPagerPosition, itemCount)) {
+    } else if (isLastPosition()) {
       view.hideRightButton();
     } else {
       view.showLeftButton();
@@ -186,12 +153,12 @@ public class WebPresenterImpl implements WebPresenter {
     view.gotoPageOnViewPager(viewPagerCurrentPosition + 1);
   }
 
-  private boolean isFirstPosition(int position) {
-    return position == 0;
+  private boolean isFirstPosition() {
+    return viewPagerPosition == 0;
   }
 
-  private boolean isLastPosition(int position, int itemCount) {
-    return position == (itemCount - 1);
+  private boolean isLastPosition() {
+    return viewPagerPosition == (adapterDataModel.getSize() - 1);
   }
 
   @Override public void onDestroy() {
