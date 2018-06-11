@@ -20,7 +20,7 @@ public class SearchNetwork extends BaseNetwork<SearchApi> {
 
   public Observable<WebsiteResult> getWebsiteResult(String text) {
     Map<String, String> queryMap = new HashMap<>();
-    queryMap.put("display", String.valueOf(5));
+    queryMap.put("display", String.valueOf(20));
     queryMap.put("start", String.valueOf(1));
     queryMap.put("query", text);
     return getApi().getWebsiteResult(queryMap);
