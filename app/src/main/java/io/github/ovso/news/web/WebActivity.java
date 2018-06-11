@@ -1,6 +1,7 @@
 package io.github.ovso.news.web;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.ContentLoadingProgressBar;
@@ -94,7 +95,17 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
   }
 
   @Override public void showMessage(int resId) {
-    Snackbar.make(rootView,resId, Snackbar.LENGTH_SHORT).show();
+    Snackbar.make(rootView, resId, Snackbar.LENGTH_SHORT).show();
+  }
+
+  @Override public void doShare(String url) {
+    Intent intent = new Intent();
+    intent.setAction(Intent.ACTION_SEND);
+    intent.setType("text/plain");
+    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+    intent.putExtra(Intent.EXTRA_TEXT, url);
+    Intent chooser = Intent.createChooser(intent, getString(R.string.app_name));
+    startActivity(chooser);
   }
 
   @Override public Context getContext() {

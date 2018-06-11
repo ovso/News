@@ -132,7 +132,7 @@ public class WebPresenterImpl implements WebPresenter {
         onWebNavigationListener.onReload();
         break;
       case R.id.share_button:
-        onWebNavigationListener.onShare();
+        view.doShare(onWebNavigationListener.getUrl());
         break;
       case R.id.listup_button:
         view.navigateToListUp();

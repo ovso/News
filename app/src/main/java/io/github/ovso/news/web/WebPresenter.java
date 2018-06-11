@@ -53,5 +53,7 @@ public interface WebPresenter {
     void refresh();
 
     void showMessage(@StringRes int resId);
+
+    void doShare(String url);
   }
 }

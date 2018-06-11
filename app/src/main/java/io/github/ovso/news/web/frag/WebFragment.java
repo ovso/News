@@ -1,6 +1,7 @@
 package io.github.ovso.news.web.frag;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -98,8 +99,8 @@ public class WebFragment extends BaseFragment
     webView.reload();
   }
 
-  @Override public void onShare() {
-    Toast.makeText(getContext(), webView.getUrl(), Toast.LENGTH_SHORT).show();
+  @Override public String getUrl() {
+    return webView.getUrl();
   }
 
   @Override public void onDestroyView() {

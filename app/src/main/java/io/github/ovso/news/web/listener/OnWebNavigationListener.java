@@ -7,5 +7,5 @@ public interface OnWebNavigationListener {
 
   void onReload();
 
-  void onShare();
+  String getUrl();
 }
