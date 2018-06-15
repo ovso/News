@@ -7,15 +7,13 @@ public interface SearchViewPresenter {
 
   void onCreate();
 
-  void onQueryTextChange(String newText);
-
   void onStop();
 
   void onItemClick(Website item);
 
-  interface View {
+  void onSearchTextChanged(String newText);
 
-    void setListener();
+  interface View {
 
     void showErrorMessage(@StringRes int resId);
 
