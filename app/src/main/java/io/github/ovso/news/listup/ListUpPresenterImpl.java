@@ -1,6 +1,8 @@
 package io.github.ovso.news.listup;
 
 import android.arch.lifecycle.LifecycleOwner;
+import com.pixplicity.easyprefs.library.Prefs;
+import io.github.ovso.news.data.Preferences;
 import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.DeprecatedUtils;
@@ -29,6 +31,11 @@ public class ListUpPresenterImpl implements ListUpPresenter {
 
   @Override
   public void onCreate() {
+    if (!isCurrentLastScreen()) {
+      view.navigateToWeb(Prefs.getInt(Preferences.KEY_WEB_POSITION.get(), 0));
+      view.finish();
+      return;
+    }
     view.setupRecyclerView();
     database.websiteDao()
         .getLiveDataItems()
@@ -46,11 +53,18 @@ public class ListUpPresenterImpl implements ListUpPresenter {
             })));
   }
 
+  private boolean isCurrentLastScreen() {
+    String last =
+        Prefs.getString(Preferences.KEY_LAST_SCREEN.get(), Preferences.SCREEN_LIST_UP.get());
+    return last.equals(Preferences.SCREEN_LIST_UP.get());
+  }
+
   @Override
   public void onDestroy() {
     //database.close();
     compositeDisposable.clear();
     view.release();
+    Prefs.putString(Preferences.KEY_LAST_SCREEN.get(), Preferences.SCREEN_LIST_UP.get());
   }
 
   @Override
@@ -80,5 +94,10 @@ public class ListUpPresenterImpl implements ListUpPresenter {
       dialog.dismiss();
     });
     return true;
+  }
+
+  @Override public void onItemClick(WebsiteEntity item) {
+    view.navigateToWeb(item.getPosition());
+    view.finish();
   }
 }

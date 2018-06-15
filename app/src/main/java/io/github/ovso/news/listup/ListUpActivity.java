@@ -31,140 +31,144 @@ import io.github.ovso.news.framework.baseview.BaseActivity;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
 import io.github.ovso.news.listup.listener.OnAdapterListener;
 
-public class ListUpActivity extends BaseActivity implements ListUpPresenter.View, OnAdapterListener<WebsiteEntity> {
+public class ListUpActivity extends BaseActivity
+    implements ListUpPresenter.View, OnAdapterListener<WebsiteEntity> {
 
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerView;
+  @BindView(R.id.recyclerview)
+  RecyclerView recyclerView;
 
-    @Inject
-    ListUpPresenter presenter;
-    @Inject
-    ListUpAdapter adapter;
-    @Inject
-    BaseAdapterView adapterView;
-    @Inject
-    RecyclerViewDragDropManager dragDropManager;
-    @Inject
-    DraggableItemAnimator animator;
-    @Inject
-    ItemShadowDecorator itemShadowDecorator;
-    @Inject
-    SimpleListDividerDecorator simpleListDividerDecorator;
-    @Inject
-    RecyclerView.Adapter wrappedAdapter;
-    @Inject
-    LinearLayoutManager layoutManager;
+  @Inject
+  ListUpPresenter presenter;
+  @Inject
+  ListUpAdapter adapter;
+  @Inject
+  BaseAdapterView adapterView;
+  @Inject
+  RecyclerViewDragDropManager dragDropManager;
+  @Inject
+  DraggableItemAnimator animator;
+  @Inject
+  ItemShadowDecorator itemShadowDecorator;
+  @Inject
+  SimpleListDividerDecorator simpleListDividerDecorator;
+  @Inject
+  RecyclerView.Adapter wrappedAdapter;
+  @Inject
+  LinearLayoutManager layoutManager;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        presenter.onCreate();
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    presenter.onCreate();
+  }
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.activity_listup;
+  }
+
+  @OnClick(R.id.fab)
+  void onFabClick() {
+    ActivityUtils.startActivitySearch(this);
+  }
+
+  @Override
+  protected void onDestroy() {
+    presenter.onDestroy();
+    super.onDestroy();
+  }
+
+  @Override
+  public void showErrorMessage(int resId) {
+    Snackbar.make(rootView, resId, Toast.LENGTH_SHORT).show();
+  }
+
+  @Override
+  public void setupRecyclerView() {
+    recyclerView.setLayoutManager(layoutManager);
+    recyclerView.setAdapter(wrappedAdapter);
+    recyclerView.setItemAnimator(animator);
+    recyclerView.addItemDecoration(itemShadowDecorator);
+    recyclerView.addItemDecoration(simpleListDividerDecorator);
+    dragDropManager.attachRecyclerView(recyclerView);
+  }
+
+  @Override
+  public void refresh() {
+    adapterView.refresh();
+  }
+
+  @Override
+  public Context getContext() {
+    return this;
+  }
+
+  @Override
+  public void release() {
+    if (dragDropManager != null) {
+      dragDropManager.release();
+      dragDropManager = null;
     }
 
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_listup;
+    if (recyclerView != null) {
+      recyclerView.setItemAnimator(null);
+      recyclerView.setAdapter(null);
+      recyclerView = null;
     }
 
-    @OnClick(R.id.fab)
-    void onFabClick() {
-        ActivityUtils.startActivitySearch(this);
+    if (wrappedAdapter != null) {
+      WrapperAdapterUtils.releaseAll(wrappedAdapter);
+      wrappedAdapter = null;
     }
+    adapter = null;
+    layoutManager = null;
+  }
 
-    @Override
-    protected void onDestroy() {
-        presenter.onDestroy();
-        super.onDestroy();
-    }
+  @Override
+  public void showSnackBar(int resId) {
+    Snackbar.make(rootView, resId, Snackbar.LENGTH_SHORT).show();
+  }
 
-    @Override
-    public void showErrorMessage(int resId) {
-        Snackbar.make(rootView, resId, Toast.LENGTH_SHORT).show();
-    }
+  @Override
+  public void showRemoveDialog(String title, DialogInterface.OnClickListener onClickListener) {
+    new AlertDialog.Builder(this)
+        .setTitle(title)
+        .setMessage(R.string.do_you_want_to_delete)
+        .setPositiveButton(android.R.string.ok, onClickListener)
+        .setNegativeButton(android.R.string.cancel, onClickListener)
+        .show();
+  }
 
-    @Override
-    public void setupRecyclerView() {
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(wrappedAdapter);
-        recyclerView.setItemAnimator(animator);
-        recyclerView.addItemDecoration(itemShadowDecorator);
-        recyclerView.addItemDecoration(simpleListDividerDecorator);
-        dragDropManager.attachRecyclerView(recyclerView);
-    }
+  @Override
+  public void notifyItemRemoved(int position) {
+    adapterView.notifyItemRemoved(position);
+  }
 
-    @Override
-    public void refresh() {
-        adapterView.refresh();
-    }
+  @DebugLog
+  @Override
+  public void onItemClick(WebsiteEntity item) {
+    presenter.onItemClick(item);
+  }
 
-    @Override
-    public Context getContext() {
-        return this;
-    }
+  @Override public void navigateToWeb(int position) {
+    Intent intent = new Intent(getApplicationContext(), WebActivity.class);
+    intent.putExtra("position", position);
+    startActivity(intent);
+  }
 
-    @Override
-    public void release() {
-        if (dragDropManager != null) {
-            dragDropManager.release();
-            dragDropManager = null;
-        }
+  @Override
+  public boolean onItemLongClick(int position) {
+    return presenter.onItemLongClick(position);
+  }
 
-        if (recyclerView != null) {
-            recyclerView.setItemAnimator(null);
-            recyclerView.setAdapter(null);
-            recyclerView = null;
-        }
+  @Override
+  protected void onPause() {
+    dragDropManager.cancelDrag();
+    super.onPause();
+  }
 
-        if (wrappedAdapter != null) {
-            WrapperAdapterUtils.releaseAll(wrappedAdapter);
-            wrappedAdapter = null;
-        }
-        adapter = null;
-        layoutManager = null;
-    }
-
-    @Override
-    public void showSnackBar(int resId) {
-        Snackbar.make(rootView, resId, Snackbar.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showRemoveDialog(String title, DialogInterface.OnClickListener onClickListener) {
-        new AlertDialog.Builder(this)
-                .setTitle(title)
-                .setMessage(R.string.do_you_want_to_delete)
-                .setPositiveButton(android.R.string.ok, onClickListener)
-                .setNegativeButton(android.R.string.cancel, onClickListener)
-                .show();
-    }
-
-    @Override
-    public void notifyItemRemoved(int position) {
-        adapterView.notifyItemRemoved(position);
-    }
-
-    @DebugLog
-    @Override
-    public void onItemClick(WebsiteEntity item) {
-        Intent intent = new Intent(getApplicationContext(), WebActivity.class);
-        intent.putExtra("position", item.getPosition());
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
-    public boolean onItemLongClick(int position) {
-        return presenter.onItemLongClick(position);
-    }
-
-    @Override
-    protected void onPause() {
-        dragDropManager.cancelDrag();
-        super.onPause();
-    }
-
-    @Override
-    public void onItemDragFinished() {
-        presenter.onItemDragFinished();
-    }
+  @Override
+  public void onItemDragFinished() {
+    presenter.onItemDragFinished();
+  }
 }

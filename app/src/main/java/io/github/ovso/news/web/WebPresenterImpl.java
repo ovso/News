@@ -4,7 +4,9 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import com.pixplicity.easyprefs.library.Prefs;
 import io.github.ovso.news.R;
+import io.github.ovso.news.data.Preferences;
 import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.db.WebsiteEntity;
 import io.github.ovso.news.framework.rx.SchedulersFacade;
@@ -158,5 +160,7 @@ public class WebPresenterImpl implements WebPresenter {
 
   @Override public void onDestroy() {
     //database.close();
+    Prefs.putString(Preferences.KEY_LAST_SCREEN.get(), Preferences.SCREEN_WEB.get());
+    Prefs.putInt(Preferences.KEY_WEB_POSITION.get(), viewPagerPosition);
   }
 }

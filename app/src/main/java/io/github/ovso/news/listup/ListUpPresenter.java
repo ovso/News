@@ -10,29 +10,35 @@ import io.github.ovso.news.db.WebsiteEntity;
 
 public interface ListUpPresenter {
 
-    void onCreate();
+  void onCreate();
 
-    void onDestroy();
+  void onDestroy();
 
-    void onItemDragFinished();
+  void onItemDragFinished();
 
-    boolean onItemLongClick(int position);
+  boolean onItemLongClick(int position);
 
-    interface View {
-        void showErrorMessage(@StringRes int resId);
+  void onItemClick(WebsiteEntity item);
 
-        void setupRecyclerView();
+  interface View {
+    void showErrorMessage(@StringRes int resId);
 
-        void refresh();
+    void setupRecyclerView();
 
-        Context getContext();
+    void refresh();
 
-        void release();
+    Context getContext();
 
-        void showSnackBar(@StringRes int resId);
+    void release();
 
-        void showRemoveDialog(String title, DialogInterface.OnClickListener onClickListener);
+    void showSnackBar(@StringRes int resId);
 
-        void notifyItemRemoved(int position);
-    }
+    void showRemoveDialog(String title, DialogInterface.OnClickListener onClickListener);
+
+    void notifyItemRemoved(int position);
+
+    void navigateToWeb(int position);
+
+    void finish();
+  }
 }
