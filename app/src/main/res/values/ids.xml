@@ -3,7 +3,6 @@
   <item name="root_view" type="id"/>
   <item name="fab" type="id"/>
   <item name="recyclerview" type="id"/>
-  <item name="searchview" type="id"/>
   <item name="title_textview" type="id"/>
   <item name="desc_textview" type="id"/>
   <item name="viewpager" type="id"/>

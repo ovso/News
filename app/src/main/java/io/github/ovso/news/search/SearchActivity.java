@@ -5,7 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.widget.EditText;
 import butterknife.BindView;
+import butterknife.OnTextChanged;
+import hugo.weaving.DebugLog;
 import io.github.ovso.news.R;
 import io.github.ovso.news.framework.baseview.BaseActivity;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
@@ -18,8 +21,8 @@ import javax.inject.Inject;
 
 public class SearchActivity extends BaseActivity implements SearchViewPresenter.View,
     OnRecyclerItemClickListener<Website> {
-  @BindView(R.id.searchview) SearchView searchView;
   @BindView(R.id.recyclerview) RecyclerView recyclerView;
+  @BindView(R.id.search_edittext) EditText searchEditText;
 
   @Inject SearchViewPresenter presenter;
   @Inject SearchAdapter adapter;
@@ -34,12 +37,8 @@ public class SearchActivity extends BaseActivity implements SearchViewPresenter.
     return R.layout.activity_search;
   }
 
-  @Override public void setListener() {
-    searchView.setOnQueryTextListener(new OnSimpleQueryTextListener() {
-      @Override public void onQueryTextChanged(String newText) {
-        presenter.onQueryTextChange(newText);
-      }
-    });
+  @OnTextChanged(R.id.search_edittext) void onSearchTextChanged(CharSequence sequence) {
+    presenter.onSearchTextChanged(sequence.toString());
   }
 
   @Override public void showErrorMessage(int resId) {

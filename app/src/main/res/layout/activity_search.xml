@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@id/root_view"
     android:layout_width="match_parent"
@@ -9,14 +8,8 @@
     android:orientation="vertical"
     tools:context=".search.SearchActivity"
     >
-
-  <android.support.v7.widget.SearchView
-      android:id="@id/searchview"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:visibility="gone"
-      />
   <io.github.ovso.news.search.customview.SearchEditText
+      android:id="@id/search_edittext"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:drawableLeft="@drawable/ic_search"
