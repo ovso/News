@@ -17,6 +17,7 @@ public class App extends DaggerApplication {
     DEBUG = AppInitUtils.isDebug(this);
     AppInitUtils.timber(DEBUG);
     AppInitUtils.stetho(this);
+    AppInitUtils.prefs(this);
   }
 
   @Override
