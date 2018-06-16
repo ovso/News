@@ -25,6 +25,7 @@ import lombok.Data;
     entity.description = item.getDescription();
     entity.link = item.getLink();
     entity.title = item.getTitle();
+    entity.position = item.getPosition();
     return entity;
   }
 }
