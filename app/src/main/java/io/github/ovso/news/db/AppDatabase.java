@@ -4,6 +4,10 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import io.github.ovso.news.listup.adapter.ListUpAdapter;
+import io.github.ovso.news.search.model.Website;
+import java.util.ArrayList;
+import java.util.List;
 
 @Database(entities = { WebsiteEntity.class }, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
@@ -33,4 +37,10 @@ public abstract class AppDatabase extends RoomDatabase {
   }
 
   public abstract WebsiteDao websiteDao();
+
+  public void insertFirstRunData() {
+    List<WebsiteEntity> entities = new ArrayList<>();
+    // title, link, position
+
+  }
 }
