@@ -2,6 +2,7 @@ package io.github.ovso.news.web;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.ContentLoadingProgressBar;
@@ -36,7 +37,7 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
 
   @OnClick({
       R.id.back_button, R.id.forward_button, R.id.refresh_button, R.id.share_button,
-      R.id.listup_button
+      R.id.listup_button, R.id.browser_button
   }) void onNaviClick(View view) {
     presenter.onNaviClick(view.getId());
   }
@@ -106,6 +107,13 @@ public class WebActivity extends BaseActivity implements WebPresenter.View,
     intent.putExtra(Intent.EXTRA_TEXT, url);
     Intent chooser = Intent.createChooser(intent, getString(R.string.app_name));
     startActivity(chooser);
+  }
+
+  @Override public void openBrowser(String url) {
+    Intent intent = new Intent(Intent.ACTION_VIEW);
+    Uri uri = Uri.parse(url);
+    intent.setData(uri);
+    startActivity(intent);
   }
 
   @Override public Context getContext() {

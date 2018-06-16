@@ -15,6 +15,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import io.github.ovso.news.R;
 import io.github.ovso.news.framework.baseview.BaseFragment;
+import io.github.ovso.news.web.customview.FullscreenableChromeClient;
 import io.github.ovso.news.web.listener.OnWebNavigationListener;
 import io.github.ovso.news.web.listener.OnWebViewStatusListener;
 
@@ -63,6 +64,15 @@ public class WebFragment extends BaseFragment
         onWebViewStatusListener.onProgress(newProgress, position);
       }
     });
+    /*
+    webView.setWebChromeClient(new FullscreenableChromeClient(getActivity()) {
+      @Override public void onProgressChanged(WebView view, int newProgress) {
+        super.onProgressChanged(view, newProgress);
+        onWebViewStatusListener.onProgress(newProgress, position);
+      }
+    });
+    */
+
     webView.setWebViewClient(new WebViewClient() {
       @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);

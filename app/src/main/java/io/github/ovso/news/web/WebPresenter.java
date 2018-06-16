@@ -55,5 +55,7 @@ public interface WebPresenter {
     void showMessage(@StringRes int resId);
 
     void doShare(String url);
+
+    void openBrowser(String url);
   }
 }

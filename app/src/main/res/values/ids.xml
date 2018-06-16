@@ -17,4 +17,5 @@
   <item name="web_navigation_container" type="id"/>
   <item name="progressbar" type="id"/>
   <item name="search_edittext" type="id"/>
+  <item name="browser_button" type="id"/>
 </resources>

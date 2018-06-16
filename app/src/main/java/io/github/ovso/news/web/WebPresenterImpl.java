@@ -139,6 +139,9 @@ public class WebPresenterImpl implements WebPresenter {
       case R.id.listup_button:
         view.navigateToListUp();
         break;
+      case R.id.browser_button:
+        view.openBrowser(onWebNavigationListener.getUrl());
+        break;
     }
   }
 

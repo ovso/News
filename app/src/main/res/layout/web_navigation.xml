@@ -45,6 +45,12 @@
         style="@style/WebviewNavigationButtonStyle"
         />
     <ImageButton
+        android:id="@id/browser_button"
+        android:scaleType="center"
+        app:srcCompat="@drawable/ic_open_in_browser"
+        style="@style/WebviewNavigationButtonStyle"
+        />
+    <ImageButton
         android:id="@id/listup_button"
         android:scaleType="center"
         app:srcCompat="@drawable/ic_format_align"
