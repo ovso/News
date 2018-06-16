@@ -1,67 +1,67 @@
 [
   {
     "title": "경향신문",
-    "link": "",
-    "description": ""
+    "link": "http://m.khan.co.kr/",
+    "position": 0
   },
   {
     "title": "네이버 뉴스",
-    "link": "",
-    "description": ""
+    "link": "http://news.naver.com/",
+    "position": 1
   },
   {
     "title": "다음 뉴스",
-    "link": "",
-    "description": ""
+    "link": "http://m.media.daum.net/m/media/",
+    "position": 2
   },
   {
     "title": "매일경제",
-    "link": "",
-    "description": ""
+    "link": "http://m.mk.co.kr/",
+    "position": 3
   },
   {
     "title": "법률신문",
-    "link": "",
-    "description": ""
+    "link": "https://m.lawtimes.co.kr/",
+    "position": 4
   },
   {
     "title": "세계일보",
-    "link": "",
-    "description": ""
+    "link": "http://www.segye.com/",
+    "position": 5
   },
   {
     "title": "MBC 뉴스",
-    "link": "",
-    "description": ""
+    "link": "http://imnews.imbc.com/",
+    "position": 6
   },
   {
     "title": "JTBC 뉴스",
-    "link": "",
-    "description": ""
+    "link": "http://mnews.jtbc.joins.com/",
+    "position": 7
   },
   {
     "title": "철강금속신문",
-    "link": "",
-    "description": ""
+    "link": "http://m.snmnews.com/",
+    "position": 8
   },
   {
     "title": "KBS 뉴스",
-    "link": "",
-    "description": ""
+    "link": "http://mn.kbs.co.kr/",
+    "position": 9
   },
   {
     "title": "타임",
-    "link": "",
-    "description": ""
+    "link": "http://mobile.time.com/",
+    "position": 10
   },
   {
     "title": "프레시안",
-    "link": "",
-    "description": ""
+    "link": "http://m.pressian.com/",
+    "position": 11
   },
   {
-    "title": "헤럴드경제",
-    "link": "",
-    "description": ""
+    "title": "한겨레신문",
+    "link": "http://m.hani.co.kr/",
+    "position": 12
   }
 ]

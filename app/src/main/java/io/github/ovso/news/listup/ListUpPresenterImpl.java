@@ -58,7 +58,7 @@ public class ListUpPresenterImpl implements ListUpPresenter {
   private void initFirstRun() {
     if (Prefs.getBoolean(Preferences.KEY_FIRST_RUN.get(), true)) {
       Prefs.putBoolean(Preferences.KEY_FIRST_RUN.get(), false);
-      database.insertFirstRunData();
+      database.insertFirstRunData(view.getContext());
     }
   }
 
