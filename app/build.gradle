@@ -81,6 +81,9 @@ dependencies {
   implementation "com.android.support:design:$rootProject.support_lib_version"
   implementation "com.android.support.constraint:constraint-layout:$rootProject.constraint_layout_version"
 
+  // Firebase
+  implementation "com.google.firebase:firebase-ads:$rootProject.firebase_ads_version"
+
   // Butterknife
   implementation "com.jakewharton:butterknife:$rootProject.butterknife_version"
   annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknife_version"

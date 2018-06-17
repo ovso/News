@@ -28,13 +28,13 @@ public class SearchNetwork extends BaseNetwork<SearchApi> {
 
   @Override protected Headers createHeaders() {
     Map<String, String> headers = new HashMap<>();
-    headers.put(Security.NAVER_CLIENT_ID_NAME.getValue(), Security.NAVER_CLIENT_ID.getValue());
-    headers.put(Security.NAVER_CLIENT_SECRET_NAME.getValue(),
-        Security.NAVER_CLIENT_SECRET.getValue());
+    headers.put(Security.NAVER_CLIENT_ID_NAME.get(), Security.NAVER_CLIENT_ID.get());
+    headers.put(Security.NAVER_CLIENT_SECRET_NAME.get(),
+        Security.NAVER_CLIENT_SECRET.get());
     return Headers.of(headers);
   }
 
   @Override protected String getBaseUrl() {
-    return Security.BASE_URL.getValue();
+    return Security.BASE_URL.get();
   }
 }

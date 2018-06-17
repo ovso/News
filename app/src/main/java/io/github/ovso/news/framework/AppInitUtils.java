@@ -3,7 +3,10 @@ package io.github.ovso.news.framework;
 import android.content.Context;
 import android.content.ContextWrapper;
 import com.facebook.stetho.Stetho;
+import com.google.android.gms.ads.MobileAds;
 import com.pixplicity.easyprefs.library.Prefs;
+import io.github.ovso.news.App;
+import io.github.ovso.news.Security;
 import timber.log.Timber;
 
 public class AppInitUtils {
@@ -29,5 +32,9 @@ public class AppInitUtils {
         .setPrefsName(context.getPackageName())
         .setUseDefaultSharedPreference(true)
         .build();
+  }
+
+  public static void admob(Context context) {
+    MobileAds.initialize(context, Security.ADMOB_APP_ID.get());
   }
 }
