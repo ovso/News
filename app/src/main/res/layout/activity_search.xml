@@ -8,6 +8,11 @@
     android:orientation="vertical"
     tools:context=".search.SearchActivity"
     >
+  <FrameLayout
+      android:id="@id/ad_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
   <io.github.ovso.news.search.customview.SearchEditText
       android:id="@id/search_edittext"
       android:layout_width="match_parent"

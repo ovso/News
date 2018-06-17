@@ -18,4 +18,5 @@
   <item name="progressbar" type="id"/>
   <item name="search_edittext" type="id"/>
   <item name="browser_button" type="id"/>
+  <item name="ad_container" type="id"/>
 </resources>

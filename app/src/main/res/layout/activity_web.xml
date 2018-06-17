@@ -8,7 +8,11 @@
     android:layout_height="match_parent"
     tools:context=".web.WebActivity"
     >
-
+  <FrameLayout
+      android:id="@id/ad_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
   <io.github.ovso.news.web.WebViewPager
       android:id="@id/viewpager"
       android:layout_width="0dp"
@@ -16,7 +20,7 @@
       app:layout_constraintBottom_toTopOf="@+id/web_navigation_container"
       app:layout_constraintEnd_toEndOf="@+id/right_button"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/ad_container"
       />
 
   <ImageButton
