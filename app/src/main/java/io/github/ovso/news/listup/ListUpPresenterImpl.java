@@ -27,6 +27,7 @@ public class ListUpPresenterImpl implements ListUpPresenter {
     this.database = database;
     this.adapterDataModel = adapterDataModel;
     this.schedulers = schedulers;
+    view.changeTheme();
   }
 
   @Override

@@ -156,6 +156,10 @@ public class ListUpActivity extends BaseActivity
     startActivity(intent);
   }
 
+  @Override public void changeTheme() {
+    setTheme(R.style.AppTheme_NoActionBar);
+  }
+
   @Override
   public boolean onItemLongClick(int position) {
     return presenter.onItemLongClick(position);

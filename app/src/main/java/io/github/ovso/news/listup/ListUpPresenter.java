@@ -40,5 +40,7 @@ public interface ListUpPresenter {
     void navigateToWeb(int position);
 
     void finish();
+
+    void changeTheme();
   }
 }
