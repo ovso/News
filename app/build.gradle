@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'hugo'
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
   compileSdkVersion rootProject.compile_sdk_version
@@ -32,10 +35,6 @@ android {
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
 
-  def keystorePropertiesFile = rootProject.file("keystore.properties")
-  def keystoreProperties = new Properties()
-  keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
   signingConfigs {
     release {
       keyAlias keystoreProperties['keyAlias']
@@ -48,13 +47,23 @@ android {
   buildTypes {
     release {
       signingConfig signingConfigs.release
-      minifyEnabled true
-      useProguard true
-      shrinkResources true
-      proguardFile 'proguard-butterknipe.pro'
+      minifyEnabled false
+      useProguard false
+      shrinkResources false
+
       proguardFile 'proguard-retrofit.pro'
       proguardFile 'proguard-okhttp.pro'
       proguardFile 'proguard-dagger.pro'
+
+      android.applicationVariants.all { variant ->
+        variant.outputs.all {
+          def formattedDate = new Date().format('yyyyMMddHHmmss')
+          def appName = variant.getApplicationId().split(/[.]/)[2]
+          outputFileName =
+              "${appName}-${variant.name}-${variant.versionCode}-${variant.versionName}-${formattedDate}.apk"
+        }
+      }
+
     }
 
     debug {
