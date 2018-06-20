@@ -17,7 +17,7 @@ public class WebPagerAdapter extends FragmentPagerAdapter implements WebAdapterD
   }
 
   @Override public void destroyItem(ViewGroup container, int position, Object object) {
-    // super.destroyItem(container, position, object);
+    super.destroyItem(container, position, object);
   }
 
   @Override public void addAll(List<Fragment> $items) {
