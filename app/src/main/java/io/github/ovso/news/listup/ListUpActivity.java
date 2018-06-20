@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,7 +37,7 @@ public class ListUpActivity extends BaseActivity
 
   @BindView(R.id.recyclerview)
   RecyclerView recyclerView;
-
+  @BindView(R.id.fab) FloatingActionButton fab;
   @Inject
   ListUpPresenter presenter;
   @Inject
@@ -90,8 +91,16 @@ public class ListUpActivity extends BaseActivity
     recyclerView.setItemAnimator(animator);
     recyclerView.addItemDecoration(itemShadowDecorator);
     recyclerView.addItemDecoration(simpleListDividerDecorator);
+    recyclerView.addOnScrollListener(onScrollListener);
     dragDropManager.attachRecyclerView(recyclerView);
   }
+
+  private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+    @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+      super.onScrolled(recyclerView, dx, dy);
+      presenter.onRecyclerViewScrolled(dy, fab.getVisibility());
+    }
+  };
 
   @Override
   public void refresh() {
@@ -158,6 +167,14 @@ public class ListUpActivity extends BaseActivity
 
   @Override public void changeTheme() {
     setTheme(R.style.AppTheme_NoActionBar);
+  }
+
+  @Override public void hideFab() {
+    fab.hide();
+  }
+
+  @Override public void showFab() {
+    fab.show();
   }
 
   @Override

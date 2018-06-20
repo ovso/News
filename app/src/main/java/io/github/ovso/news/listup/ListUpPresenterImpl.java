@@ -110,4 +110,13 @@ public class ListUpPresenterImpl implements ListUpPresenter {
     view.navigateToWeb(item.getPosition());
     view.finish();
   }
+
+
+  @Override public void onRecyclerViewScrolled(int dy, int visibility) {
+    if (dy > 0 && visibility == android.view.View.VISIBLE) {
+      view.hideFab();
+    } else if (dy < 0 && visibility != android.view.View.VISIBLE) {
+      view.showFab();
+    }
+  }
 }
