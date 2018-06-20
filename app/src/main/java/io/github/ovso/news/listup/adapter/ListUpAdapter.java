@@ -1,5 +1,6 @@
 package io.github.ovso.news.listup.adapter;
 
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
@@ -48,6 +49,7 @@ public class ListUpAdapter extends BaseDraggableAdapter
             holder.titleTextView.setText(DeprecatedUtils.fromHtml(item.getTitle()));
             holder.itemView.setOnClickListener(v -> onAdapterListener.onItemClick(item));
             holder.itemView.setOnLongClickListener(v -> onAdapterListener.onItemLongClick(position));
+            holder.dragImageView.setOnTouchListener((v, event) -> true);
         }
     }
 
