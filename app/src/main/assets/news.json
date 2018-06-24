@@ -200,58 +200,53 @@
     "position": 39
   },
   {
-    "title": "프레시안",
-    "link": "http://www.pressian.com/",
-    "position": 40
-  },
-  {
     "title": "머니투데이",
     "link": "http://www.mt.co.kr/",
-    "position": 41
+    "position": 40
   },
   {
     "title": "아시아경제",
     "link": "http://www.asiae.co.kr/news/",
-    "position": 42
+    "position": 41
   },
   {
     "title": "디지털타임스",
     "link": "http://www.dt.co.kr/",
-    "position": 43
+    "position": 42
   },
   {
     "title": "시사인",
     "link": "http://www.sisain.co.kr/",
-    "position": 44
+    "position": 43
   },
   {
     "title": "국민일보",
     "link": "http://www.kmib.co.kr",
-    "position": 45
+    "position": 44
   },
   {
     "title": "파이낸뉴스",
     "link": "http://www.fnnews.com/",
-    "position": 46
+    "position": 45
   },
   {
     "title": "서울경제",
     "link": "http://www.sedaily.com/",
-    "position": 47
+    "position": 46
   },
   {
     "title": "전자신문",
     "link": "http://www.etnews.com/",
-    "position": 48
+    "position": 47
   },
   {
     "title": "데일리안",
     "link": "http://www.dailian.co.kr/",
-    "position": 49
+    "position": 48
   },
   {
     "title": "오마이뉴스",
     "link": "http://www.ohmynews.com/",
-    "position": 50
+    "position": 49
   }
 ]

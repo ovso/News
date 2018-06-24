@@ -10,8 +10,11 @@ import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.rx.SchedulersFacade;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
+import timber.log.Timber;
 
 public class ListUpPresenterImpl implements ListUpPresenter {
 
@@ -59,7 +62,12 @@ public class ListUpPresenterImpl implements ListUpPresenter {
   private void initFirstRun() {
     if (Prefs.getBoolean(Preferences.KEY_FIRST_RUN.get(), true)) {
       Prefs.putBoolean(Preferences.KEY_FIRST_RUN.get(), false);
-      database.insertFirstRunData(view.getContext());
+      compositeDisposable.add(
+          Observable.fromCallable(() -> database.insertFirstRunData(view.getContext()))
+              .subscribeOn(schedulers.io())
+              .subscribe(b -> Timber.d("result = " + b.booleanValue()),
+                  throwable -> Timber.d(throwable))
+      );
     }
   }
 
@@ -110,7 +118,6 @@ public class ListUpPresenterImpl implements ListUpPresenter {
     view.navigateToWeb(item.getPosition());
     view.finish();
   }
-
 
   @Override public void onRecyclerViewScrolled(int dy, int visibility) {
     if (dy > 0 && visibility == android.view.View.VISIBLE) {
