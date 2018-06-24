@@ -3,9 +3,6 @@ package io.github.ovso.news.listup;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.StringRes;
-
-import java.util.List;
-
 import io.github.ovso.news.db.WebsiteEntity;
 
 public interface ListUpPresenter {
@@ -19,6 +16,8 @@ public interface ListUpPresenter {
   boolean onItemLongClick(int position);
 
   void onItemClick(WebsiteEntity item);
+
+  void onRecyclerViewScrolled(int dy, int visibility);
 
   interface View {
     void showErrorMessage(@StringRes int resId);
@@ -42,5 +41,9 @@ public interface ListUpPresenter {
     void finish();
 
     void changeTheme();
+
+    void hideFab();
+
+    void showFab();
   }
 }

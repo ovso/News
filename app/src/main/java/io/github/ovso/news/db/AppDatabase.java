@@ -9,7 +9,9 @@ import io.github.ovso.news.framework.AssetsUtils;
 import io.github.ovso.news.search.model.Website;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,15 +48,27 @@ public abstract class AppDatabase extends RoomDatabase {
 
   public boolean insertFirstRunData(Context context) {
     try {
+      List<WebsiteEntity> websiteEntities = new ArrayList<>();
       Gson gson = new Gson();
       String jsonString = AssetsUtils.read(context, "news.json");
       JSONArray jsonArray = new JSONArray(jsonString);
-      for (int i = 0; i < jsonArray.length(); i++) {
+      int size = jsonArray.length();
+      for (int i = 0; i < size; i++) {
         JSONObject jsonObject = jsonArray.getJSONObject(i);
         Website website = gson.fromJson(jsonObject.toString(), Website.class);
         WebsiteEntity websiteEntity = WebsiteEntity.convertWebsiteToEntiry(website);
+        websiteEntities.add(websiteEntity);
+      }
+
+      long seed = System.nanoTime();
+      Collections.shuffle(websiteEntities, new Random(seed));
+
+      for (int i = 0; i < size; i++) {
+        WebsiteEntity websiteEntity = websiteEntities.get(i);
+        websiteEntity.position = i;
         websiteDao().insert(websiteEntity);
       }
+
       return true;
     } catch (IOException e) {
       e.printStackTrace();
