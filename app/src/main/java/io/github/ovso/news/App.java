@@ -2,7 +2,7 @@ package io.github.ovso.news;
 
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
-import io.github.ovso.news.framework.AppInitUtils;
+import io.github.ovso.news.framework.utils.AppInitUtils;
 import io.github.ovso.news.framework.di.DaggerAppComponent;
 import lombok.Getter;
 

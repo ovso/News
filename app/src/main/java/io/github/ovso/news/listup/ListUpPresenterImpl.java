@@ -6,7 +6,7 @@ import io.github.ovso.news.R;
 import io.github.ovso.news.data.Preferences;
 import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.db.WebsiteEntity;
-import io.github.ovso.news.framework.DeprecatedUtils;
+import io.github.ovso.news.framework.utils.DeprecatedUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.resources.ResourcesProvider;
 import io.github.ovso.news.framework.rx.SchedulersFacade;

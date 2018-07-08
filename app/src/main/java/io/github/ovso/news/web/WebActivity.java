@@ -11,7 +11,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 import io.github.ovso.news.R;
-import io.github.ovso.news.framework.ActivityUtils;
+import io.github.ovso.news.framework.utils.ActivityUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.baseview.BaseActivity;
 import io.github.ovso.news.web.apdater.WebPagerAdapter;
