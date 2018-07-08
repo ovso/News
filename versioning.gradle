@@ -37,6 +37,8 @@ ext {
   // Stetho
   stetho_version = '1.5.0'
 
+  sheet_fab_version = '1.2.1'
+
   // Test
   junit_version = '4.12'
   runner_version = '1.0.2'

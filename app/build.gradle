@@ -140,6 +140,9 @@ dependencies {
   // Stetho
   implementation "com.facebook.stetho:stetho:$rootProject.stetho_version"
 
+  // floating button
+  implementation "com.gordonwong:material-sheet-fab:$sheet_fab_version"
+
   // Test
   testImplementation "junit:junit:$rootProject.junit_version"
   androidTestImplementation "com.android.support.test:runner:$rootProject.runner_version"

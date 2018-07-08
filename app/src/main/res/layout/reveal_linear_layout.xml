@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Circular reveal container for the sheet -->
+<io.codetail.widget.RevealLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="end|bottom"
+    android:orientation="vertical"
+
+    >
+
+  <!-- Sheet that contains your items -->
+  <!--
+    <android.support.v7.widget.CardView
+        android:id="@+id/fab_sheet"
+        style="@style/Widget.MaterialSheetFab.Sheet"
+        >
+  -->
+  <FrameLayout
+      android:id="@+id/fab_sheet_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      >
+    <!-- Sheet items -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/fab_item_search"
+          android:drawableLeft="@drawable/ic_search"
+          android:text="@string/search"
+          style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
+          />
+
+      <TextView
+          android:id="@+id/fab_item_help"
+          android:drawableLeft="@drawable/ic_help_outline"
+          android:text="@string/help"
+          style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
+          />
+
+      <TextView
+          android:id="@+id/fab_item_license"
+          android:drawableLeft="@drawable/ic_looks"
+          android:text="@string/opensource_license"
+          android:visibility="gone"
+          style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
+          />
+
+    </LinearLayout>
+  </FrameLayout>
+  <!--</android.support.v7.widget.CardView>-->
+
+</io.codetail.widget.RevealLinearLayout>
