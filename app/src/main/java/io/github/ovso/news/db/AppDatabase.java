@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import com.google.gson.Gson;
-import io.github.ovso.news.framework.AssetsUtils;
+import io.github.ovso.news.framework.utils.AssetsUtils;
 import io.github.ovso.news.search.model.Website;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ import java.util.Random;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import timber.log.Timber;
 
 @Database(entities = { WebsiteEntity.class }, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {

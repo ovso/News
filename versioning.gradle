@@ -3,7 +3,7 @@ ext {
   application_id = 'io.github.ovso.news'
   min_sdk_version = 21
   target_sdk_version = 27
-  version_code = 2
+  version_code = 3
 
   support_lib_version = '27.1.1'
   constraint_layout_version = '1.1.0'
@@ -36,6 +36,8 @@ ext {
 
   // Stetho
   stetho_version = '1.5.0'
+
+  sheet_fab_version = '1.2.1'
 
   // Test
   junit_version = '4.12'

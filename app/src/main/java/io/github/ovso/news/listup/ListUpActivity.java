@@ -5,13 +5,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
+import com.gordonwong.materialsheetfab.MaterialSheetFab;
+import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
 import com.h6ah4i.android.widget.advrecyclerview.animator.DraggableItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
@@ -26,18 +28,21 @@ import butterknife.OnClick;
 import hugo.weaving.DebugLog;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.WebsiteEntity;
-import io.github.ovso.news.framework.ActivityUtils;
+import io.github.ovso.news.framework.utils.ActivityUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.baseview.BaseActivity;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
 import io.github.ovso.news.listup.listener.OnAdapterListener;
+import timber.log.Timber;
 
 public class ListUpActivity extends BaseActivity
     implements ListUpPresenter.View, OnAdapterListener<WebsiteEntity> {
 
   @BindView(R.id.recyclerview)
   RecyclerView recyclerView;
-  @BindView(R.id.fab) FloatingActionButton fab;
+  @BindView(R.id.sheet_fab) SheetFab sheetFab;
+  @BindView(R.id.fab_sheet_view) View fabSheetView;
+  @BindView(R.id.fab_overlay_view) View fabOverlayView;
   @Inject
   ListUpPresenter presenter;
   @Inject
@@ -56,21 +61,51 @@ public class ListUpActivity extends BaseActivity
   RecyclerView.Adapter wrappedAdapter;
   @Inject
   LinearLayoutManager layoutManager;
+  private MaterialSheetFab materialSheetFab;
+  private int statusBarColor;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     presenter.onCreate();
+    setupFab();
+  }
+
+  private void setupFab() {
+    int sheetColor = getResources().getColor(android.R.color.white);
+    int fabColor = getResources().getColor(R.color.colorAccent);
+
+    // Create material sheet FAB
+    materialSheetFab =
+        new MaterialSheetFab<>(sheetFab, fabSheetView, fabOverlayView, sheetColor, fabColor);
+
+    // Set material sheet event listener
+    materialSheetFab.setEventListener(new MaterialSheetFabEventListener() {
+      @Override
+      public void onShowSheet() {
+        // Save current status bar color
+        //statusBarColor = getStatusBarColor();
+        // Set darker status bar color to match the dim overlay
+        //setStatusBarColor(getResources().getColor(R.color.theme_primary_dark2));
+      }
+
+      @Override
+      public void onHideSheet() {
+        // Restore status bar color
+        //setStatusBarColor(statusBarColor);
+      }
+    });
+  }
+
+  @OnClick({
+      R.id.fab_item_search, R.id.fab_item_help, R.id.fab_item_license
+  }) void onFabItemClick(View view) {
+    presenter.onFabItemClick(view.getId());
   }
 
   @Override
   protected int getLayoutResId() {
     return R.layout.activity_listup;
-  }
-
-  @OnClick(R.id.fab)
-  void onFabClick() {
-    ActivityUtils.startActivitySearch(this);
   }
 
   @Override
@@ -98,7 +133,7 @@ public class ListUpActivity extends BaseActivity
   private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
     @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
       super.onScrolled(recyclerView, dx, dy);
-      presenter.onRecyclerViewScrolled(dy, fab.getVisibility());
+      presenter.onRecyclerViewScrolled(dy);
     }
   };
 
@@ -170,11 +205,34 @@ public class ListUpActivity extends BaseActivity
   }
 
   @Override public void hideFab() {
-    fab.hide();
+    //fab.hide();
+    sheetFab.hide();
+    Timber.d("hideFab");
   }
 
   @Override public void showFab() {
-    fab.show();
+    //fab.show();
+    sheetFab.show();
+    Timber.d("showFab");
+  }
+
+  @Override public void hideFabSheet() {
+    materialSheetFab.hideSheet();
+  }
+
+  @Override public void navigateToSearch() {
+    ActivityUtils.startActivitySearch(this);
+  }
+
+  @Override public void showHelpDialog(String msg) {
+    new AlertDialog.Builder(getContext()).setTitle(R.string.help).setMessage(msg).setPositiveButton(
+        android.R.string.ok, (dialog, which) -> {
+          dialog.dismiss();
+        }).show();
+  }
+
+  @Override public void showOpenSourceLicensesDialog() {
+    // do...
   }
 
   @Override

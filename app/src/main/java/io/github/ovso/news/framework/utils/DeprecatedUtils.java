@@ -1,4 +1,4 @@
-package io.github.ovso.news.framework;
+package io.github.ovso.news.framework.utils;
 
 import android.os.Build;
 import android.text.Html;

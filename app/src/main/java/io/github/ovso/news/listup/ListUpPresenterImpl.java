@@ -2,18 +2,18 @@ package io.github.ovso.news.listup;
 
 import android.arch.lifecycle.LifecycleOwner;
 import com.pixplicity.easyprefs.library.Prefs;
+import io.github.ovso.news.R;
 import io.github.ovso.news.data.Preferences;
 import io.github.ovso.news.db.AppDatabase;
 import io.github.ovso.news.db.WebsiteEntity;
-import io.github.ovso.news.framework.DeprecatedUtils;
+import io.github.ovso.news.framework.utils.DeprecatedUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
+import io.github.ovso.news.framework.resources.ResourcesProvider;
 import io.github.ovso.news.framework.rx.SchedulersFacade;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 import timber.log.Timber;
 
 public class ListUpPresenterImpl implements ListUpPresenter {
@@ -23,13 +23,16 @@ public class ListUpPresenterImpl implements ListUpPresenter {
   private CompositeDisposable compositeDisposable = new CompositeDisposable();
   private BaseAdapterDataModel<WebsiteEntity> adapterDataModel;
   private SchedulersFacade schedulers;
+  private ResourcesProvider resourcesProvider;
 
   ListUpPresenterImpl(ListUpPresenter.View view, AppDatabase database,
-      BaseAdapterDataModel<WebsiteEntity> adapterDataModel, SchedulersFacade schedulers) {
+      BaseAdapterDataModel<WebsiteEntity> adapterDataModel, SchedulersFacade schedulers,
+      ResourcesProvider $resourcesProvider) {
     this.view = view;
     this.database = database;
     this.adapterDataModel = adapterDataModel;
     this.schedulers = schedulers;
+    resourcesProvider = $resourcesProvider;
     view.changeTheme();
   }
 
@@ -119,11 +122,34 @@ public class ListUpPresenterImpl implements ListUpPresenter {
     view.finish();
   }
 
-  @Override public void onRecyclerViewScrolled(int dy, int visibility) {
-    if (dy > 0 && visibility == android.view.View.VISIBLE) {
+  @Override public void onRecyclerViewScrolled(int dy) {
+    if (dy > 0) {
       view.hideFab();
-    } else if (dy < 0 && visibility != android.view.View.VISIBLE) {
+    } else if (dy < 0) {
       view.showFab();
     }
+  }
+
+  @Override public void onFabItemClick(int id) {
+    switch (id) {
+      case R.id.fab_item_search:
+        view.hideFabSheet();
+        view.navigateToSearch();
+        break;
+      case R.id.fab_item_help:
+        view.hideFabSheet();
+        view.showHelpDialog(getHelpMessage());
+        break;
+      case R.id.fab_item_license:
+        view.showOpenSourceLicensesDialog();
+        break;
+    }
+  }
+
+  private String getHelpMessage() {
+    return resourcesProvider.string(R.string.help_msg_1) + "\n\n"
+        + resourcesProvider.string(R.string.help_msg_2) + "\n\n"
+        + resourcesProvider.string(R.string.help_msg_3) + "\n\n"
+        + resourcesProvider.string(R.string.help_msg_4);
   }
 }

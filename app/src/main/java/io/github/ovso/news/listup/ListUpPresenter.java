@@ -2,6 +2,7 @@ package io.github.ovso.news.listup;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import io.github.ovso.news.db.WebsiteEntity;
 
@@ -17,7 +18,9 @@ public interface ListUpPresenter {
 
   void onItemClick(WebsiteEntity item);
 
-  void onRecyclerViewScrolled(int dy, int visibility);
+  void onRecyclerViewScrolled(int dy);
+
+  void onFabItemClick(@IdRes int id);
 
   interface View {
     void showErrorMessage(@StringRes int resId);
@@ -45,5 +48,13 @@ public interface ListUpPresenter {
     void hideFab();
 
     void showFab();
+
+    void navigateToSearch();
+
+    void showHelpDialog(String msg);
+
+    void showOpenSourceLicensesDialog();
+
+    void hideFabSheet();
   }
 }

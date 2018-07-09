@@ -1,6 +1,5 @@
 package io.github.ovso.news.listup.adapter;
 
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
@@ -12,7 +11,7 @@ import java.util.List;
 import hugo.weaving.DebugLog;
 import io.github.ovso.news.R;
 import io.github.ovso.news.db.WebsiteEntity;
-import io.github.ovso.news.framework.DeprecatedUtils;
+import io.github.ovso.news.framework.utils.DeprecatedUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.listup.listener.OnAdapterListener;

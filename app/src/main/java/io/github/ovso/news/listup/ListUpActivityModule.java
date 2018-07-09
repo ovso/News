@@ -11,6 +11,8 @@ import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 
+import io.github.ovso.news.framework.resources.ResourcesProvider;
+import io.github.ovso.news.framework.resources.ResourcesProviderImpl;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -23,6 +25,7 @@ import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.rx.SchedulersFacade;
 import io.github.ovso.news.listup.adapter.ListUpAdapter;
 import io.github.ovso.news.listup.listener.OnAdapterListener;
+import timber.log.Timber;
 
 @Module
 public class ListUpActivityModule {
@@ -30,8 +33,8 @@ public class ListUpActivityModule {
     @Provides
     public ListUpPresenter provideListUpPresenter(ListUpPresenter.View view, AppDatabase
             database, BaseAdapterDataModel<WebsiteEntity>
-                                                          adapterDataModel, SchedulersFacade schedulers) {
-        return new ListUpPresenterImpl(view, database, adapterDataModel, schedulers);
+                                                          adapterDataModel, SchedulersFacade schedulers, ResourcesProviderImpl resourcesProvider) {
+        return new ListUpPresenterImpl(view, database, adapterDataModel, schedulers, resourcesProvider);
     }
 
     @Singleton

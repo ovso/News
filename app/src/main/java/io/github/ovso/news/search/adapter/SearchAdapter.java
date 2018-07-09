@@ -2,7 +2,7 @@ package io.github.ovso.news.search.adapter;
 
 import android.view.View;
 import io.github.ovso.news.R;
-import io.github.ovso.news.framework.DeprecatedUtils;
+import io.github.ovso.news.framework.utils.DeprecatedUtils;
 import io.github.ovso.news.framework.adapter.BaseAdapterDataModel;
 import io.github.ovso.news.framework.adapter.BaseAdapterView;
 import io.github.ovso.news.framework.adapter.BaseRecyclerAdapter;
