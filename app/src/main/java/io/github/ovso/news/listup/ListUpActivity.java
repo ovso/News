@@ -1,5 +1,8 @@
 package io.github.ovso.news.listup;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +23,7 @@ import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDec
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
+import io.github.ovso.news.listup.lifecycle.DragDropLifecycleObserver;
 import io.github.ovso.news.web.WebActivity;
 import javax.inject.Inject;
 
@@ -36,7 +40,7 @@ import io.github.ovso.news.listup.listener.OnAdapterListener;
 import timber.log.Timber;
 
 public class ListUpActivity extends BaseActivity
-    implements ListUpPresenter.View, OnAdapterListener<WebsiteEntity> {
+    implements ListUpPresenter.View, OnAdapterListener<WebsiteEntity>, LifecycleObserver {
 
   @BindView(R.id.recyclerview)
   RecyclerView recyclerView;
@@ -61,17 +65,18 @@ public class ListUpActivity extends BaseActivity
   RecyclerView.Adapter wrappedAdapter;
   @Inject
   LinearLayoutManager layoutManager;
+  @Inject DragDropLifecycleObserver dragDropLifecycleObserver;
+
   private MaterialSheetFab materialSheetFab;
-  private int statusBarColor;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     presenter.onCreate();
-    setupFab();
   }
 
-  private void setupFab() {
+  @Override
+  public void setupFab() {
     int sheetColor = getResources().getColor(android.R.color.white);
     int fabColor = getResources().getColor(R.color.colorAccent);
 
@@ -95,6 +100,10 @@ public class ListUpActivity extends BaseActivity
         //setStatusBarColor(statusBarColor);
       }
     });
+  }
+
+  @Override public void setupLifeCycle() {
+    getLifecycle().addObserver(dragDropLifecycleObserver);
   }
 
   @OnClick({
@@ -149,10 +158,6 @@ public class ListUpActivity extends BaseActivity
 
   @Override
   public void release() {
-    if (dragDropManager != null) {
-      dragDropManager.release();
-      dragDropManager = null;
-    }
 
     if (recyclerView != null) {
       recyclerView.setItemAnimator(null);
@@ -240,10 +245,9 @@ public class ListUpActivity extends BaseActivity
     return presenter.onItemLongClick(position);
   }
 
-  @Override
-  protected void onPause() {
+  @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+  void cancelDragDrop() {
     dragDropManager.cancelDrag();
-    super.onPause();
   }
 
   @Override

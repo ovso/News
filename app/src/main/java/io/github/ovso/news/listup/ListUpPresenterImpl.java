@@ -43,6 +43,8 @@ public class ListUpPresenterImpl implements ListUpPresenter {
       view.finish();
       return;
     }
+    view.setupLifeCycle();
+    view.setupFab();
     view.setupRecyclerView();
     database.websiteDao()
         .getLiveDataItems()

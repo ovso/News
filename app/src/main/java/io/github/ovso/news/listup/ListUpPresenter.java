@@ -56,5 +56,9 @@ public interface ListUpPresenter {
     void showOpenSourceLicensesDialog();
 
     void hideFabSheet();
+
+    void setupFab();
+
+    void setupLifeCycle();
   }
 }
