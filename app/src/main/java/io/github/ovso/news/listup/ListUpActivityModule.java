@@ -12,7 +12,6 @@ import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDec
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 
 import io.github.ovso.news.framework.resources.ResourcesProviderImpl;
-import io.github.ovso.news.listup.lifecycle.DragDropLifecycleObserver;
 import javax.inject.Singleton;
 
 import dagger.Module;

@@ -63,7 +63,6 @@ android {
               "${appName}-${variant.name}-${variant.versionCode}-${variant.versionName}-${formattedDate}.apk"
         }
       }
-
     }
 
     debug {
